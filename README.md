@@ -170,7 +170,6 @@ frontend/src/
   lib/state.js          shared settings and saved-settings guard
   components/farmer/    the guided Farmer view
   components/           the Analytics and Community tabs
-docs/                   project page, demo script, QA table, phase specs
 SI_DISCLOSURE.md        how SI tools were used
 ```
 
