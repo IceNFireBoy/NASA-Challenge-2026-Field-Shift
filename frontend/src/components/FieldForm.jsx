@@ -1,6 +1,7 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
 import { FIELD_SITUATIONS, SOILS, CROPS, ROTATION_IDS } from '../engine/params.js';
 import { PLANTING_OPTIONS, resolvePlanting } from '../engine/engine.js';
+import NumField from './NumField.jsx';
 
 const field = 'min-h-[44px] w-full rounded border border-stone-400 bg-white px-3 py-2 text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700';
 
@@ -54,8 +55,8 @@ export default function FieldForm({ state, dispatch }) {
         </div>
         <div>
           <label htmlFor="labor" className="text-sm font-semibold">Labour available (man-days per ha)</label>
-          <input id="labor" type="number" min="0" max="200" inputMode="numeric" className={field} value={state.laborCap}
-            onChange={(e) => dispatch({ type: 'set', key: 'laborCap', value: Math.max(0, Number(e.target.value) || 0) })} />
+          <NumField id="labor" max={200} inputMode="numeric" className={field} value={state.laborCap}
+            onChange={(v) => dispatch({ type: 'set', key: 'laborCap', value: v })} />
         </div>
       </div>
     </section>

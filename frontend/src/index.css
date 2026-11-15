@@ -1,3 +1,46 @@
+/* SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Strong ease-out for UI entrances and feedback; the built-in ease-out is too weak. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Farmer mode: 18 px base text. Every rem-based size (type, spacing, touch targets) scales with it. */
+html.farmer { font-size: 112.5%; }
+
+/* Phone basics: no grey tap flash, no double-tap delay, no text selection on controls. */
+html { -webkit-tap-highlight-color: transparent; }
+button, label, summary, [role='tab'] { touch-action: manipulation; }
+button { -webkit-user-select: none; user-select: none; }
+
+/* Tap feedback: the control answers the finger straight away. */
+.pressable { transition: transform 140ms var(--ease-out), background-color 150ms ease, border-color 150ms ease; }
+.pressable:active:not(:disabled) { transform: scale(0.97); }
+
+/* Hover only where a real pointer exists; touch screens fire false hovers on tap. */
+@media (hover: hover) and (pointer: fine) {
+  .pick-card:hover { border-color: #166534; }
+}
+
+/* Step change: the new screen slides in from the side the user is heading to. */
+@keyframes step-in-fwd { from { opacity: 0; transform: translateX(16px); } }
+@keyframes step-in-back { from { opacity: 0; transform: translateX(-16px); } }
+.step-enter { animation: step-in-fwd 220ms var(--ease-out) both; }
+.step-enter[data-dir='back'] { animation-name: step-in-back; }
+
+/* Small entrance for results and list items; --i staggers neighbours by 50 ms. */
+@keyframes rise-in { from { opacity: 0; transform: translateY(8px); } }
+.rise-in { animation: rise-in 220ms var(--ease-out) both; animation-delay: calc(var(--i, 0) * 50ms); }
+
+/* Score and progress bars grow by scaling, never by resizing. */
+.fit-fill { transform-origin: left center; transition: transform 250ms var(--ease-out); }
+
+/* Reduced motion: every animation and transition above is switched off. */
+@media (prefers-reduced-motion: reduce) {
+  .step-enter, .rise-in { animation: none; }
+  .pressable, .fit-fill { transition: none; }
+  .pressable:active:not(:disabled) { transform: none; }
+}

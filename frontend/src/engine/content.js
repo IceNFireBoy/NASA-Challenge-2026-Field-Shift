@@ -19,13 +19,15 @@ const pct = (x) => `${Math.round(100 * x)}%`;
 const mm = (x) => `${Math.round(x)} mm`;
 
 export function dateOfDay(day) {
-  const days = [31, 31, 28, 31, 30, 31];
+  // Day 0 = Dec 1. Late plantings finish after May 31, so the calendar runs on through Jun-Aug.
+  const months = [...SEASON_MONTHS, 'Jun', 'Jul', 'Aug'];
+  const days = [31, 31, 28, 31, 30, 31, 30, 31, 31];
   let d = day;
-  for (let i = 0; i < 6; i += 1) {
-    if (d < days[i]) return `${SEASON_MONTHS[i]} ${d + 1}`;
+  for (let i = 0; i < days.length; i += 1) {
+    if (d < days[i]) return `${months[i]} ${d + 1}`;
     d -= days[i];
   }
-  return `Jun ${d + 1}`;
+  return `Sep ${d + 1}`;
 }
 
 export function whySuggested(r, rankCount) {

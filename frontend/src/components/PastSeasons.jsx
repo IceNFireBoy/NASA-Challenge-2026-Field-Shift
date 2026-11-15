@@ -27,7 +27,7 @@ function TrendChart({ climate }) {
   const tpath = series.map((s, i) => `${i ? 'L' : 'M'}${L + bw * (i + 0.5)},${yt(s.tmax_mean_c)}`).join(' ');
   return (
     <section aria-labelledby="trend-t" className={card}>
-      <h2 id="trend-t" className="text-lg font-bold text-green-900">Long-term trend: Dec-May rainfall and heat, 24 seasons</h2>
+      <h2 id="trend-t" className="text-lg font-bold text-green-900">Long-term trend: Dec-May rainfall and heat, {series.length} seasons</h2>
       <div className="mt-2 overflow-x-auto">
         <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="trend-svg-t" className="min-w-[560px] w-full">
           <title id="trend-svg-t">Dec-May rainfall per season with El Niño seasons outlined and a trend line</title>
@@ -46,7 +46,7 @@ function TrendChart({ climate }) {
         </svg>
       </div>
       <ul className="flex flex-wrap gap-x-4 text-xs text-stone-700"><li>▮ Rain per season</li><li>▭ Orange outline = El Niño season</li><li>┄ Trend line</li></ul>
-      <p className="mt-1 text-sm">Trend: {t.rain_mm_per_decade > 0 ? '+' : ''}{Number(t.rain_mm_per_decade).toFixed(0)} mm per decade ({rainSource} rainfall). A trend over 24 seasons is indicative, not conclusive.</p>
+      <p className="mt-1 text-sm">Trend: {t.rain_mm_per_decade > 0 ? '+' : ''}{Number(t.rain_mm_per_decade).toFixed(0)} mm per decade ({rainSource} rainfall). A trend over {series.length} seasons is indicative, not conclusive.</p>
       <div className="mt-3 overflow-x-auto">
         <svg viewBox={`0 0 ${W} ${H2}`} role="img" aria-labelledby="tmax-svg-t" className="min-w-[560px] w-full">
           <title id="tmax-svg-t">Mean daily maximum temperature, Dec-May, per season</title>
@@ -55,7 +55,7 @@ function TrendChart({ climate }) {
           <text x={L - 4} y={yt(tmax) + 4} textAnchor="end" fontSize="10">{tmax.toFixed(1)}</text>
           <text x={L - 4} y={yt(tmin) + 4} textAnchor="end" fontSize="10">{tmin.toFixed(1)}</text>
           <text x={12} y={H2 / 2} fontSize="11" fill="#44403c" transform={`rotate(-90 12 ${H2 / 2})`} textAnchor="middle">Mean Tmax (°C)</text>
-          <text x={W / 2} y={H2 - 6} fontSize="11" textAnchor="middle" fill="#44403c">Season start year, 2001 to 2024</text>
+          <text x={W / 2} y={H2 - 6} fontSize="11" textAnchor="middle" fill="#44403c">Season start year, {series[0].start_year} to {series[series.length - 1].start_year}</text>
         </svg>
       </div>
       <p className="text-sm">Mean Tmax trend: {t.tmax_c_per_decade > 0 ? '+' : ''}{Number(t.tmax_c_per_decade).toFixed(2)} °C per decade (NASA POWER). Indicative, not conclusive.</p>
@@ -63,7 +63,7 @@ function TrendChart({ climate }) {
   );
 }
 
-function Replay({ inputs, seasons }) {
+function Replay({ inputs }) {
   const [mode, setMode] = useState('water');
   const rows = useMemo(() => replaySeasons(inputs), [inputs]);
   const color = (c) => {
@@ -119,6 +119,7 @@ function ScenarioChart({ climate, scenarioId }) {
   const a = src === 'source' && hasImerg ? typ.rain_imerg_mm : pickRain(typ).rain;
   const b = src === 'source' && hasImerg ? typ.rain_power_mm : pickRain(sc).rain;
   const la = src === 'source' && hasImerg ? 'IMERG (typical)' : 'Typical year'; const lb = src === 'source' && hasImerg ? 'POWER (typical)' : climate.scenarios[scenarioId].label.split(' (')[0];
+  const same = !(src === 'source' && hasImerg) && scenarioId === 'typical'; // both series would be the typical year
   const W = 720; const H = 260; const L = 50; const T = 15; const B = 40;
   const max = Math.max(...a, ...b, ...typ.et0_mm) * 1.1; const y = (v) => T + (H - T - B) * (1 - v / max);
   const gw = (W - L - 10) / 6;
@@ -140,7 +141,7 @@ function ScenarioChart({ climate, scenarioId }) {
           {SEASON_MONTHS.map((m, i) => (
             <g key={m}>
               <rect x={L + gw * i + gw * 0.12} y={y(a[i])} width={gw * 0.36} height={H - B - y(a[i])} fill="#0072B2"><title>{`${m} ${la}: ${Math.round(a[i])} mm`}</title></rect>
-              <rect x={L + gw * i + gw * 0.5} y={y(b[i])} width={gw * 0.36} height={H - B - y(b[i])} fill="#E69F00"><title>{`${m} ${lb}: ${Math.round(b[i])} mm`}</title></rect>
+              {!same && <rect x={L + gw * i + gw * 0.5} y={y(b[i])} width={gw * 0.36} height={H - B - y(b[i])} fill="#E69F00"><title>{`${m} ${lb}: ${Math.round(b[i])} mm`}</title></rect>}
               <text x={L + gw * (i + 0.5)} y={H - B + 16} textAnchor="middle" fontSize="11">{m}</text>
             </g>
           ))}
@@ -148,8 +149,8 @@ function ScenarioChart({ climate, scenarioId }) {
           <text x={12} y={H / 2} fontSize="11" transform={`rotate(-90 12 ${H / 2})`} textAnchor="middle" fill="#44403c">mm per month</text>
         </svg>
       </div>
-      <ul className="flex flex-wrap gap-x-4 text-xs text-stone-700"><li><span style={{ color: '#0072B2' }}>▮</span> {la}</li><li><span style={{ color: '#E69F00' }}>▮</span> {lb}</li><li>┄ Reference ET0 (typical year)</li></ul>
-      <p className="mt-1 text-sm">Where the bars fall below the dashed line, rain alone does not meet a well-watered crop's demand. {src === 'source' ? 'Satellite-gauge (IMERG) vs model reanalysis (POWER): why combining sources matters.' : ''}</p>
+      <ul className="flex flex-wrap gap-x-4 text-xs text-stone-700"><li><span style={{ color: '#0072B2' }}>▮</span> {la}</li>{!same && <li><span style={{ color: '#E69F00' }}>▮</span> {lb}</li>}<li>┄ Reference ET0 (typical year)</li></ul>
+      <p className="mt-1 text-sm">Where the bars fall below the dashed line, rain alone does not meet a well-watered crop's demand. {same ? 'Pick an El Niño scenario in Compare to see it beside the typical year. ' : ''}{src === 'source' ? 'Satellite-gauge (IMERG) vs model reanalysis (POWER): why combining sources matters.' : ''}</p>
     </section>
   );
 }
@@ -159,7 +160,7 @@ export default function PastSeasons({ climate, inputs }) {
     <div className="space-y-4">
       <p className="rounded border border-amber-300 bg-amber-50 p-3 text-sm">Past seasons show what happened; they are not forecasts of 2026-27.</p>
       <TrendChart climate={climate} />
-      <Replay inputs={inputs} seasons={climate.seasons} />
+      <Replay inputs={inputs} />
       <ScenarioChart climate={climate} scenarioId={inputs.scenarioId} />
     </div>
   );

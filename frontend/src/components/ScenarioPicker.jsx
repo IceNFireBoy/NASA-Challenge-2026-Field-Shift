@@ -1,13 +1,24 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useRef } from 'react';
 import { SCENARIO_IDS } from '../engine/engine.js';
 
 export default function ScenarioPicker({ climate, scenarioId, rainPct, tempDelta, dispatch }) {
+  const refs = useRef({});
+  const onKey = (e, i) => {
+    const step = ['ArrowDown', 'ArrowRight'].includes(e.key) ? 1 : ['ArrowUp', 'ArrowLeft'].includes(e.key) ? -1 : 0;
+    if (!step) return;
+    e.preventDefault();
+    const next = SCENARIO_IDS[(i + step + SCENARIO_IDS.length) % SCENARIO_IDS.length];
+    dispatch({ type: 'set', key: 'scenarioId', value: next });
+    refs.current[next]?.focus();
+  };
   return (
     <section aria-labelledby="step3" className="rounded-lg border border-stone-300 bg-white p-4">
       <h2 id="step3" className="text-lg font-bold text-green-900">Step 3. Scenario</h2>
       <div role="radiogroup" aria-labelledby="step3" className="mt-2 grid gap-2">
-        {SCENARIO_IDS.map((id) => (
-          <button key={id} type="button" role="radio" aria-checked={scenarioId === id}
+        {SCENARIO_IDS.map((id, i) => (
+          <button key={id} ref={(el) => { refs.current[id] = el; }} type="button" role="radio" aria-checked={scenarioId === id}
+            tabIndex={scenarioId === id ? 0 : -1} onKeyDown={(e) => onKey(e, i)}
             onClick={() => dispatch({ type: 'set', key: 'scenarioId', value: id })}
             className={`min-h-[44px] rounded border px-3 py-2 text-left text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700 ${scenarioId === id ? 'border-green-800 bg-green-800 font-semibold text-white' : 'border-stone-400 bg-white'}`}>
             {scenarioId === id ? '● ' : '○ '}{climate.scenarios[id].label}

@@ -24,7 +24,7 @@ export default function SeasonCalendar({ result, state, climate, scenarioLabel }
   const dryRice = state.situationId === 'after_dry_rice';
   const start = result.planting.day;
   const rowH = 34; const top = 78;
-  const H = top + result.ranked.length * rowH + 40;
+  const H = top + result.ranked.length * rowH + 8;
 
   const rows = result.ranked.map((r) => {
     const segs = [{ from: 0, to: 6, label: 'Wet-season rice (typical, assumed)', fill: '#cfe3d4' }];
@@ -70,21 +70,21 @@ export default function SeasonCalendar({ result, state, climate, scenarioLabel }
                 {segs.map((s) => s.to > s.from && (
                   <g key={s.label}>
                     <rect x={x(s.from)} y={y + 4} width={(s.to - s.from) * COL} height={22} fill={s.fill} stroke="#57534e" />
-                    {(s.to - s.from) * COL > 38 && <text x={x(s.from) + 4} y={y + 19} fontSize="11" fill={s.crop ? '#fff' : '#1c1917'} fontWeight="600">{s.crop ? s.label : s.label.length > 22 && (s.to - s.from) < 8 ? 'Rice' : s.label}</text>}
+                    {(s.to - s.from) * COL > 38 && <text x={x(s.from) + 4} y={y + 19} fontSize="11" fill={s.crop ? '#0c0a09' : '#1c1917'} fontWeight="600">{s.crop ? s.label : s.label.length > 22 && (s.to - s.from) < 8 ? 'Rice' : s.label}</text>}
                   </g>
                 ))}
                 {r.blocked && <text x={LEFT + 6 * COL + 6} y={y + 19} fontSize="11" fill="#7f1d1d" fontWeight="600">Blocked on this soil</text>}
               </g>
             );
           })}
-          <g transform={`translate(${LEFT}, ${H - 20})`} fontSize="11" fill="#292524">
-            <rect width="14" height="14" fill="#cfe3d4" stroke="#57534e" /><text x="20" y="11">Wet-season rice (assumed)</text>
-            {dryRice && <><rect x="190" width="14" height="14" fill="#9fc7ad" stroke="#57534e" /><text x="210" y="11">Dry-season rice</text></>}
-            <rect x="330" width="14" height="14" fill="url(#bare)" stroke="#b8ae9c" /><text x="350" y="11">Bare field (hatched)</text>
-            <rect x="480" width="14" height="14" fill="#009E73" stroke="#57534e" /><text x="500" y="11">Dry-season crop (colour per crop)</text>
-          </g>
         </svg>
       </div>
+      <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-stone-800">
+        <li className="flex items-center gap-1"><span aria-hidden="true" className="inline-block h-3.5 w-3.5 border border-stone-600" style={{ background: '#cfe3d4' }} />Wet-season rice (assumed)</li>
+        {dryRice && <li className="flex items-center gap-1"><span aria-hidden="true" className="inline-block h-3.5 w-3.5 border border-stone-600" style={{ background: '#9fc7ad' }} />Dry-season rice</li>}
+        <li className="flex items-center gap-1"><span aria-hidden="true" className="inline-block h-3.5 w-3.5 border border-stone-400" style={{ background: 'repeating-linear-gradient(45deg, #f3efe8 0 3px, #b8ae9c 3px 5px)' }} />Bare field (hatched)</li>
+        <li className="flex items-center gap-1"><span aria-hidden="true" className="inline-block h-3.5 w-3.5 border border-stone-600" style={{ background: '#009E73' }} />Dry-season crop (colour per crop)</li>
+      </ul>
       <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
         {rows.map(({ r, bareDays }) => (
           <li key={r.id}>

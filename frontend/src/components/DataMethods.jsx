@@ -2,6 +2,7 @@
 import { CROPS, SOILS, FIELD_SITUATIONS, IRRIGATION, MODEL } from '../engine/params.js';
 import { SOURCES, GLOSSARY, SOIL_HEALTH_PRIMER } from '../engine/content.js';
 import StatusBadge from './StatusBadge.jsx';
+import { LIGHT_RULES, MAX_PICKS, PICK_WEIGHTS, PRIORITIES } from '../lib/farmer.js';
 
 const METHOD = [
   'Reference evapotranspiration (ET0) is estimated with the Hargreaves formula from NASA POWER daily temperatures.',
@@ -98,7 +99,22 @@ export default function DataMethods({ climate }) {
         </div>
       </section>
 
-      <section aria-labelledby="dm-gl" className="rounded-lg border border-stone-300 bg-white p-4">
+      <section aria-labelledby="dm-farmer" className="rounded-lg border border-stone-300 bg-white p-4">
+        <h2 id="dm-farmer" className="flex flex-wrap items-center gap-2 text-lg font-bold text-green-900">Farmer view rules <StatusBadge status="assumption" /></h2>
+        <p className="mt-1 text-sm">The Farmer view uses the same engine and settings as this Expert view. These simplifications are our own choices:</p>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
+          <li>Priorities: each picked card (up to {MAX_PICKS}) sets its criterion to weight {PICK_WEIGHTS.picked}; every other criterion gets {PICK_WEIGHTS.other}. No pick keeps the default weights. Cards map to: {PRIORITIES.map((p) => `${p.id} = ${p.criterion}`).join(', ')}.</li>
+          <li>El Niño question: "yes" uses the strong El Niño scenario; "no" and "not sure" use the typical year, and the result also states what a strong El Niño year would change.</li>
+          <li>Water light: good above {LIGHT_RULES.water.good * 100}% of crop water need met by rain and stored soil water, okay from {LIGHT_RULES.water.ok * 100}%, risky below; good when irrigating.</li>
+          <li>Soil light: good at soil-health tier {LIGHT_RULES.soil.good} or more, okay from {LIGHT_RULES.soil.ok}, risky below.</li>
+          <li>Income light: good when net return per hectare is positive, okay at zero, risky when negative (illustrative prices unless you edit them).</li>
+          <li>Work light: good up to {LIGHT_RULES.work.good * 100}% of your labour limit, okay up to {LIGHT_RULES.work.ok * 100}%, risky above.</li>
+          <li>Technical asides (crop coefficients, yield-response factors) are hidden from the Farmer view's why-card; the figures themselves are unchanged.</li>
+          <li>Filipino labels were drafted with SI and are being reviewed by the team.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="dm-gl"className="rounded-lg border border-stone-300 bg-white p-4">
         <h2 id="dm-gl" className="text-lg font-bold text-green-900">Glossary</h2>
         <dl className="mt-2 space-y-2 text-sm">{GLOSSARY.map((g) => <div key={g.term}><dt className="font-semibold">{g.term}</dt><dd className="text-stone-700">{g.text}</dd></div>)}</dl>
         <h3 className="mt-4 font-semibold">How rotations build soil health</h3>
