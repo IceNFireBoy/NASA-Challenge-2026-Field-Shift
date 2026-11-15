@@ -1,13 +1,15 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useTr } from '../lib/lang.jsx';
 import { ROTATION_COLORS } from '../lib/colors.js';
 
 export default function UncertaintyPanel({ ranked, unc }) {
+  const tr = useTr();
   const rows = ranked.filter((r) => !r.blocked).map((r) => ({ r, share: unc.topShare[r.id] }));
   const best = rows.reduce((a, b) => (b.share > a.share ? b : a), rows[0]);
   const close = best && best.share < 0.6;
   return (
     <section aria-labelledby="unc-t" className="card">
-      <h2 id="unc-t" className="text-xl font-bold text-green-950">How sure is the top choice?</h2>
+      <h2 id="unc-t" className="text-xl font-bold text-green-950">{tr('How sure is the top choice?')}</h2>
       <p className="text-sm text-stone-700">We re-ran the comparison {unc.draws} times, varying yields, prices, costs, crop durations, water-use factors, starting soil water and your weights within plausible ranges.</p>
       <ul className="mt-3 space-y-2">
         {rows.map(({ r, share }) => (
@@ -19,7 +21,7 @@ export default function UncertaintyPanel({ ranked, unc }) {
         ))}
       </ul>
       <p className="mt-2 text-sm text-stone-600">Share of {unc.draws} runs in which each option ranked first.</p>
-      {close && <p role="note" className="callout mt-3 text-sm font-bold">Close call: local judgement matters most here.</p>}
+      {close && <p role="note" className="callout mt-3 text-sm font-bold">{tr('Close call: local judgement matters most here.')}</p>}
     </section>
   );
 }

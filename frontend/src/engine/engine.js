@@ -25,7 +25,7 @@ export const CRITERIA = [
   { id: 'drought', label: 'Drought safety', hint: 'Share of the crop\'s water need covered by rain and stored soil water (fallow has no crop at risk)' },
   { id: 'soil', label: 'Soil health & nitrogen', hint: 'Nitrogen fixing and nutrient balance (ordinal)' },
   { id: 'cover', label: 'Ground cover', hint: 'Days with a living crop in Dec-May; bare soil erodes and crusts' },
-  { id: 'income', label: 'Income', hint: 'Net PHP/ha compared across these options' },
+  { id: 'income', label: 'Income', hint: 'Net ₱/ha compared across these options' },
   { id: 'labor', label: 'Low labour', hint: 'Fewer man-days per hectare scores higher' },
   { id: 'forage', label: 'Forage value', hint: 'Residues usable as animal feed (ordinal)' },
 ];
@@ -363,5 +363,5 @@ export function firstDeficitMonth(scenRain, typicalRain, { ratio = 0.5, minTypic
 
 export function formatPhp(x) {
   const sign = x < 0 ? '-' : '';
-  return `${sign}PHP ${Math.round(Math.abs(x)).toLocaleString('en-PH')}`;
+  return `${sign}₱${Math.round(Math.abs(x)).toLocaleString('en-PH')}`;
 }

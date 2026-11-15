@@ -1,4 +1,5 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useTr } from '../lib/lang.jsx';
 import { useState } from 'react';
 import { seedDemandKg, firstDeficitMonth, pickRain, SEASON_MONTHS } from '../engine/engine.js';
 import { CROPS, ROTATION_IDS } from '../engine/params.js';
@@ -18,6 +19,7 @@ const field = 'min-h-[44px] w-full rounded border border-stone-400 bg-white px-3
 const n = (x) => Math.round(x).toLocaleString('en-PH');
 
 export default function Community({ result, climate, scenarioId, waterMode }) {
+  const tr = useTr();
   const [ha, setHa] = useState(1000);
   const [share, setShare] = useState(60);
   const [pick, setPick] = useState(null);
@@ -37,21 +39,21 @@ export default function Community({ result, climate, scenarioId, waterMode }) {
 
   return (
     <section aria-labelledby="com-t" className="space-y-4 card">
-      <h2 id="com-t" className="text-xl font-bold text-green-950">Plan together</h2>
-      <p role="note" className="inline-block rounded border border-stone-400 bg-stone-100 px-2 py-1 text-sm font-semibold">Illustrative scenario, not an LGU plan.</p>
+      <h2 id="com-t" className="text-xl font-bold text-green-950">{tr('Plan together')}</h2>
+      <p role="note" className="inline-block rounded border border-stone-400 bg-stone-100 px-2 py-1 text-sm font-semibold">{tr('Illustrative scenario, not an LGU plan.')}</p>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <label htmlFor="c-ha" className="text-sm font-semibold">Hectares in the cooperative</label>
+          <label htmlFor="c-ha" className="text-sm font-semibold">{tr('Hectares in the cooperative')}</label>
           <NumField id="c-ha" inputMode="numeric" className={field} value={ha} onChange={setHa} />
           <div className="mt-1"><StatusBadge status="illustrative" title="Default of 1,000 ha is a placeholder; enter your cooperative's real area" /></div>
         </div>
         <div>
-          <label htmlFor="c-share" className="text-sm font-semibold">Share adopting (%)</label>
+          <label htmlFor="c-share" className="text-sm font-semibold">{tr('Share adopting (%)')}</label>
           <NumField id="c-share" max={100} inputMode="numeric" className={field} value={share} onChange={setShare} />
           <div className="mt-1"><StatusBadge status="illustrative" title="Placeholder adoption share" /></div>
         </div>
         <div>
-          <label htmlFor="c-crop" className="text-sm font-semibold">Crop {!picked && <span className="ml-1 rounded bg-stone-200 px-1.5 py-0.5 text-sm">top-ranked</span>}</label>
+          <label htmlFor="c-crop" className="text-sm font-semibold">{tr('Crop')} {!picked && <span className="ml-1 rounded bg-stone-200 px-1.5 py-0.5 text-sm">top-ranked</span>}</label>
           <select id="c-crop" className={field} value={cropId} onChange={(e) => setPick(e.target.value)}>
             {result.ranked.map((x) => <option key={x.id} value={x.id} disabled={x.blocked}>{x.crop.name}{x.blocked ? ' (blocked)' : ''}</option>)}
           </select>
@@ -59,23 +61,23 @@ export default function Community({ result, climate, scenarioId, waterMode }) {
       </div>
 
       <dl className="grid gap-3 sm:grid-cols-3">
-        <div className="rounded border border-stone-200 p-3"><dt className="text-sm text-stone-600">Seed needed</dt><dd className="text-xl font-bold">{n(seed)} kg</dd>
+        <div className="rounded border border-stone-200 p-3"><dt className="text-sm text-stone-600">{tr('Seed needed')}</dt><dd className="text-xl font-bold">{n(seed)} kg</dd>
           <dd className="mt-1 flex items-center gap-1 text-sm text-stone-600"><StatusBadge status={crop.seedRateKgHa.status} title={crop.seedRateKgHa.source ?? ''} /> {crop.seedRateKgHa.value} kg/ha seed rate</dd></div>
-        <div className="rounded border border-stone-200 p-3"><dt className="text-sm text-stone-600">Total labour</dt><dd className="text-xl font-bold">{n(labour)} man-days</dd>
+        <div className="rounded border border-stone-200 p-3"><dt className="text-sm text-stone-600">{tr('Total labour')}</dt><dd className="text-xl font-bold">{n(labour)} man-days</dd>
           <dd className="mt-1 text-sm text-stone-600">{r.laborMd} man-days/ha on {n(adopted)} ha</dd></div>
-        <div className="rounded border border-stone-200 p-3"><dt className="text-sm text-stone-600">Extra water if irrigating</dt>
+        <div className="rounded border border-stone-200 p-3"><dt className="text-sm text-stone-600">{tr('Extra water if irrigating')}</dt>
           <dd className="text-xl font-bold">{waterMode === 'irrigated' ? `${n(water)} m³` : `${n(r.irrigationMm * adopted * 10 || 0)} m³`}</dd>
           <dd className="mt-1 text-sm text-stone-600">{waterMode === 'irrigated' ? `About ${n(r.irrigationMm)} mm per ha pumped (illustrative cost model).` : 'Your Compare settings are rainfed, so this shows 0; switch to "Can irrigate" in Compare to see the pumped volume.'}</dd></div>
       </dl>
 
       <div className="callout text-sm">
-        <h3 className="font-semibold">Coordination prompt</h3>
+        <h3 className="font-semibold">{tr('Coordination prompt')}</h3>
         <p>{dm >= 0
           ? `In this scenario, rainfall falls below half of normal from ${SEASON_MONTHS[dm]}. Agree on water sharing and planting dates with the irrigators' association and the Municipal Agriculture Office before then.`
           : 'No month falls below half of normal in this scenario; this does not rule out dry spells.'}</p>
       </div>
       <div className="text-sm">
-        <h3 className="font-semibold">Who to involve</h3>
+        <h3 className="font-semibold">{tr('Who to involve')}</h3>
         <ul className="list-disc pl-5">
           <li>Municipal Agriculture Office (San Mateo)</li>
           <li>PhilRice Isabela (Malasin, San Mateo)</li>
@@ -86,7 +88,7 @@ export default function Community({ result, climate, scenarioId, waterMode }) {
       </div>
 
       <section aria-labelledby="qa-t" className="border-t border-stone-300 pt-4">
-        <h3 id="qa-t" className="text-xl font-bold text-green-950">Farmer Q&amp;A (coming soon)</h3>
+        <h3 id="qa-t" className="text-xl font-bold text-green-950">{tr('Farmer Q&A (coming soon)')}</h3>
         <p className="mt-1 text-sm text-stone-700">A place for farmers to ask questions is planned but not built. The three questions below are <strong>samples written by the team</strong> to show how it could look: nobody posted them, and each answer is copied from this app's glossary (Data &amp; methods tab).</p>
         <ul className="mt-3 space-y-3">
           {SAMPLE_QA.map((x) => (
@@ -96,7 +98,7 @@ export default function Community({ result, climate, scenarioId, waterMode }) {
             </li>
           ))}
         </ul>
-        <button type="button" disabled className="mt-3 min-h-[44px] cursor-not-allowed rounded border border-stone-400 bg-stone-200 px-3 text-sm font-medium text-stone-700">Ask a question (coming soon)</button>
+        <button type="button" disabled className="mt-3 min-h-[44px] cursor-not-allowed rounded border border-stone-400 bg-stone-200 px-3 text-sm font-medium text-stone-700">{tr('Ask a question (coming soon)')}</button>
         <p className="mt-2 text-sm text-stone-700">For advice today, visit the San Mateo Municipal Agriculture Office in person. We found no official contact page to link to.</p>
       </section>
     </section>

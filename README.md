@@ -1,5 +1,5 @@
 <!-- SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team. -->
-# Field Shift: San Mateo, Isabela
+# Has Bean Planned: San Mateo, Isabela
 
 **A decision-support tool that compares dry-season options after rice for San Mateo, Isabela, using NASA climate data, crop-water science and the farmer's own priorities.**
 
@@ -19,11 +19,11 @@ Climate variability makes this harder. The El Niño event expected in the 2026-2
 
 ## What the tool does
 
-Field Shift compares four dry-season options after rice: **fallow**, **mungbean**, **corn** and **peanut**. The current rotation is always one of the four, so a farmer can see what changing would mean.
+Has Bean Planned compares four dry-season options after rice: **fallow**, **mungbean**, **corn** and **peanut**. The current rotation is always one of the four, so a farmer can see what changing would mean.
 
 Mapped to the challenge objectives:
 
-| Challenge objective | What Field Shift does | Status |
+| Challenge objective | What Has Bean Planned does | Status |
 |---|---|---|
 | Compare rotation options, including the current one | Ranks fallow, mungbean, corn and peanut side by side, with the current rotation included | Built |
 | Explain each option: why, evidence, benefits, gaps, risks | Each ranked card shows a "why" card, evidence, benefits, gaps, risks and pest notes | Built |
@@ -112,7 +112,7 @@ This project is licensed under the MIT Licence. [ADD LICENSE FILE TO REPOSITORY]
 
 ## Team
 
-[TEAM NAME]
+NASApusomo
 [MEMBER NAMES AND ROLES]
 
 ## References
