@@ -122,6 +122,8 @@ function Replay({ inputs }) {
       const p = c.pctMet; const text = `${Math.round(100 * p)}% of water need met`;
       return p > 0.8 ? { bg: '#86d9a8', t: '✓', text } : p >= 0.5 ? { bg: '#fcd34d', t: '~', text } : { bg: '#f87171', t: '!', text };
     }
+    // Fallow has no crop, so it neither earns nor loses: show it as neutral, not as a profit.
+    if (c.pctMet == null) return { bg: '#e7e5e4', t: '–', text: 'no crop, no income' };
     return c.net >= 0 ? { bg: '#86d9a8', t: '+', text: `net ${formatPhp(c.net)}/ha` } : { bg: '#f87171', t: '−', text: `net ${formatPhp(c.net)}/ha` };
   };
   const mung = rows.filter((r) => (r.cells.rice_mungbean.pctMet ?? 0) >= 0.8).length;
@@ -176,7 +178,7 @@ function Replay({ inputs }) {
         </dl>
       </div>
       <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-stone-800">
-        {mode === 'water' ? <><li>✓ over 80% met</li><li>~ 50 to 80%</li><li>! under 50%</li><li>– no crop (fallow)</li></> : <><li>+ net positive</li><li>− net negative</li></>}
+        {mode === 'water' ? <><li>✓ over 80% met</li><li>~ 50 to 80%</li><li>! under 50%</li><li>– no crop (fallow)</li></> : <><li>+ net positive</li><li>− net negative</li><li>– no crop (fallow)</li></>}
         <li>× blocked on this soil</li><li>EN = El Niño season</li>
       </ul>
       <p className="mt-2 text-sm">Mungbean met at least 80% of its water need in <strong>{mung} of {rows.length}</strong> past seasons (using your planting date and soil; water need met counts rain and stored soil water only). Past seasons are not forecasts.</p>
