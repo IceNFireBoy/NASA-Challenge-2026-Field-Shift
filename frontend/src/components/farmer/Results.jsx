@@ -78,10 +78,10 @@ export default function Results({ state, dispatch, result, unc, inputs, climate,
         <div className="mt-4"><TrafficRow lights={trafficLights(best, ctx)} t={t} /></div>
         <p className="mt-3 text-stone-700">{t('results.sample')}</p>
         <p className="mt-2">{t('results.sure', { pct: Math.round(100 * share), n: unc.draws })}</p>
-        {share < CLOSE_CALL && <p role="note" className="mt-2 rounded-lg border-2 border-amber-500 bg-amber-100 p-3 font-semibold text-amber-950">⚠ {t('results.close')}</p>}
+        {share < CLOSE_CALL && <p role="note" className="mt-2 rounded-lg border-2 border-amber-500 bg-amber-100 p-3 font-semibold text-amber-950">{t('results.close')}</p>}
         {dryBest && (
           <p className="mt-2 rounded-lg border border-stone-300 bg-stone-100 p-3">
-            <span aria-hidden="true">☀️ </span>{t(dryBest.id === best.id ? 'results.dryNote.same' : 'results.dryNote.diff', { crop: t(`crop.${dryBest.id}`) })}
+            {t(dryBest.id === best.id ? 'results.dryNote.same' : 'results.dryNote.diff', { crop: t(`crop.${dryBest.id}`) })}
           </p>
         )}
       </article>
@@ -108,9 +108,9 @@ export default function Results({ state, dispatch, result, unc, inputs, climate,
       <div className="grid gap-3 sm:grid-cols-2">
         <button type="button" className={secondary} aria-pressed={dry}
           onClick={() => dispatch({ type: 'set', key: 'scenarioId', value: dry ? 'typical' : DRY_SCENARIO })}>
-          <span aria-hidden="true">{dry ? '🌧️ ' : '☀️ '}</span>{t(dry ? 'results.tryNormal' : 'results.tryDry')}
+          {t(dry ? 'results.tryNormal' : 'results.tryDry')}
         </button>
-        <button type="button" className={secondary} onClick={onChangeAnswers}><span aria-hidden="true">✏️ </span>{t('results.change')}</button>
+        <button type="button" className={secondary} onClick={onChangeAnswers}>{t('results.change')}</button>
       </div>
 
       <div>

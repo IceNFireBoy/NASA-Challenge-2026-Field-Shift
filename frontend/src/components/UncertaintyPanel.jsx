@@ -19,7 +19,7 @@ export default function UncertaintyPanel({ ranked, unc }) {
         ))}
       </ul>
       <p className="mt-2 text-xs text-stone-600">Share of {unc.draws} runs in which each option ranked first.</p>
-      {close && <p role="note" className="mt-2 rounded border border-amber-400 bg-amber-100 p-2 text-sm font-semibold text-amber-950">⚠ Close call: local judgement matters most here.</p>}
+      {close && <p role="note" className="mt-2 rounded border border-amber-400 bg-amber-100 p-2 text-sm font-semibold text-amber-950">Close call: local judgement matters most here.</p>}
     </section>
   );
 }

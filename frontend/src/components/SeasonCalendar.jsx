@@ -56,9 +56,9 @@ export default function SeasonCalendar({ result, state, climate, scenarioLabel }
           {stress.map((s, i) => (
             <g key={s.month}>
               <rect x={x(6 + i) + 1} y={22} width={COL - 2} height={18} rx="3" fill={s.waterStress ? '#fde68a' : '#f5f5f4'} stroke={s.waterStress ? '#b45309' : '#d6d3d1'} />
-              <text x={x(6 + i) + COL / 2} y={35} textAnchor="middle" fontSize="11" fontWeight="600" fill="#292524">{s.waterStress ? '⚠ dry' : 'ok'}</text>
+              <text x={x(6 + i) + COL / 2} y={35} textAnchor="middle" fontSize="11" fontWeight="600" fill="#292524">{s.waterStress ? 'dry' : 'ok'}</text>
               <rect x={x(6 + i) + 1} y={46} width={COL - 2} height={18} rx="3" fill={s.heatStress ? '#fecaca' : '#f5f5f4'} stroke={s.heatStress ? '#b91c1c' : '#d6d3d1'} />
-              <text x={x(6 + i) + COL / 2} y={59} textAnchor="middle" fontSize="11" fontWeight="600" fill="#292524">{s.heatStress ? `⚠ ${Math.round(s.hotDays)} d` : 'ok'}</text>
+              <text x={x(6 + i) + COL / 2} y={59} textAnchor="middle" fontSize="11" fontWeight="600" fill="#292524">{s.heatStress ? `${Math.round(s.hotDays)} d` : 'ok'}</text>
             </g>
           ))}
           {rows.map(({ r, segs }, k) => {

@@ -32,10 +32,10 @@ export default function RotationCard({ r, isCurrent, laborCap, waterMode, topSha
               {!r.fallow && waterMode === 'irrigated' && <span className="block text-xs font-normal text-stone-600">Rain + soil water alone: {pc(r.pctMet)}</span>}
             </dd></div>
             <div><dt className="text-stone-600">Net per ha</dt><dd className="font-semibold">{formatPhp(r.net)}</dd></div>
-            <div><dt className="text-stone-600">Labour</dt><dd className={`font-semibold ${overLabor ? 'text-red-800' : ''}`}>{r.laborMd.toLocaleString('en-PH')} man-days{overLabor && ' ⚠ above your limit'}</dd></div>
+            <div><dt className="text-stone-600">Labour</dt><dd className={`font-semibold ${overLabor ? 'text-red-800' : ''}`}>{r.laborMd.toLocaleString('en-PH')} man-days{overLabor && ' (above your limit)'}</dd></div>
             <div><dt className="text-stone-600">Harvest</dt><dd className="font-semibold">{r.fallow ? 'n/a' : `about ${dateOfDay(r.end)}`}</dd></div>
           </dl>
-          {r.heatFlag && <p className="mt-2 text-sm text-amber-900">⚠ Heat flag: hot days (35 °C or more) likely during flowering.</p>}
+          {r.heatFlag && <p className="mt-2 text-sm text-amber-900">Heat flag: hot days (35 °C or more) likely during flowering.</p>}
           <p className="mt-2 text-sm text-stone-700">
             Top choice in {pc(topShare)} of {draws} plausible variations.
             {!isCurrent && <> Beats your current rotation in {pc(beatsShare)}.</>}
