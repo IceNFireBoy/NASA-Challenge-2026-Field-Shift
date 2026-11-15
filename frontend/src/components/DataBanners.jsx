@@ -14,7 +14,7 @@ export default function DataBanners({ meta, rainSource, scenarioId }) {
       )}
       {scenarioId !== 'typical' && (
         <p className="callout text-sm">
-          PAGASA (5 Nov 2026): a very strong El Niño is under way, with impacts likely into mid-2027. Source listed in the Data tab.
+          PAGASA, as reported by the Philippine Daily Inquirer on 5 Nov 2026: a very strong El Niño is under way, with impacts likely into mid-2027. Source listed in the Data tab.
         </p>
       )}
     </div>

@@ -5,13 +5,13 @@ import { formatPhp, SEASON_MONTHS, topReasons } from './engine.js';
 export const SOURCES = {
   power: { label: 'NASA POWER (daily agroclimatology)', url: 'https://power.larc.nasa.gov/' },
   imerg: { label: 'GPM IMERG Final monthly V07, doi:10.5067/GPM/IMERG/3B-MONTH/07', url: 'https://doi.org/10.5067/GPM/IMERG/3B-MONTH/07' },
-  oni: { label: 'NOAA CPC Oceanic Nino Index (ONI v5)', url: 'https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v5/' },
+  oni: { label: 'NOAA CPC Oceanic Nino Index (ONI, ERSSTv6)', url: 'https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/' },
   fao56: { label: 'FAO Irrigation & Drainage Paper 56 (Allen et al., 1998)', url: 'https://www.fao.org/4/x0490e/x0490e00.htm' },
   fao33: { label: 'FAO Irrigation & Drainage Paper 33 Ky values (via FAO I&D Paper 66)', url: 'https://www.fao.org/4/i2800e/i2800e02.pdf' },
-  pcaarrd: { label: 'DOST-PCAARRD: Isabela town celebrates Mungbean Fiesta', url: 'https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta' },
+  pcaarrd: { label: 'DOST-PCAARRD (2018): Isabela town celebrates Mungbean Fiesta', url: 'https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta' },
   manilatimes: { label: 'Manila Times (2021): Isabela town benefits from mungbean', url: 'https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138' },
   philrice: { label: 'PhilRice Isabela R&D Highlights 2021 (rice-rice-mungbean and rice-rice-corn)', url: 'https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf' },
-  pagasa: { label: 'PAGASA via news reports, 5 Nov 2026: very strong El Nino, impacts into mid-2027', url: 'https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/' },
+  pagasa: { label: 'PAGASA as reported by the Philippine Daily Inquirer (via Asia News Network), 5 Nov 2026: very strong El Nino, impacts into mid-2027', url: 'https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/' },
   psa: { label: 'PSA farmgate price releases (regional, 2023-2025)', url: 'https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices' },
 };
 
@@ -76,7 +76,7 @@ export function buildWhyCard(r, { waterMode, scenarioLabel, rainSource, soilLabe
   if (r.hotFlowerDays >= 0.5) card.evidence.push(`About ${r.hotFlowerDays.toFixed(1)} days at 35 C or hotter expected during flowering.`);
 
   if (r.id === 'rice_mungbean') {
-    card.evidence.push('San Mateo is known as the Munggo Capital; at least 7,000 ha of its rice land are rotated with mungbean (Manila Times 2021).', 'Local yields of 800-1,000 kg/ha are reported (DOST-PCAARRD).');
+    card.evidence.push('San Mateo is known as the Munggo Capital (Manila Times 2021); about 7,000 ha are planted to mungbean in the dry months (DOST-PCAARRD 2018).', 'Local yields of 800-1,000 kg/ha are reported (DOST-PCAARRD).');
     card.benefits.push('Fixes 21-85 kg N/ha per cycle, cutting urea needs for the next rice crop.', 'Shortest crop here (60-80 days), so it can finish before the hottest, driest weeks.', 'Lowest water need of the three crops.');
     card.risks.push('Rain during pod drying can rot pods; hand-picking in several rounds adds labour.', 'Bean fly and pod borers in warm spells.');
     card.validate.push('Seed variety and local planting window with the Philippine Mungbean Center (ISU San Mateo) or the Municipal Agriculture Office.', 'Your actual farmgate price this season.');

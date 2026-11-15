@@ -1,7 +1,7 @@
 {
  "meta": {
   "schema_version": 1,
-  "generated_at": "2026-11-15T13:43:59Z",
+  "generated_at": "2026-11-15T14:07:13Z",
   "data_status": "real",
   "location": {
    "name": "San Mateo, Isabela, Philippines",
@@ -29,8 +29,8 @@
    "heavy_rain_mm": 50.0
   },
   "enso": {
-   "index": "Oceanic Nino Index (ONI), DJF, NOAA CPC ERSSTv5",
-   "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v5/",
+   "index": "Oceanic Nino Index (ONI), DJF, NOAA CPC ERSSTv6",
+   "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/",
    "accessed": "2026-11-15",
    "rule": "El Nino if DJF ONI >= +0.5, La Nina if <= -0.5, else neutral; strong El Nino = DJF ONI >= 1.5"
   },
@@ -63,7 +63,7 @@
     "api_version": "v2.10.3",
     "resolution_note": "Gridded estimate (MERRA-2/GEOS meteorology, about 0.5 x 0.625 deg); not a weather-station reading",
     "citation": "These data were obtained from the NASA Langley Research Center (LaRC) POWER Project funded through the NASA Earth Science/Applied Science Program.",
-    "fetched_at": "2026-11-15T13:43:59Z"
+    "fetched_at": "2026-11-15T14:07:13Z"
    },
    {
     "id": "gpm_imerg",
@@ -77,18 +77,18 @@
      "mm/hr"
     ],
     "resolution_note": "Satellite-gauge estimate, 0.1 deg grid (~11 km), area-averaged by NASA Giovanni over lon/lat box 121.55,16.85,121.65,16.95",
-    "citation": "Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, J. Tan (2019), GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07, Greenbelt, MD, Goddard Earth Sciences Data and Information Services Center (GES DISC), doi:10.5067/GPM/IMERG/3B-MONTH/07",
-    "fetched_at": "2026-11-15T13:43:59Z",
+    "citation": "Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, J. Tan (2023), GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07, Greenbelt, MD, Goddard Earth Sciences Data and Information Services Center (GES DISC), doi:10.5067/GPM/IMERG/3B-MONTH/07",
+    "fetched_at": "2026-11-15T14:07:13Z",
     "via": "NASA Giovanni area-averaged time series (CSV)",
     "file": "imerg_giovanni.csv",
     "data_bounding_box": "121.55,16.85,121.65,16.95"
    },
    {
     "id": "noaa_oni",
-    "name": "NOAA CPC Oceanic Nino Index (ONI, ERSSTv5)",
-    "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v5/",
+    "name": "NOAA CPC Oceanic Nino Index (ONI, ERSSTv6)",
+    "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/",
     "status": "embedded_table",
-    "citation": "NOAA Climate Prediction Center, ONI v5 table, accessed 2026-11-15"
+    "citation": "NOAA Climate Prediction Center, ONI v6 (ERSSTv6) table, accessed 2026-11-15"
    }
   ]
  },
@@ -258,7 +258,7 @@
   {
    "id": "2003-04",
    "start_year": 2003,
-   "oni_djf": 0.4,
+   "oni_djf": 0.3,
    "enso": "neutral",
    "strength": null,
    "monthly": {
@@ -501,7 +501,7 @@
   {
    "id": "2006-07",
    "start_year": 2006,
-   "oni_djf": 0.7,
+   "oni_djf": 0.6,
    "enso": "el_nino",
    "strength": "weak",
    "monthly": {
@@ -582,7 +582,7 @@
   {
    "id": "2007-08",
    "start_year": 2007,
-   "oni_djf": -1.6,
+   "oni_djf": -1.8,
    "enso": "la_nina",
    "strength": null,
    "monthly": {
@@ -663,7 +663,7 @@
   {
    "id": "2008-09",
    "start_year": 2008,
-   "oni_djf": -0.8,
+   "oni_djf": -0.9,
    "enso": "la_nina",
    "strength": null,
    "monthly": {
@@ -987,7 +987,7 @@
   {
    "id": "2012-13",
    "start_year": 2012,
-   "oni_djf": -0.3,
+   "oni_djf": -0.2,
    "enso": "neutral",
    "strength": null,
    "monthly": {
@@ -1068,7 +1068,7 @@
   {
    "id": "2013-14",
    "start_year": 2013,
-   "oni_djf": -0.3,
+   "oni_djf": -0.2,
    "enso": "neutral",
    "strength": null,
    "monthly": {
@@ -1230,7 +1230,7 @@
   {
    "id": "2015-16",
    "start_year": 2015,
-   "oni_djf": 2.6,
+   "oni_djf": 2.5,
    "enso": "el_nino",
    "strength": "very_strong",
    "monthly": {
@@ -1311,7 +1311,7 @@
   {
    "id": "2016-17",
    "start_year": 2016,
-   "oni_djf": -0.2,
+   "oni_djf": -0.1,
    "enso": "neutral",
    "strength": null,
    "monthly": {
@@ -1392,7 +1392,7 @@
   {
    "id": "2017-18",
    "start_year": 2017,
-   "oni_djf": -0.8,
+   "oni_djf": -0.7,
    "enso": "la_nina",
    "strength": null,
    "monthly": {
@@ -1473,9 +1473,9 @@
   {
    "id": "2018-19",
    "start_year": 2018,
-   "oni_djf": 0.9,
+   "oni_djf": 1.0,
    "enso": "el_nino",
-   "strength": "weak",
+   "strength": "moderate",
    "monthly": {
     "rain_imerg_mm": [
      231.0,
@@ -1554,7 +1554,7 @@
   {
    "id": "2019-20",
    "start_year": 2019,
-   "oni_djf": 0.6,
+   "oni_djf": 0.7,
    "enso": "el_nino",
    "strength": "weak",
    "monthly": {
@@ -1635,7 +1635,7 @@
   {
    "id": "2020-21",
    "start_year": 2020,
-   "oni_djf": -0.9,
+   "oni_djf": -1.0,
    "enso": "la_nina",
    "strength": null,
    "monthly": {
@@ -1878,7 +1878,7 @@
   {
    "id": "2023-24",
    "start_year": 2023,
-   "oni_djf": 1.9,
+   "oni_djf": 1.8,
    "enso": "el_nino",
    "strength": "strong",
    "monthly": {
@@ -1959,8 +1959,8 @@
   {
    "id": "2024-25",
    "start_year": 2024,
-   "oni_djf": -0.4,
-   "enso": "neutral",
+   "oni_djf": -0.5,
+   "enso": "la_nina",
    "strength": null,
    "monthly": {
     "rain_imerg_mm": [

@@ -120,7 +120,7 @@ export const CROPS = {
     nFixed: { text: 'none; removes soil N', status: 'sourced' },
     econ: {
       yieldKgHa: { value: 5000, range: [4000, 6000], status: 'illustrative', source: 'Placeholder hybrid yellow-corn yield; replace with PSA Isabela data' },
-      pricePhpKg: { value: 17.5, range: [16, 19], status: 'sourced', source: 'PSA regional farmgate releases: yellow corn about ₱17.49/kg (Biliran Q1 2025) and ₱18.14/kg (Central Luzon Q1 2023)' },
+      pricePhpKg: { value: 17.5, range: [16, 19], status: 'illustrative', source: 'Set just below the PSA Central Luzon Q1 2023 farmgate price for yellow corn, ₱18.14/kg; replace with the Cagayan Valley value from PSA OpenSTAT' },
       costPhpHa: { value: 60000, status: 'illustrative', source: 'Placeholder production cost; replace with PSA costs-and-returns or local data' },
     },
     seedRateKgHa: { value: 18, status: 'illustrative', source: 'Verify with seed suppliers / DA-RFO2' },

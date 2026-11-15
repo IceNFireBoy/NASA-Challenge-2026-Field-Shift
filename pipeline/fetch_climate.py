@@ -58,25 +58,26 @@ IMERG_SHORT_NAME = "GPM_3IMERGM"
 IMERG_VERSION = "07"
 IMERG_HALF_BOX_DEG = 0.1
 
-# NOAA CPC ONI (ERSSTv5), DJF value keyed by season start year Y (Dec Y - Feb Y+1).
-# Source: https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v5/
-# (accessed 2026-11-15). CPC now uses the Relative ONI (RONI) for official monitoring;
-# ONI values are still published and are used here only to label past seasons.
+# NOAA CPC ONI (ERSSTv6), DJF value keyed by season start year Y (Dec Y - Feb Y+1).
+# Source: https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/
+# (table read 2026-11-15; it replaced the ERSSTv5 table used earlier in this project).
+# CPC now uses the Relative ONI (RONI) for official monitoring; ONI values are still
+# published and are used here only to label past seasons.
 ONI_DJF = {
-    2001: -0.1, 2002: 0.9, 2003: 0.4, 2004: 0.6, 2005: -0.9, 2006: 0.7,
-    2007: -1.6, 2008: -0.8, 2009: 1.5, 2010: -1.3, 2011: -0.7, 2012: -0.3,
-    2013: -0.3, 2014: 0.7, 2015: 2.6, 2016: -0.2, 2017: -0.8, 2018: 0.9,
-    2019: 0.6, 2020: -0.9, 2021: -0.8, 2022: -0.5, 2023: 1.9, 2024: -0.4,
+    2001: -0.1, 2002: 0.9, 2003: 0.3, 2004: 0.6, 2005: -0.9, 2006: 0.6,
+    2007: -1.8, 2008: -0.9, 2009: 1.5, 2010: -1.3, 2011: -0.7, 2012: -0.2,
+    2013: -0.2, 2014: 0.7, 2015: 2.5, 2016: -0.1, 2017: -0.7, 2018: 1.0,
+    2019: 0.7, 2020: -1.0, 2021: -0.8, 2022: -0.5, 2023: 1.8, 2024: -0.5,
 }
 STRONG_EL_NINO_SEASONS = [2009, 2015, 2023]  # DJF ONI >= 1.5
-ANALOG_SEASON = 2015  # strongest El Nino on record (DJF ONI 2.6)
+ANALOG_SEASON = 2015  # strongest El Nino in the record used here (DJF ONI 2.5)
 
 MONTHLY_KEYS = ["rain_imerg_mm", "rain_power_mm", "et0_mm", "tmax_c", "tmin_c",
                 "hot_days", "heavy_rain_days", "max_1day_rain_mm", "wetness"]
 
 POWER_ACK = ("These data were obtained from the NASA Langley Research Center (LaRC) POWER "
              "Project funded through the NASA Earth Science/Applied Science Program.")
-IMERG_CITATION = ("Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, J. Tan (2019), GPM IMERG "
+IMERG_CITATION = ("Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, J. Tan (2023), GPM IMERG "
                   "Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07, Greenbelt, MD, Goddard "
                   "Earth Sciences Data and Information Services Center (GES DISC), "
                   "doi:10.5067/GPM/IMERG/3B-MONTH/07")
@@ -695,8 +696,8 @@ def base_meta(data_status: str) -> dict:
         "season_months": MONTH_LABELS,
         "season_days": SEASON_DAYS,
         "thresholds": {"hot_day_c": HOT_DAY_C, "heavy_rain_mm": HEAVY_RAIN_MM},
-        "enso": {"index": "Oceanic Nino Index (ONI), DJF, NOAA CPC ERSSTv5",
-                 "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v5/",
+        "enso": {"index": "Oceanic Nino Index (ONI), DJF, NOAA CPC ERSSTv6",
+                 "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/",
                  "accessed": "2026-11-15",
                  "rule": "El Nino if DJF ONI >= +0.5, La Nina if <= -0.5, else neutral; "
                          "strong El Nino = DJF ONI >= 1.5"},
@@ -786,9 +787,9 @@ def imerg_source(status: str, meta: dict | None, error: str | None = None) -> di
 
 
 def oni_source() -> dict:
-    return {"id": "noaa_oni", "name": "NOAA CPC Oceanic Nino Index (ONI, ERSSTv5)",
-            "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v5/",
-            "status": "embedded_table", "citation": "NOAA Climate Prediction Center, ONI v5 table, accessed 2026-11-15"}
+    return {"id": "noaa_oni", "name": "NOAA CPC Oceanic Nino Index (ONI, ERSSTv6)",
+            "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/",
+            "status": "embedded_table", "citation": "NOAA Climate Prediction Center, ONI v6 (ERSSTv6) table, accessed 2026-11-15"}
 
 
 def carry_over_extra_keys(payload: dict, path: Path) -> list[str]:

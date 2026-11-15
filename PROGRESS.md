@@ -2,7 +2,7 @@
 # Has Bean Planned: progress
 
 Team NASApusomo. NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
-Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:55 that day.
+Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 22:10 that day.
 
 ## Where things stand right now
 
@@ -185,6 +185,30 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
   `--offline` never touches the network. Delete `pipeline/cache/ndvi_*.json` to force a fresh
   download; allow about 25 to 75 minutes, since the service took 25 to 80 seconds per request.
 
+## Source and link check (about 22:00 to 22:10, on `main`)
+
+Every cited URL was opened and the cited figures compared with the pages.
+
+| Source | Result |
+|---|---|
+| NOAA ONI | The project used the ERSSTv5 table. NOAA now publishes an ERSSTv6 table; **switched to v6**. All 24 embedded values had matched v5 exactly; 14 values moved by 0.1 to 0.2. Labels changed for 2018-19 (weak -> moderate El Nino) and 2024-25 (neutral -> La Nina). Strong El Nino seasons are the same three, so **scenarios, trends and rankings are unchanged** (verified by diffing `climate.json`) |
+| FAO-56 Table 12 | Confirmed: green gram 1.05 / 0.35, groundnut 1.15 / 0.60, maize 1.20 / 0.35, legumes initial 0.40. The maize initial value (0.30) was not readable on the page and is not re-confirmed |
+| FAO-33 Ky (Paper 66 PDF) | Confirmed: beans 1.15, maize 1.25, groundnut 0.70 |
+| OSTI 634524 (Rosales et al., 1998) | Confirmed: mungbean fixed 21 to 85 kg N/ha |
+| DOST-PCAARRD (8 May 2018) | Confirmed: 800 to 1,000 kg/ha; 7,000 ha planted in the dry months |
+| Manila Times (8 Apr 2021) | Confirmed in the free part: "Munggo Capital", mayor on idle fields. The 7,000 ha figure is **not** there; **re-credited to DOST-PCAARRD** in `content.js` |
+| PhilRice 2021 Highlights | Confirmed: Extracore Project 16 on rice-rice-mungbean and rice-rice-corn |
+| PAGASA El Nino report | Confirmed: Philippine Daily Inquirer via Asia News Network, 5 Nov 2026. "Into mid-2027" is the reporter's wording |
+| PSA farmgate prices | Mongo ₱62.80 (Biliran, Q1 2024) confirmed. Peanut ₱58.24 and yellow corn ₱18.14 (Central Luzon, Q1 2023) confirmed. **Yellow corn ₱17.49 (Biliran, Q1 2025) is wrong: that figure is for palay.** Corn price source corrected and its badge changed from Sourced to Illustrative; the value (17.5) was left as is so rankings do not move. PSA pages return 403 to automated clients, so these rest on search-result extracts |
+| IMERG and MOD13Q1 DOIs | Both resolve. IMERG citation year corrected from 2019 to 2023 |
+| POWER, GPM, SoilGrids, OSM, Giovanni, ORNL, GitHub | All return 200 |
+
+Not checked against a primary source: mungbean duration (60 to 80 days), peanut duration (90 to 120 days), peanut manual harvest labour (15 to 23 man-days/ha). They came through the Gemini literature summary and are badged Secondary or Assumption.
+
+SI-generated items that are not data, all badged Assumption or disclosed: Farmer-view weights and traffic-light cut-offs, growth-stage shares, soil and forage tiers, Monte Carlo ranges, and the Filipino labels. See `SI_DISCLOSURE.md`.
+
+Also done: team member names added (README, project page, demo script); `SI_DISCLOSURE.md` and `docs/PROJECT_PAGE.md` rewritten for IMERG, MODIS, SoilGrids and the two views.
+
 ## What went wrong
 
 - **GPM IMERG through the pipeline's own login never worked.** earthaccess hit a gateway
@@ -226,8 +250,4 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 ## Human to do before submitting
 
 - Demo video link: `[DEMO_LINK]` (README, DEMO_SCRIPT) and `[LINK]` (PROJECT_PAGE).
-- `SI_DISCLOSURE.md`: `[TEAM TO CONFIRM how claims ... were checked]` for the Gemini summary.
-- README references still open: PSA, DOST-PCAARRD, PhilRice, Manila Times
-  (`[ADD SPECIFIC ...]`), same four on PROJECT_PAGE.
-- README line 111 says `[ADD LICENSE FILE TO REPOSITORY]`; the LICENSE file exists, so delete the tag.
 - Native read of the Filipino labels.

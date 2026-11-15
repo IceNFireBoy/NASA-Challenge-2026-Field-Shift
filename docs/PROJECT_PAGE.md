@@ -7,21 +7,32 @@ Paste each block into the matching field on the Space Apps project page.
 
 ## Project name
 
-Has Bean Planned: San Mateo, Isabela
+Has Bean Planned
+
+## Team
+
+NASApusomo: Marxus Magisa, Krizdarl Callo, Antonio Pasia, Kareena Macasiljig, Anica Begonia, Jonathan Serote
 
 ## High-level summary (about 150 words)
 
-Has Bean Planned helps rice farmers in San Mateo, Isabela, Philippines choose what to plant after the wet-season harvest. It compares fallow, mungbean, corn and peanut, including the current rotation. Each option shows its reasons, evidence, benefits, gaps, risks and pest-cycle notes, ranked by the farmer's own priorities, with its uncertainty stated. NASA POWER daily climate data drives a water balance and a water-stress yield estimate, using FAO-56 and FAO-33 methods. Prices and costs are editable and labelled with their data status. Past seasons summarise what has happened, not what will happen. Has Bean Planned supports, and does not replace, farmer and expert judgement. NASA POWER is a gridded estimate, not a weather station.
+Has Bean Planned helps rice farmers decide what to do with their field in the dry season. A farmer answers five picture-card questions on a phone and gets one plain answer, in English or Filipino: the best fit among fallow, mungbean, corn and peanut, with three reasons and traffic lights for water, soil, income and work. An Analytics and Community view gives extension workers the full comparison, a season calendar, 24 past seasons replayed, and a cooperative planner. Rainfall comes from NASA GPM IMERG; temperature and soil wetness from NASA POWER; observed greenness from MODIS NDVI. FAO-56 and FAO-33 methods turn these into crop water need, yield loss and income, and 300 what-if runs show how sure the answer is. San Mateo, Isabela is our test-drive area; the design is meant to scale nationally. The tool supports, and does not replace, farmer and expert judgement. Past seasons are not forecasts.
 
 ## Project details
 
-Has Bean Planned is a web application for farmers, cooperatives and local extension staff in San Mateo, Isabela. The problem is that dry-season choices after rice involve uncertain water, uncertain prices and up-front costs. El Niño conditions expected in the 2026-27 season make this harder.
+**The problem.** After the wet-season rice harvest a field can sit idle or carry a second crop. Each option needs water that may not come, a price that may not hold, and costs paid up front. A very strong El Niño was reported by PAGASA in November 2026, which makes the choice harder.
 
-The app compares fallow, mungbean, corn and peanut side by side. It lets users set field details and rank their priorities, and it shows a ranked list of options with plain-language reasons. Current features include the Compare view, the ranked option cards, uncertainty lines per card, editable prices and costs with status badges, and reset.
+**What we built.** A web app with two views that share every setting.
 
-Features in progress include what-if sliders, a season calendar showing bare-field and vulnerable months, past-season replay and trend charts, a full uncertainty panel, a community tab, and a Data and methods tab with a glossary.
+- *Farmer view (default).* One question per screen with large picture cards, then a single answer card with plain reasons, a fit score, traffic lights that use marks and words as well as colour, how sure the answer is, what a dry El Niño year would change, and a "what if it rains less?" slider.
+- *Analytics and Community view.* Compare (priority sliders, scenarios, ranked options with why-cards, editable prices), Season calendar (bare-field periods and vulnerable months), Past seasons (trends, a replay of all 24 dry seasons, IMERG against POWER rainfall, MODIS NDVI), Plan together (cooperative seed, labour and water planner), and Data & methods (sources, a grid-cell map, every parameter with its status, glossary, limitations).
 
-Status and limitations are stated openly in the app. Past seasons are not forecasts. Economic values are illustrative where marked. There is no pest or disease model, no groundwater or capillary rise, and the model has not yet been validated against field records.
+**How it works.** Reference evapotranspiration from NASA POWER temperatures and FAO-56 crop coefficients give each crop's water need. Usable IMERG rain plus stored soil water give the supply. FAO-33 yield-response factors turn the shortfall into yield loss and income. Options are scored on six criteria weighted by the farmer's priorities, and the comparison is re-run 300 times with inputs varied inside stated ranges.
+
+**What it found for San Mateo** (default settings, past seasons, not a forecast). Mungbean is the best fit in both a typical year and a strong El Niño year. In a strong El Niño year corn falls below leaving the field idle.
+
+**Scaling.** San Mateo is the test-drive area. Every data source is global and fetched by coordinates, so the next step is a location picker, regional prices and more crops and languages.
+
+**Limits, stated in the app.** One point is modelled; satellite and model grids are not rain gauges; economics are illustrative unless badged otherwise; no pest or disease model; no field validation yet.
 
 Live app: https://hasbeanplanned.netlify.app
 Demo video: [LINK]
@@ -29,34 +40,40 @@ Source code: https://github.com/IceNFireBoy/NASA-Challenge-2026-Field-Shift
 
 ## Use of NASA data
 
-- **NASA POWER** (daily gridded meteorological data, including rainfall in the current build) is the main climate input. It is used to build a daily soil-water balance and to replay past seasons.
-- **GPM IMERG V07** (satellite-gauge precipitation, monthly, 0.1 degree) is the rainfall source for all 24 dry seasons, retrieved as an area-averaged time series through NASA Giovanni. NASA POWER rainfall is kept for a side-by-side comparison chart.
+- **GPM IMERG Final, monthly, V07 (GPM_3IMERGM)** is the rainfall the model runs on, for all 24 dry seasons from 2001-02 to 2024-25, retrieved as an area-averaged time series through NASA Giovanni.
+- **NASA POWER** daily data supplies maximum and minimum temperature and root-zone soil wetness, and a second rainfall series shown beside IMERG for comparison.
+- **MODIS MOD13Q1 v061 NDVI** (250 m, 16-day) shows observed greenness at the point as an independent check on when land is green or bare. The crop model does not use it.
 
-Links: https://power.larc.nasa.gov/ and https://gpm.nasa.gov/data/imerg
+Links: https://gpm.nasa.gov/data/imerg , https://power.larc.nasa.gov/ , https://doi.org/10.5067/MODIS/MOD13Q1.061
 
 ## Space agency partner and other data
 
 - **Space agency partner:** NASA
 - **Other data:**
-  - NOAA Oceanic Niño Index (ONI), for El Niño context: https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php
-  - FAO-56 and FAO-33 methods for crop water use and yield response (see references)
-  - Philippine Statistics Authority, DOST-PCAARRD and PhilRice, for local crop facts [ADD SPECIFIC SOURCE]
-  - The Manila Times, for local reporting on the 2026-27 outlook [ADD SPECIFIC ARTICLE LINK]
+  - NOAA CPC Oceanic Niño Index (ERSSTv6), to label El Niño and La Niña seasons: https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/
+  - FAO Irrigation and Drainage Papers 56 and 33, for crop water use and yield response
+  - ISRIC SoilGrids 2.0, for a soil-texture hint: https://soilgrids.org/
+  - DOST-PCAARRD, PSA regional farmgate releases, PhilRice Isabela and The Manila Times, for local yields, prices and context
+  - OpenStreetMap, for the base map
 
 ## References
 
 1. NASA POWER Project. https://power.larc.nasa.gov/
-2. Huffman, G. J., et al. GPM IMERG Final Precipitation L3 1 month 0.1 degree V07 (GPM_3IMERGM). https://gpm.nasa.gov/data/imerg. DOI: 10.5067/GPM/IMERG/3B-MONTH/07
-3. NOAA Climate Prediction Center. Oceanic Niño Index. https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php
-4. Allen, R. G., Pereira, L. S., Raes, D., Smith, M. (1998). Crop evapotranspiration: Guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper 56.
-5. Doorenbos, J., and Kassam, A. H. (1979). Yield response to water. FAO Irrigation and Drainage Paper 33.
-6. Philippine Statistics Authority. [ADD SPECIFIC PUBLICATION]
-7. DOST-PCAARRD. [ADD SPECIFIC PUBLICATION]
-8. PhilRice. [ADD SPECIFIC PUBLICATION]
-9. The Manila Times. [ADD SPECIFIC ARTICLE, DATE AND URL]
+2. Huffman, G. J., Stocker, E. F., Bolvin, D. T., Nelkin, E. J., Tan, J. (2023). GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07. NASA GES DISC. https://doi.org/10.5067/GPM/IMERG/3B-MONTH/07
+3. Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061. NASA LP DAAC. https://doi.org/10.5067/MODIS/MOD13Q1.061
+4. NOAA Climate Prediction Center. Oceanic Niño Index (ERSSTv6). https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/
+5. Allen, R. G., Pereira, L. S., Raes, D., Smith, M. (1998). Crop evapotranspiration: Guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper 56. https://www.fao.org/4/x0490e/x0490e00.htm
+6. Doorenbos, J., Kassam, A. H. (1979). Yield response to water. FAO Irrigation and Drainage Paper 33; values as given in Paper 66. https://www.fao.org/4/i2800e/i2800e02.pdf
+7. Poggio, L., et al. (2021). SoilGrids 2.0. SOIL 7, 217-240. https://doi.org/10.5194/soil-7-217-2021
+8. DOST-PCAARRD (2018). Isabela town celebrates Mungbean FIESTA. https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta
+9. Philippine Statistics Authority. Regional farmgate price releases, 2023 to 2025. https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices
+10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station. https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
+11. Domingo, L. C. (8 April 2021). Isabela town benefits from mungbean. The Manila Times. https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138
+12. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
+13. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
 
 ## Use of SI tools
 
-This project used AI tools. Claude (claude.ai, by Anthropic) was used for research, verification, drafting of the core data pipeline and calculation engine, and this documentation. Claude Code (by Anthropic) was used for the user interface, documentation and deployment. Gemini (by Google) was used for an early literature summary, as a secondary reference only. No image or video generation tools were used.
+This project used SI tools. Claude (claude.ai, by Anthropic) was used for research, source checking, and drafting of the core data pipeline and calculation engine. Claude Code (by Anthropic) was used for the user interface, charts, pipeline extensions, a link and source check, documentation and deployment. Gemini (by Google) was used for an early literature summary, as a pointer to primary sources only. No image or video generation tools were used.
 
-Every source file generated with AI assistance is marked with an SI-ASSISTED comment at the top. The team reviewed and tested the code. All numbers come from cited data or from user input, not from AI output. Full details: [LINK TO SI_DISCLOSURE.md]
+Every source file generated with SI assistance is marked with an SI-ASSISTED comment at the top. The team reviewed and tested the code. No climate, satellite or soil number was generated by SI; modelling assumptions proposed by SI are badged "Assumption" in the app, and the Filipino labels drafted by SI are under native-speaker review. Full details: https://github.com/IceNFireBoy/NASA-Challenge-2026-Field-Shift/blob/main/SI_DISCLOSURE.md

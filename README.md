@@ -6,7 +6,7 @@
 - Live app: https://hasbeanplanned.netlify.app
 - Demo video (28 seconds): [DEMO_LINK]
 - Source code: https://github.com/IceNFireBoy/NASA-Challenge-2026-Field-Shift
-- Team: NASApusomo
+- Team: NASApusomo (Marxus Magisa, Krizdarl Callo, Antonio Pasia, Kareena Macasiljig, Anica Begonia, Jonathan Serote)
 - Built for the NASA Space Apps Challenge 2026, "Field Shift: Adapting Farms with NASA Data"
 
 > This tool supports, and does not replace, farmer and expert judgement. Its scenarios summarise past seasons; they are not forecasts. NASA POWER and GPM IMERG are gridded estimates, not weather stations on a farm.
@@ -22,24 +22,25 @@
 5. [Data used](#data-used)
 6. [Method](#method)
 7. [What the data shows for San Mateo](#what-the-data-shows-for-san-mateo)
-8. [Limitations](#limitations)
-9. [Repository layout](#repository-layout)
-10. [Run, test and reproduce](#run-test-and-reproduce)
-11. [Accessibility and language](#accessibility-and-language)
-12. [Use of SI (AI) tools](#use-of-si-ai-tools)
-13. [Licence, team, references](#licence)
+8. [Source check](#source-check)
+9. [Limitations](#limitations)
+10. [Repository layout](#repository-layout)
+11. [Run, test and reproduce](#run-test-and-reproduce)
+12. [Accessibility and language](#accessibility-and-language)
+13. [Use of SI (AI) tools](#use-of-si-ai-tools)
+14. [Licence, team, references](#licence)
 
 ---
 
 ## The problem
 
-After the wet-season rice harvest, a field can be left idle until the rains return or planted with a second crop. The choice is not simple. Each crop needs water that may or may not arrive, a price that may or may not hold, and labour and inputs paid for up front. An El Niño year makes the dry months drier and the gamble larger. PAGASA, as reported in the news on 5 November 2026, described a very strong El Niño with impacts expected into mid-2027.
+After the wet-season rice harvest, a field can be left idle until the rains return or planted with a second crop. The choice is not simple. Each crop needs water that may or may not arrive, a price that may or may not hold, and labour and inputs paid for up front. An El Niño year makes the dry months drier and the gamble larger. PAGASA, as reported by the Philippine Daily Inquirer on 5 November 2026, described a very strong El Niño, with impacts expected to last into mid-2027.
 
 Farmers, cooperatives and local agriculture offices need a way to compare the options that is grounded in data, honest about what it does not know, and usable by someone who is not comfortable with technology.
 
 ## San Mateo is the test drive; the goal is national
 
-This build covers **one place: San Mateo, Isabela**, in the Cagayan Valley of northern Luzon. We chose it as the test-drive area because it has a real, documented version of the question the app answers: San Mateo is known as the Munggo Capital, and its farmers already rotate rice with mungbean on thousands of hectares.
+This build covers **one place: San Mateo, Isabela**, in the Cagayan Valley of northern Luzon. We chose it as the test-drive area because it has a real, documented version of the question the app answers: San Mateo is known as the Munggo Capital, and about 7,000 hectares there are planted to mungbean in the dry months (DOST-PCAARRD, 2018).
 
 **Given more time, Has Bean Planned is meant to be scaled to the whole Philippines.** San Mateo is where we proved the idea works end to end, not the limit of the idea. Nothing in the approach is specific to one town:
 
@@ -115,7 +116,7 @@ Made for extension workers, cooperatives and analysts. It was first called "Expe
 
 | Source | What we use it for |
 |---|---|
-| **NOAA CPC Oceanic Niño Index** (ONI v5) | Labelling each season as El Niño, La Niña or neutral, and choosing the strong El Niño seasons |
+| **NOAA CPC Oceanic Niño Index** (ONI, ERSSTv6 table) | Labelling each season as El Niño, La Niña or neutral, and choosing the strong El Niño seasons |
 | **FAO Irrigation and Drainage Paper 56** | Reference evapotranspiration (Hargreaves-Samani), crop coefficients, available soil water, root depths |
 | **FAO Irrigation and Drainage Paper 33** (values via Paper 66) | Yield response to water shortage |
 | **USDA-SCS effective rainfall** (as used in FAO CROPWAT) | The share of rain a crop can actually use |
@@ -154,6 +155,14 @@ These are results from the committed data with the default settings (after wet-s
 - **Greenness:** the town-centre pixel is least green in November (NDVI 0.44) and greenest in August (0.59), with a second peak in January.
 
 Income figures rest on illustrative prices and costs until local ones are entered.
+
+## Source check
+
+On 15 November 2026 every cited link was opened and the cited figures were compared with the pages. Details are in [SI_DISCLOSURE.md](SI_DISCLOSURE.md). In short:
+
+- **Confirmed:** FAO-56 crop coefficients and FAO-33 yield-response factors; mungbean nitrogen fixation (21 to 85 kg N/ha); San Mateo mungbean yield (800 to 1,000 kg/ha) and area; the PhilRice rotation project; the Manila Times and PAGASA statements; the IMERG and MODIS DOIs; mungbean and peanut farmgate prices.
+- **Corrected:** the ENSO table now uses NOAA's current ERSSTv6 ONI instead of ERSSTv5 (two season labels changed; no scenario or ranking changed); the yellow-corn price is now badged Illustrative because one of its two cited figures was for palay, not corn; a 7,000-hectare figure is now credited to DOST-PCAARRD; the IMERG citation year is 2023.
+- **Still secondary, not checked against a primary source:** mungbean and peanut crop duration, and peanut harvest labour. They are badged Secondary source or Assumption in the app.
 
 ## Limitations
 
@@ -241,22 +250,29 @@ MIT. See [LICENSE](LICENSE).
 ## Team
 
 **NASApusomo**
-[MEMBER NAMES AND ROLES]
+
+- Marxus Magisa
+- Krizdarl Callo
+- Antonio Pasia
+- Kareena Macasiljig
+- Anica Begonia
+- Jonathan Serote
 
 Contact: marxus.antonio.magisa@student.ateneo.edu
 
 ## References
 
 1. NASA POWER Project, NASA Langley Research Center. https://power.larc.nasa.gov/
-2. Huffman, G. J., E. F. Stocker, D. T. Bolvin, E. J. Nelkin, J. Tan. GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07 (GPM_3IMERGM). NASA GES DISC. DOI: 10.5067/GPM/IMERG/3B-MONTH/07. Retrieved through NASA Giovanni, 15 Nov 2026.
+2. Huffman, G. J., E. F. Stocker, D. T. Bolvin, E. J. Nelkin, J. Tan (2023). GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07 (GPM_3IMERGM). NASA GES DISC. DOI: 10.5067/GPM/IMERG/3B-MONTH/07. Retrieved through NASA Giovanni, 15 Nov 2026.
 3. Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061. NASA LP DAAC. DOI: 10.5067/MODIS/MOD13Q1.061. Retrieved through the ORNL DAAC subsetting service, 15 Nov 2026.
-4. NOAA Climate Prediction Center. Oceanic Niño Index (ONI v5). https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v5/
+4. NOAA Climate Prediction Center. Oceanic Niño Index (ONI), ERSSTv6 table. https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/ (table read 15 Nov 2026)
 5. Allen, R. G., Pereira, L. S., Raes, D., Smith, M. (1998). *Crop evapotranspiration: Guidelines for computing crop water requirements*. FAO Irrigation and Drainage Paper 56. https://www.fao.org/4/x0490e/x0490e00.htm
 6. Doorenbos, J., and Kassam, A. H. (1979). *Yield response to water*. FAO Irrigation and Drainage Paper 33; values as given in FAO Irrigation and Drainage Paper 66. https://www.fao.org/4/i2800e/i2800e02.pdf
 7. Poggio, L., et al. (2021). SoilGrids 2.0. *SOIL* 7, 217-240. DOI: 10.5194/soil-7-217-2021
-8. Philippine Statistics Authority. Farmgate price releases, regional, 2023-2025. https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices
-9. DOST-PCAARRD. Isabela town celebrates Mungbean Fiesta. https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta
-10. PhilRice. Isabela R&D Highlights 2021. https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
-11. The Manila Times (8 April 2021). Isabela town benefits from mungbean. https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138
-12. PAGASA, as reported 5 Nov 2026: very strong El Niño active in the tropical Pacific. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
-13. OpenStreetMap contributors. Map data and tiles. https://www.openstreetmap.org/copyright
+8. Philippine Statistics Authority. Regional farmgate price releases: Central Luzon, first quarter 2023 (yellow corn, dry peanut with shell); Biliran, first quarter 2025 (mongo, with 2024 comparison). Database: https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices (refuses automated clients; opens in a browser)
+9. DOST-PCAARRD (8 May 2018). Isabela town celebrates Mungbean FIESTA. https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta
+10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station (Extracore Project 16, rice-rice-mungbean and rice-rice-corn). https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
+11. Domingo, L. C. (8 April 2021). Isabela town benefits from mungbean. The Manila Times (partly behind a paywall). https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138
+12. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
+13. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
+14. OpenStreetMap contributors. Map data and tiles. https://www.openstreetmap.org/copyright
