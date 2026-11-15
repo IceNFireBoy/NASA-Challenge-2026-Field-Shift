@@ -20,7 +20,7 @@ function OptionCard({ r, ctx, t, i }) {
     <li className="rise-in rounded-2xl border-2 border-stone-300 bg-white p-4" style={{ '--i': i }}>
       <h4 className="flex items-center gap-3 text-xl font-bold"><span className="text-3xl leading-none"><CropIcon id={r.id} /></span>{t(`crop.${r.id}`)}</h4>
       {r.blocked ? (
-        <p className="mt-2 rounded-lg border-2 border-red-700 bg-red-50 p-3 text-red-950">
+        <p className="callout mt-2">
           <strong>{t('results.blocked')}.</strong> {r.crop.blockOnClay ? t('results.blockedClay') : plainText(r.crop.blockReason)}
         </p>
       ) : (
@@ -78,9 +78,9 @@ export default function Results({ state, dispatch, result, unc, inputs, climate,
         <div className="mt-4"><TrafficRow lights={trafficLights(best, ctx)} t={t} /></div>
         <p className="mt-3 text-stone-700">{t('results.sample')}</p>
         <p className="mt-2">{t('results.sure', { pct: Math.round(100 * share), n: unc.draws })}</p>
-        {share < CLOSE_CALL && <p role="note" className="mt-2 rounded-lg border-2 border-amber-500 bg-amber-100 p-3 font-semibold text-amber-950">{t('results.close')}</p>}
+        {share < CLOSE_CALL && <p role="note" className="callout mt-3 font-bold">{t('results.close')}</p>}
         {dryBest && (
-          <p className="mt-2 rounded-lg border border-stone-300 bg-stone-100 p-3">
+          <p className="callout mt-3">
             {t(dryBest.id === best.id ? 'results.dryNote.same' : 'results.dryNote.diff', { crop: t(`crop.${dryBest.id}`) })}
           </p>
         )}

@@ -155,7 +155,7 @@ export default function FarmerFlow({ state, dispatch, result, unc, inputs, clima
 
   return (
     <section aria-labelledby="farmer-h" className="mx-auto max-w-2xl">
-      {climate.meta.data_status === 'placeholder' && <p role="alert" className="mb-3 rounded border border-red-400 bg-red-100 p-3 font-semibold text-red-950">{t('placeholder')}</p>}
+      {climate.meta.data_status === 'placeholder' && <p role="alert" className="callout mb-3 font-bold">{t('placeholder')}</p>}
       {progress !== null && (
         <div className="mb-4">
           <p className="font-semibold text-green-900">{n ? t('step.of', { n, total: NUMBERED.length }) : t('step.last')}</p>
