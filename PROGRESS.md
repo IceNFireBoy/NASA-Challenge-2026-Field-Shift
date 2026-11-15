@@ -146,9 +146,8 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 - October has 30 composites and November 42, against 48 for other months, because of how the
   16-day windows fall; those two means rest on less data.
 - Monthly means average all 24 years, so they hide year-to-year change.
-- The glossary entry for NDVI in `frontend/src/engine/content.js` still says "This version
-  does not use it". The model indeed does not, but the app now shows it; the sentence should
-  be reworded (left alone because `engine/*` is off limits without the human's OK).
+- The glossary entry for NDVI in `frontend/src/engine/content.js` was reworded (text only, with
+  the human's OK) to say the app shows MODIS NDVI but the model and rankings do not use it.
 
 ### How to re-run
 - `PY pipeline/fetch_extras.py` reuses the cache and rewrites the two optional blocks.
@@ -185,7 +184,6 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 
 ## Known issues
 
-- The NDVI glossary entry (`content.js`) says "This version does not use it"; see the MODIS section.
 - Node v26 and Python 3.13 are outside the spec's version ranges; everything works so far.
 - Economics are illustrative until local prices and costs are entered.
 - The PAGASA El Niño banner and its source link in `content.js` were not re-checked.

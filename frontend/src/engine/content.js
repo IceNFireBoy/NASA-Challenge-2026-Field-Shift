@@ -113,7 +113,7 @@ export const GLOSSARY = [
   { term: 'Root-zone soil wetness', text: 'NASA POWER index from 0 (dry) to 1 (saturated) for the top 1 m of soil, from the MERRA-2 model. We compare each scenario with the typical year (a soil-moisture anomaly).' },
   { term: 'Yield response factor (Ky)', text: 'How strongly yield drops when the crop gets less water than it needs (FAO-33). Above 1 means very sensitive.' },
   { term: 'El Nino and ONI', text: 'El Nino warms the central Pacific and usually brings drier dry seasons to the Philippines. NOAA\'s Oceanic Nino Index (ONI) measures its strength.' },
-  { term: 'NDVI', text: 'A satellite greenness index from Landsat or MODIS. This version does not use it; it would show when fields are green or bare.' },
+  { term: 'NDVI', text: 'A satellite greenness index from 0 to 1; higher means denser green plants. The Past seasons tab shows MODIS NDVI for one 250 m pixel at the town centre as a check on when land is green or bare. The crop model and the rankings do not use it.' },
   { term: 'Frost risk', text: 'Not a factor in lowland Isabela. The challenge lists it; we show it here so its absence is a stated finding, not an omission.' },
   { term: 'Satellite vs ground data', text: 'Satellites and models cover every field, every month, but blur detail over kilometres. Ground stations are precise but sparse. Combining them (as IMERG does with rain gauges) gives the best of both; local records should still check our numbers.' },
 ];
