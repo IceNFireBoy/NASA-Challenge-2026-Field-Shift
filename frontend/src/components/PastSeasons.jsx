@@ -223,7 +223,7 @@ function ScenarioChart({ climate, scenarioId }) {
 export default function PastSeasons({ climate, inputs }) {
   return (
     <div className="space-y-4">
-      <p className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm">Past seasons show what happened; they are not forecasts of 2026-27.</p>
+      <p className="callout text-sm font-semibold">Past seasons show what happened; they are not forecasts of 2026-27.</p>
       <TrendChart climate={climate} />
       <Replay inputs={inputs} />
       <ScenarioChart climate={climate} scenarioId={inputs.scenarioId} />

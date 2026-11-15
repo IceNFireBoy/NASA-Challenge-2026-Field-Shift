@@ -121,10 +121,10 @@ export default function DataMethods({ climate }) {
         <dl className="mt-1 space-y-2 text-sm">{SOIL_HEALTH_PRIMER.map((g) => <div key={g.title}><dt className="font-semibold">{g.title}</dt><dd className="text-stone-700">{g.text}</dd></div>)}</dl>
       </section>
 
-      <section aria-labelledby="dm-lim" className="rounded-lg border border-amber-300 bg-amber-50 p-4">
-        <h2 id="dm-lim" className="text-lg font-bold text-amber-900">Limitations</h2>
+      <section aria-labelledby="dm-lim" className="card">
+        <h2 id="dm-lim" className="text-xl font-bold text-green-950">Limitations</h2>
         <ul className="mt-2 list-disc pl-5 text-sm">{LIMITS.map((t) => <li key={t}>{t}</li>)}</ul>
-        <p className="mt-2 text-sm">This tool supports, not replaces, farmer and expert judgement.</p>
+        <p className="callout mt-3 text-sm font-semibold">This tool supports, not replaces, farmer and expert judgement.</p>
       </section>
     </div>
   );

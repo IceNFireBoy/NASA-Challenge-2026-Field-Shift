@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { formatPhp } from '../engine/engine.js';
 import { dateOfDay } from '../engine/content.js';
-import { ROTATION_COLORS } from '../lib/colors.js';
 import ScoreBar from './ScoreBar.jsx';
 import WhyCard from './WhyCard.jsx';
 
@@ -12,7 +11,7 @@ export default function RotationCard({ r, isCurrent, laborCap, waterMode, topSha
   const [open, setOpen] = useState(false);
   const overLabor = !r.blocked && r.laborMd > laborCap;
   return (
-    <article className={`rounded-lg border bg-white p-4 ${r.blocked ? 'border-red-300' : 'border-stone-300'}`} style={{ borderLeft: `6px solid ${ROTATION_COLORS[r.id]}` }}>
+    <article className="card">
       <header className="flex flex-wrap items-center gap-2">
         {r.blocked
           ? <span className="rounded bg-red-100 px-2 py-0.5 text-sm font-bold text-red-900">Blocked</span>
@@ -44,7 +43,7 @@ export default function RotationCard({ r, isCurrent, laborCap, waterMode, topSha
       )}
 
       <button type="button" aria-expanded={open} onClick={() => setOpen(!open)} className="mt-3 min-h-[44px] rounded border border-stone-400 px-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700">
-        {open ? '▼ Hide why' : '▶ Why this result'}
+        {open ? 'Hide why' : 'Why this result'}
       </button>
       {open && <WhyCard card={card} />}
     </article>

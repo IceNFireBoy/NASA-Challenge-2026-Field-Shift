@@ -68,7 +68,7 @@ export default function Community({ result, climate, scenarioId, waterMode }) {
           <dd className="mt-1 text-sm text-stone-600">{waterMode === 'irrigated' ? `About ${n(r.irrigationMm)} mm per ha pumped (illustrative cost model).` : 'Your Compare settings are rainfed, so this shows 0; switch to "Can irrigate" in Compare to see the pumped volume.'}</dd></div>
       </dl>
 
-      <div className="rounded border border-sky-300 bg-sky-50 p-3 text-sm">
+      <div className="callout text-sm">
         <h3 className="font-semibold">Coordination prompt</h3>
         <p>{dm >= 0
           ? `In this scenario, rainfall falls below half of normal from ${SEASON_MONTHS[dm]}. Agree on water sharing and planting dates with the irrigators' association and the Municipal Agriculture Office before then.`

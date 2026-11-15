@@ -1,6 +1,5 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
 import { CRITERIA } from '../engine/engine.js';
-import { CRITERION_COLORS } from '../lib/colors.js';
 import { useNormalizedWeights } from '../hooks/useNormalizedWeights.js';
 
 export default function PrioritySliders({ weights, dispatch }) {
@@ -17,7 +16,7 @@ export default function PrioritySliders({ weights, dispatch }) {
           <div key={c.id}>
             <div className="flex items-center justify-between gap-2">
               <label htmlFor={`w-${c.id}`} className="flex items-center gap-2 text-sm font-semibold">
-                <span className="inline-block h-3 w-3 rounded-sm" style={{ background: CRITERION_COLORS[c.id] }} aria-hidden="true" />{c.label}
+                {c.label}
               </label>
               <span className="text-sm font-bold tabular-nums">{percents[c.id]}%</span>
             </div>
