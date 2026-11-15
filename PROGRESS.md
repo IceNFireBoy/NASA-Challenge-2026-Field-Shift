@@ -2,7 +2,7 @@
 # Has Bean Planned: progress
 
 Team NASApusomo. NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
-Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:20 that day.
+Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:25 that day.
 
 ## Where things stand right now
 
@@ -90,6 +90,71 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
   Past seasons has a chart with a typical-year view (least green in Nov at 0.44, greenest in
   Aug at 0.59) and an each-dry-season view. The crop model does not use NDVI.
 
+## MODIS NDVI in detail (Phase 5, stretch 3)
+
+### What it is
+- MODIS is an instrument on NASA's Terra satellite. Product **MOD13Q1 v061** gives NDVI
+  (a 0 to 1 greenness index: near 0 is bare soil, higher is denser green plants) for 250 m
+  pixels, as the best value in each 16-day window ("composite").
+- We use one pixel, the one containing the San Mateo town-centre point (16.88, 121.58), from
+  the ORNL DAAC MODIS/VIIRS subsetting web service (`https://modis.ornl.gov/rst/api/v1/`).
+
+### What it is for
+- It is the only **observed** land-surface data in the app. NASA POWER and the crop model
+  estimate weather and water; NDVI shows what the ground actually looked like from space.
+- It answers "when is this land green and when is it bare?" independently of our model, which
+  speaks to the challenge's bare-field and vegetation-stress objectives.
+- It is a cross-check and a teaching aid only. **The crop model, the ranking, the Farmer view
+  answer and the traffic lights do not use NDVI.** No score changed because of it.
+
+### What changed
+- `pipeline/fetch_extras.py` (new): downloads the NDVI band `250m_16_days_NDVI`, 10 dates per
+  request (the service's limit), 56 requests in all; drops fill values; saves each finished
+  request to `pipeline/cache/ndvi_partial.json` so a restart resumes; writes the full series to
+  `pipeline/cache/ndvi_mod13q1.json` (cache is git-ignored). The same script fetches SoilGrids.
+- `frontend/src/data/climate.json`: one new top-level key, `ndvi`. The four existing keys
+  (`meta`, `seasons`, `scenarios`, `trend`) were compared before and after and are unchanged.
+  The block holds: `product`, `source`, `url`, `citation`, `accessed`, `note`,
+  `monthly_mean` (12 rows, June to May: mean NDVI and how many composites went into it),
+  `season_mean` (24 rows: mean December to May NDVI per season), `n_composites`,
+  `first_date`, `last_date`.
+- `frontend/src/components/PastSeasons.jsx`: new "Vegetation greenness from satellite (NDVI)"
+  card at the bottom of Past seasons, with a "Typical year" / "Each dry season" switch,
+  tooltips, a sentence naming the least and most green month, and the product, date range
+  and caveats. It renders only when the `ndvi` block exists.
+- `frontend/src/components/DataMethods.jsx`: the map card lists the MOD13Q1 citation, access
+  date and note, read from the block.
+- `pipeline/test_pipeline.py`: one new test covering the NDVI summary and the soil-texture
+  classifier (pipeline tests 13 -> 14).
+- `fetch_climate.py` and the engine maths were not touched.
+
+### What the data shows
+- 552 composites, 2001-06-10 to 2025-05-25, fetched 15 Nov 2026.
+- Typical year, mean NDVI by month: Jun 0.50, Jul 0.53, Aug 0.59, Sep 0.51, Oct 0.46,
+  Nov 0.44, Dec 0.45, Jan 0.54, Feb 0.51, Mar 0.45, Apr 0.48, May 0.50.
+- Two green peaks (August and January) and two dips (October to December, and March). That
+  pattern is what two crops a year would look like, with the dips at harvest and land
+  preparation. This is our reading of the curve, not something the data states.
+- Dry-season (Dec to May) means range from 0.40 (2020-21) to 0.57 (2012-13).
+
+### Limits to state if asked
+- One 250 m pixel at the town centre. It can include buildings, roads and trees, so it is
+  not a clean rice-field signal and not any one farmer's field.
+- No cloud or quality screening beyond the 16-day composite: the reliability band was not
+  downloaded. The lowest season, 2020-21, is also the wettest season in our rainfall record,
+  so cloud is a likely cause of that low value rather than bare fields.
+- October has 30 composites and November 42, against 48 for other months, because of how the
+  16-day windows fall; those two means rest on less data.
+- Monthly means average all 24 years, so they hide year-to-year change.
+- The glossary entry for NDVI in `frontend/src/engine/content.js` still says "This version
+  does not use it". The model indeed does not, but the app now shows it; the sentence should
+  be reworded (left alone because `engine/*` is off limits without the human's OK).
+
+### How to re-run
+- `PY pipeline/fetch_extras.py` reuses the cache and rewrites the two optional blocks.
+  `--offline` never touches the network. Delete `pipeline/cache/ndvi_*.json` to force a fresh
+  download; allow about 25 to 75 minutes, since the service took 25 to 80 seconds per request.
+
 ## What went wrong
 
 - **GPM IMERG never loaded.** Two attempts (full run, then `--imerg-limit 6`) hit an Earthdata
@@ -120,6 +185,7 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 
 ## Known issues
 
+- The NDVI glossary entry (`content.js`) says "This version does not use it"; see the MODIS section.
 - Node v26 and Python 3.13 are outside the spec's version ranges; everything works so far.
 - Economics are illustrative until local prices and costs are entered.
 - The PAGASA El Niño banner and its source link in `content.js` were not re-checked.
