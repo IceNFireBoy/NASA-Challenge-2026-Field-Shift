@@ -96,7 +96,7 @@ export const CROPS = {
     soilTier: { value: 90, status: 'assumption', note: 'Legume; fixes 21-85 kg N/ha per cycle (sourced range).' },
     forageTier: { value: 50, status: 'assumption', note: 'Residues usually incorporated into the soil.' },
     laborMdHa: { value: 25, range: [20, 35], status: 'assumption', note: 'Moderate labour; harvesting by repeated hand-picking (priming) adds work.' },
-    nFixed: { text: '21-85 kg N/ha per cycle', range: [21, 85], status: 'secondary', source: 'SI-assisted literature summary (team PDF) citing a field evaluation of N2 fixation by mungbean in the Philippines (OSTI ETDEWEB 634524)' },
+    nFixed: { text: '21-85 kg N/ha per cycle', range: [21, 85], status: 'sourced', source: 'Rosales, Rivera, Hautea and Del Rosario (1998), Field evaluation of N2 fixation by mung bean in the Philippines (OSTI ETDEWEB 634524): 43-85 kg N/ha at one site, 21-85 at the other' },
     econ: {
       yieldKgHa: { value: 900, range: [800, 1000], status: 'local-sourced', source: 'DOST-PCAARRD: San Mateo produces 800-1,000 kg/ha' },
       pricePhpKg: { value: 80.36, range: [50, 95], status: 'sourced', source: 'PSA OpenSTAT farmgate prices, Region II (Cagayan Valley), mean of January to May 2026: mongo, green, labo ₱80.36/kg (monthly ₱50.00 to ₱95.00; the green shiny type averaged ₱69.92; 2025 mean ₱72.83)' },
