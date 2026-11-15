@@ -10,10 +10,13 @@ Usage (run from the repo root, inside the venv):
   python pipeline/fetch_climate.py --placeholder   # synthetic, clearly labelled, no network
   python pipeline/fetch_climate.py --skip-imerg    # NASA POWER only (no login needed)
   python pipeline/fetch_climate.py                 # NASA POWER + GPM IMERG (Earthdata login)
+  python pipeline/fetch_climate.py --imerg-direct  # IMERG over plain HTTPS from GES DISC (no earthaccess)
+  python pipeline/fetch_climate.py --imerg-csv pipeline/data/imerg_giovanni.csv --imerg-units mm/hr  # IMERG from the committed Giovanni CSV (what the app ships with)
 
 Data:
   * NASA POWER daily point API (community AG): T2M_MAX, T2M_MIN, PRECTOTCORR, GWETROOT.
-  * GPM IMERG Final, monthly, 0.1 deg, V07 (GPM_3IMERGM) via earthaccess + h5py.
+  * GPM IMERG Final, monthly, 0.1 deg, V07 (GPM_3IMERGM): a NASA Giovanni area-averaged CSV
+    (--imerg-csv), plain HTTPS from GES DISC (--imerg-direct), or earthaccess + h5py (default).
   * NOAA CPC Oceanic Nino Index (ONI, DJF) to label seasons (table embedded below).
 Failures: POWER failure stops the run (fail loudly). IMERG failure falls back to POWER
 rainfall, records status "unavailable" and the error, and the app shows a banner.
@@ -395,6 +398,202 @@ def fetch_imerg(months: list[tuple[int, int]], refresh: bool, limit: int | None)
     return values, meta
 
 
+# ----------------------------------------------------------------------------- IMERG from a Giovanni CSV
+def _units_from_text(text: str) -> str | None:
+    """Find one of the unit spellings the converter already knows inside free text."""
+    squashed = text.lower().replace(" ", "").replace("^", "")
+    for table in (_HOURLY, _DAILY, _MONTHLY):
+        for u in sorted(table, key=len, reverse=True):
+            if u in squashed:
+                return u
+    return None
+
+
+def read_imerg_csv(path: Path, units: str | None = None) -> tuple[dict, dict]:
+    """Read a NASA Giovanni area-averaged time-series CSV of GPM_3IMERGM precipitation.
+
+    The file starts with comment lines (title, dates, bounding box, fill value), then a header
+    row whose first column is `time`, then one row per month. Units are taken from `units` or
+    from the comment/header lines; if they cannot be found the function refuses to guess.
+    Returns ({(year, month): mm}, meta) in the same shape as fetch_imerg."""
+    lines = Path(path).read_text(encoding="utf-8-sig").splitlines()
+    head = next((i for i, ln in enumerate(lines) if ln.strip().lower().startswith("time,")), None)
+    if head is None:
+        raise RuntimeError(f"{path}: no header row starting with 'time,' found")
+    preamble = "\n".join(lines[: head + 1])
+    units = units or _units_from_text(preamble)
+    if not units:
+        raise RuntimeError(f"{path}: precipitation units not stated in the file; pass --imerg-units (e.g. mm/hr)")
+    fill = None
+    for ln in lines[:head]:
+        if ln.lower().startswith("fill value"):
+            m = re.search(r"(-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?)\s*$", ln.strip())
+            fill = float(m.group(1)) if m else None
+    values: dict[tuple[int, int], float] = {}
+    skipped = 0
+    for ln in lines[head + 1:]:
+        parts = [x.strip() for x in ln.split(",")]
+        if len(parts) < 2 or not parts[0]:
+            continue
+        ts = pd.Timestamp(parts[0])
+        try:
+            rate = float(parts[1])
+        except ValueError:
+            skipped += 1
+            continue
+        if math.isnan(rate) or rate < 0 or (fill is not None and abs(rate - fill) < 1e-6):
+            skipped += 1
+            continue
+        values[(int(ts.year), int(ts.month))] = to_mm_per_month(rate, units, int(ts.year), int(ts.month))
+    if not values:
+        raise RuntimeError(f"{path}: no usable rows")
+    # Giovanni lists the box the user asked for and the box of grid cells it actually averaged;
+    # the second one is what the numbers describe.
+    boxes = {ln.split(":", 1)[0].strip().lower(): ln.split(":", 1)[1].strip(' ,"') for ln in lines[:head]
+             if "bounding box" in ln.lower() and ":" in ln}
+    bbox = boxes.get("data bounding box") or next(iter(boxes.values()), None)
+    meta = {"units_in_files": [units], "via": "NASA Giovanni area-averaged time series (CSV)", "rows_skipped": skipped,
+            "file": Path(path).name, "data_bounding_box": bbox,
+            "resolution_note": "Satellite-gauge estimate, 0.1 deg grid (~11 km), area-averaged by NASA Giovanni"
+                               + (f" over lon/lat box {bbox}" if bbox else "")}
+    log(f"IMERG CSV: {len(values)} months read from {path} (units {units}, {skipped} skipped)")
+    return values, meta
+
+
+# ----------------------------------------------------------------------------- IMERG over plain HTTPS
+GESDISC_DIR = "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGM.07"
+URS_HOST = "urs.earthdata.nasa.gov"
+
+
+class _EarthdataSession(requests.Session):
+    """requests drops credentials on cross-host redirects; keep them only for Earthdata Login."""
+
+    def rebuild_auth(self, prepared_request, response):
+        if "Authorization" in prepared_request.headers:
+            host = requests.utils.urlparse(prepared_request.url).hostname
+            if host != URS_HOST and host != requests.utils.urlparse(response.request.url).hostname:
+                del prepared_request.headers["Authorization"]
+        if self.trust_env and "Authorization" not in prepared_request.headers:
+            super().rebuild_auth(prepared_request, response)  # lets ~/.netrc answer for URS
+
+
+def earthdata_sessions() -> list[tuple[str, requests.Session]]:
+    """Every login method that is configured, in order: token, then username/password (both from
+    the environment; pipeline/.env is loaded), then ~/.netrc. Values are never logged."""
+    load_dotenv_file(HERE / ".env")
+    out = []
+    token = os.environ.get("EARTHDATA_TOKEN", "").strip()
+    user, pw = os.environ.get("EARTHDATA_USERNAME", "").strip(), os.environ.get("EARTHDATA_PASSWORD", "")
+    if token:
+        sess = _EarthdataSession()
+        sess.trust_env = False
+        sess.headers["Authorization"] = f"Bearer {token}"
+        out.append(("token", sess))
+    if user and pw:
+        sess = _EarthdataSession()
+        sess.trust_env = False
+        sess.auth = (user, pw)
+        out.append(("username/password", sess))
+    out.append(("netrc", _EarthdataSession()))
+    return out
+
+
+class EarthdataAuthError(RuntimeError):
+    pass
+
+
+def _get_with_retry(sess: requests.Session, url: str, tries: int = 3, timeout: int = 60) -> requests.Response:
+    last = None
+    for attempt in range(tries):
+        try:
+            resp = sess.get(url, timeout=timeout, allow_redirects=True)
+            if resp.status_code in (401, 403):  # a login problem does not heal on retry
+                raise EarthdataAuthError(f"HTTP {resp.status_code} from {requests.utils.urlparse(resp.url).hostname}")
+            if "text/html" in resp.headers.get("content-type", "") and url.upper().endswith(".HDF5"):
+                raise EarthdataAuthError("got a login page instead of data")
+            resp.raise_for_status()
+            return resp
+        except EarthdataAuthError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            last = exc
+            if attempt < tries - 1:
+                time.sleep(5 * (attempt + 1))
+    raise RuntimeError(f"GET failed after {tries} tries: {url}: {type(last).__name__}: {last}")
+
+
+def working_earthdata_session(probe_url: str) -> requests.Session:
+    """First configured login method that the data server accepts for `probe_url`."""
+    errors = []
+    for name, sess in earthdata_sessions():
+        try:
+            _get_with_retry(sess, probe_url)
+            log(f"Earthdata login OK ({name})")
+            return sess
+        except EarthdataAuthError as exc:
+            errors.append(f"{name}: {exc}")
+    raise RuntimeError("Earthdata login was refused by GES DISC with every configured method ("
+                       + " | ".join(errors) + "). A token may have expired (they last 60 days), or the "
+                       "'NASA GESDISC DATA ARCHIVE' application may not be approved for the account.")
+
+
+def list_imerg_files(sess: requests.Session, year: int) -> dict[tuple[int, int], str]:
+    """Read one year's directory listing and return {(year, month): file name} from its links."""
+    html = _get_with_retry(sess, f"{GESDISC_DIR}/{year}/").text
+    out: dict[tuple[int, int], str] = {}
+    for name in sorted(set(re.findall(r'href="([^"/?]+\.HDF5)"', html, flags=re.I))):  # later versions sort last and win
+        m = re.search(r"3IMERG\.(\d{4})(\d{2})01", name)
+        if m:
+            out[(int(m.group(1)), int(m.group(2)))] = name
+    return out
+
+
+def fetch_imerg_direct(months: list[tuple[int, int]], refresh: bool, limit: int | None) -> tuple[dict, dict]:
+    """Same result as fetch_imerg, but downloads each monthly file over HTTPS with requests.
+    Every month is appended to the cache at once, so an interrupted run resumes."""
+    import io as _io
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    cache = CACHE_DIR / "imerg_monthly.csv"
+    values: dict[tuple[int, int], float] = {}
+    units_seen = set()
+    if cache.exists() and not refresh:
+        for row in pd.read_csv(cache).itertuples(index=False):
+            values[(int(row.year), int(row.month))] = float(row.rain_mm)
+            units_seen.add(str(row.units))
+    todo = [ym for ym in months if ym not in values]
+    log(f"IMERG direct: {len(values)} months cached, {len(todo)} to fetch")
+    if limit:
+        todo = todo[:limit]
+    if todo:
+        sess = working_earthdata_session(f"{GESDISC_DIR}/{todo[0][0]}/")
+        lat, lon = LOCATION["lat"], LOCATION["lon"]
+        names: dict[tuple[int, int], str] = {}
+        new_file = not cache.exists() or refresh
+        with cache.open("w" if new_file else "a", encoding="utf-8") as fh:
+            if new_file:
+                fh.write("year,month,rain_mm,units,granule\n")
+            for k, (y, m) in enumerate(todo, 1):
+                if not any(yy == y for yy, _ in names):
+                    listing = list_imerg_files(sess, y)
+                    if not listing:
+                        raise RuntimeError(f"No IMERG files listed for {y}")
+                    names.update(listing)
+                    log(f"IMERG listing {y}: {len(listing)} files, e.g. {sorted(listing.values())[0]}")
+                if (y, m) not in names:
+                    log(f"WARNING: no IMERG file listed for {y}-{m:02d}")
+                    continue
+                t0 = time.time()
+                resp = _get_with_retry(sess, f"{GESDISC_DIR}/{y}/{names[(y, m)]}")
+                rate, units = read_imerg_point(_io.BytesIO(resp.content), lat, lon)
+                mm = to_mm_per_month(rate, units, y, m)
+                values[(y, m)] = mm
+                units_seen.add(units)
+                fh.write(f"{y},{m},{mm:.3f},{units},{names[(y, m)]}\n")
+                fh.flush()
+                log(f"IMERG {k}/{len(todo)} {y}-{m:02d}: {mm:7.1f} mm ({len(resp.content) / 1e6:.1f} MB, {time.time() - t0:.1f}s)")
+    return values, {"units_in_files": sorted(units_seen), "via": "HTTPS download from GES DISC"}
+
+
 # ----------------------------------------------------------------------------- seasons
 def season_months(start_year: int) -> list[tuple[int, int]]:
     return [(start_year if m == 12 else start_year + 1, m) for m in SEASON_MONTHS]
@@ -575,8 +774,12 @@ def imerg_source(status: str, meta: dict | None, error: str | None = None) -> di
            "url": "https://doi.org/10.5067/GPM/IMERG/3B-MONTH/07", "status": status,
            "parameters": ["Grid/precipitation"],
            "units": (meta or {}).get("units_in_files", []),
-           "resolution_note": "Satellite-gauge estimate, 0.1 deg grid (~11 km), cells within +/-0.1 deg averaged",
+           "resolution_note": (meta or {}).get("resolution_note")
+                              or "Satellite-gauge estimate, 0.1 deg grid (~11 km), cells within +/-0.1 deg averaged",
            "citation": IMERG_CITATION, "fetched_at": utc_now()}
+    for key in ("via", "file", "data_bounding_box"):
+        if (meta or {}).get(key):
+            src[key] = meta[key]
     if error:
         src["error"] = error[:500]
     return src
@@ -586,6 +789,19 @@ def oni_source() -> dict:
     return {"id": "noaa_oni", "name": "NOAA CPC Oceanic Nino Index (ONI, ERSSTv5)",
             "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v5/",
             "status": "embedded_table", "citation": "NOAA Climate Prediction Center, ONI v5 table, accessed 2026-11-15"}
+
+
+def carry_over_extra_keys(payload: dict, path: Path) -> list[str]:
+    """Copy top-level keys this script does not produce (e.g. soilgrids, ndvi from
+    fetch_extras.py) from the existing output file into the new payload."""
+    try:
+        old = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    kept = [k for k in old if k not in payload] if isinstance(old, dict) else []
+    for k in kept:
+        payload[k] = old[k]
+    return kept
 
 
 def placeholder_payload() -> dict:
@@ -627,6 +843,9 @@ def main() -> int:
     ap.add_argument("--placeholder", action="store_true", help="write labelled synthetic data and exit")
     ap.add_argument("--skip-imerg", action="store_true", help="use NASA POWER rainfall only")
     ap.add_argument("--imerg-limit", type=int, default=None, help="fetch at most N IMERG months (testing)")
+    ap.add_argument("--imerg-csv", type=Path, default=None, help="read IMERG from a Giovanni area-averaged time-series CSV")
+    ap.add_argument("--imerg-units", default=None, help="units of the --imerg-csv values if the file does not state them")
+    ap.add_argument("--imerg-direct", action="store_true", help="download IMERG over HTTPS from GES DISC instead of earthaccess")
     ap.add_argument("--refresh", action="store_true", help="ignore caches")
     ap.add_argument("--out", type=Path, default=OUT_PATH)
     args = ap.parse_args()
@@ -647,7 +866,12 @@ def main() -> int:
         else:
             needed = [ym for y in range(FIRST_SEASON, LAST_SEASON + 1) for ym in season_months(y)]
             try:
-                imerg, imeta = fetch_imerg(needed, args.refresh, args.imerg_limit)
+                if args.imerg_csv:
+                    imerg, imeta = read_imerg_csv(args.imerg_csv, args.imerg_units)
+                elif args.imerg_direct:
+                    imerg, imeta = fetch_imerg_direct(needed, args.refresh, args.imerg_limit)
+                else:
+                    imerg, imeta = fetch_imerg(needed, args.refresh, args.imerg_limit)
                 complete = all(ym in imerg for ym in needed)
                 sources.append(imerg_source("ok" if complete else "partial", imeta))
                 if not complete:
@@ -661,6 +885,9 @@ def main() -> int:
         payload = build_payload(monthly, imerg, sources, "real", notes)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
+    kept = carry_over_extra_keys(payload, args.out)
+    if kept:
+        log(f"kept existing blocks: {', '.join(kept)}")
     args.out.write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
     m = payload["meta"]
     log(f"wrote {args.out} | data_status={m['data_status']} | precip_source={m['precip_source']}")

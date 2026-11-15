@@ -5,7 +5,7 @@ Checked by code reading and a dev-browser pass (no console errors). Phone width 
 
 | Challenge item | Where | Status |
 |---|---|---|
-| NASA data used | NASA POWER (temperature, rain, root-zone wetness); Data & methods, footer | Done. GPM IMERG was attempted and failed (gateway timeout); rainfall is POWER and the app says so |
+| NASA data used | GPM IMERG (rainfall, via Giovanni CSV), NASA POWER (temperature, comparison rainfall, root-zone wetness), MODIS NDVI (Past seasons); Data & methods, footer | Done |
 | Local soil | Field form (loam / heavy clay); clay blocks peanut | Done (two soil types only) |
 | Crop characteristics | Data & methods parameter table; why cards | Done; several values are Assumption/Illustrative and badged |
 | Farmer priorities | Priority sliders | Done |
@@ -21,7 +21,7 @@ Checked by code reading and a dev-browser pass (no console errors). Phone width 
 | Uncertainty | Uncertainty panel and card lines (300 runs) | Done |
 | Where human judgement matters | Notice, "Check locally", close-call note | Done |
 | Plain-language terms (ET, soil moisture anomaly, NDVI, frost, water balance) | Glossary in Data & methods | Done; NDVI and frost are explained but not used |
-| Satellite vs ground data | Glossary; IMERG-vs-POWER toggle (disabled, no IMERG data) | Partly: explained, comparison chart unavailable |
+| Satellite vs ground data | Glossary; IMERG-vs-POWER toggle in Past seasons (working) | Done |
 | Harmonised resolution | Data & methods "Harmonising data" | Done (explained; one point, monthly) |
 | Scenario sliders | Rainfall change, warmer by | Done |
 | Supports-not-replaces framing | Persistent notice, footer, limitations | Done |
@@ -30,6 +30,6 @@ Checked by code reading and a dev-browser pass (no console errors). Phone width 
 
 ## Open items
 - Phone-width check by a human.
-- IMERG rainfall (optional; retry only if asked).
-- Replace README/project-page placeholders: demo link, team, source-code link; verify the IMERG DOI.
+- IMERG rainfall: done through a Giovanni CSV (`pipeline/data/imerg_giovanni.csv`).
+- Replace README/project-page placeholders: demo link and the open reference tags.
 - No field validation; one grid point; past seasons are not forecasts.
