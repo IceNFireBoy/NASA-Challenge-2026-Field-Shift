@@ -2,7 +2,7 @@
 # Has Bean Planned: progress
 
 Team NASApusomo. NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
-Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 20:55 that day.
+Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:15 that day.
 
 ## Where things stand right now
 
@@ -12,18 +12,12 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 | Branch `main` | UX redesign merged (PR 1). Tests and build pass |
 | Branch `phase-5` | Pushed, **not merged**. Rename, peso sign, Filipino in both views, map, NDVI and SoilGrids code |
 | SoilGrids soil data | **In `climate.json`** on `phase-5`: clay loam (32% clay, 42% sand, top 30 cm). Soil hint checked in the browser |
-| NDVI download | **Running in the background** (third attempt, started 20:50, resuming from 3 of 56 requests) |
+| MODIS NDVI data | **In `climate.json`** on `phase-5`: 552 composites, 2001-06-10 to 2025-05-25. Chart checked in the browser |
 | Tests | Frontend 22 pass, pipeline 14 pass, `npm run build` OK (on `phase-5`) |
 
 ## Waiting on
 
-- **MODIS NDVI data** (`pipeline/fetch_extras.py`). The MODIS service is slow today: about
-  80 seconds per 10-date request, 53 requests left, so roughly 70 minutes if it keeps answering.
-  Until it finishes the NDVI chart (Past seasons) stays hidden; it appears on its own once the
-  optional `ndvi` block exists. If it fails once more the same way, stop retrying (rule 9).
-- When it finishes: check the chart in the browser, commit `climate.json`, push `phase-5`.
-- **Human decision:** merge `phase-5` into `main`. The human asked to wait for NDVI first.
-  If NDVI is not done by about 22:45, merge without it; the app works with the blocks absent.
+- **Human decision only:** merge `phase-5` into `main`. Nothing is downloading any more.
 
 ## Done
 
@@ -92,7 +86,9 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 - Stretch 4, SoilGrids: done. `pipeline/fetch_extras.py` added a `soilgrids` block (new key
   only; existing keys verified unchanged). A hint under the Soil dropdown says the global map
   suggests clay loam; it never changes the setting.
-- Stretch 3, NDVI: code done (chart in Past seasons), data still downloading.
+- Stretch 3, NDVI: done. `ndvi` block added (new key only; existing keys verified unchanged).
+  Past seasons has a chart with a typical-year view (least green in Nov at 0.44, greenest in
+  Aug at 0.59) and an each-dry-season view. The crop model does not use NDVI.
 
 ## What went wrong
 
@@ -100,7 +96,7 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
   gateway timeout; login worked. Stopped per the two-failures rule. All rainfall is NASA POWER,
   and the app says so in a banner. The "IMERG vs POWER" chart toggle is disabled.
 - **Second NDVI download timed out.** After 3 of 56 requests the MODIS server stopped accepting
-  connections (WinError 10060). Those 3 are saved; a third run is resuming from them.
+  connections (WinError 10060). Those 3 were saved; the third run resumed from them and finished at about 21:10.
 - **First NDVI download was lost.** It ran in the background, the session ended before it
   finished, and the script only saved at the very end, so nothing was kept. The script now
   saves after every request and resumes, and fetches SoilGrids first.
@@ -119,7 +115,8 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 - All Filipino text (Farmer view in `i18n.js`, analytics in `lang.jsx`) is SI-drafted and has
   had no native-speaker review.
 - Not tested on a real phone, only at 360, 375 and 1280 px in a desktop browser.
-- NDVI data has no cloud or quality screening beyond the 16-day composite.
+- NDVI data has no cloud or quality screening beyond the 16-day composite, and it is one
+  250 m pixel at the town centre, which may include buildings and roads rather than a rice field.
 
 ## Known issues
 
