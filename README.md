@@ -128,13 +128,13 @@ All calculations live in one engine (`frontend/src/engine/engine.js`) with autom
 
 These are results from the committed data with the default settings (after wet-season rice, loose soil, rain only, default priorities). They describe past seasons and are not a forecast.
 
-- **Typical year:** Mungbean scores 81, peanut 69, corn 67, fallow 48. Mungbean comes first in 77% of the 300 what-if runs.
-- **Strong El Niño year:** Mungbean 83, peanut 50, fallow 48, corn 39. Corn falls below leaving the field idle, and mungbean comes first in 99% of runs.
+- **Typical year:** Mungbean scores 83, peanut 69, corn 58, fallow 48. Mungbean comes first in 90% of the 300 what-if runs.
+- **Strong El Niño year:** Mungbean 83, peanut 53, fallow 48, corn 38. Corn falls below leaving the field idle, and mungbean comes first in every one of the 300 runs.
 - **Replay:** mungbean met at least 80% of its water need in 23 of 24 past dry seasons.
 - **Rainfall:** typical dry-season months are 176, 87, 63, 85, 79 and 202 mm (December to May, IMERG); a strong El Niño year totals 573 mm against 692 mm.
 - **Greenness:** the town-centre pixel is least green in November (NDVI 0.44) and greenest in August (0.59), with a second peak in January.
 
-Income figures rest on illustrative prices and costs until local ones are entered.
+Prices are PSA farmgate prices for Cagayan Valley (January to May 2026). Mungbean and peanut costs are PSA national averages for 2021, so today's costs are likely higher. Corn yield and cost, and peanut yield, are still placeholders. All of them can be edited in the app.
 
 ## Limitations
 
@@ -240,7 +240,7 @@ Contact: marxus.antonio.magisa@student.ateneo.edu
 5. Allen, R. G., Pereira, L. S., Raes, D., Smith, M. (1998). *Crop evapotranspiration: Guidelines for computing crop water requirements*. FAO Irrigation and Drainage Paper 56. https://www.fao.org/4/x0490e/x0490e00.htm
 6. Doorenbos, J., and Kassam, A. H. (1979). *Yield response to water*. FAO Irrigation and Drainage Paper 33; values as given in FAO Irrigation and Drainage Paper 66. https://www.fao.org/4/i2800e/i2800e02.pdf
 7. Poggio, L., et al. (2021). SoilGrids 2.0. *SOIL* 7, 217-240. DOI: 10.5194/soil-7-217-2021
-8. Philippine Statistics Authority. Regional farmgate price releases: Central Luzon, first quarter 2023 (yellow corn, dry peanut with shell); Biliran, first quarter 2025 (mongo, with 2024 comparison). Database: https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices (refuses automated clients; opens in a browser)
+8. Philippine Statistics Authority, OpenSTAT. (a) Farmgate prices by geolocation, commodity, year and period: Cereals, and Beans and Legumes; Region II (Cagayan Valley), January to May 2026. (b) Legumes: Average Production Costs and Returns, 2021 (mongo, peanut; national). https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices . The downloaded costs-and-returns tables are in `pipeline/data/psa/`.
 9. DOST-PCAARRD (8 May 2018). Isabela town celebrates Mungbean FIESTA. https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta
 10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station (Extracore Project 16, rice-rice-mungbean and rice-rice-corn). https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
 11. Domingo, L. C. (8 April 2021). Isabela town benefits from mungbean. The Manila Times (partly behind a paywall). https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138

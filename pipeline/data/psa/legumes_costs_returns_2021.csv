@@ -1,0 +1,71 @@
+"Legumes: Average Production Costs and Returns by Commodity, Item and Year by Commodity, Item and Year"
+
+"Commodity";"Item";"2021"
+"Mongo";"CASH COSTS";9224
+"Mongo";"..Seeds/Planting materials";1095
+"Mongo";"..Fertilizers";72
+"Mongo";"..Pesticides";728
+"Mongo";"..Hired labor";3661
+"Mongo";"..Land tax";153
+"Mongo";"..Rentals";836
+"Mongo";"..Fuel and oil";207
+"Mongo";"..Irrigation fee";58
+"Mongo";"..Interest payment on crop loan";748
+"Mongo";"..Transport of inputs";69
+"Mongo";"..Food expense";438
+"Mongo";"..Repairs";1159
+"Mongo";"NON-CASH COSTS";3701
+"Mongo";"..Seeds/planting materials paid in kind";1056
+"Mongo";"..Hired labor paid in kind";93
+"Mongo";"..Landlord's share";653
+"Mongo";"..Harvester's share";1891
+"Mongo";"..Irrigation fee paid in kind";8
+"Mongo";"IMPUTED COSTS";12209
+"Mongo";"..Operator/family labor";5450
+"Mongo";"..Exchange labor";95
+"Mongo";"..Depreciation";5221
+"Mongo";"..Interest on operating capital";394
+"Mongo";"..Rental value of owned land";1049
+"Mongo";"ALL  COSTS";25134
+"Mongo";"GROSS RETURNS";53851
+"Mongo";"RETURNS ABOVE CASH COST";44626
+"Mongo";"RETURNS ABOVE CASH AND NON-CASH COSTS";40925
+"Mongo";"NET RETURNS";28717
+"Mongo";"NET PROFIT-COST RATIO";1
+"Mongo";"Cost per kilogram (pesos)";30
+"Mongo";"Yield per hectare (kg)";851
+"Mongo";"Farmgate price (pesos/kg)";63
+"Peanut";"CASH COSTS";24651
+"Peanut";"..Seeds/Planting materials";2157
+"Peanut";"..Fertilizers";650
+"Peanut";"..Pesticides";37
+"Peanut";"..Hired labor";16829
+"Peanut";"..Land tax";243
+"Peanut";"..Rentals";753
+"Peanut";"..Fuel and oil";351
+"Peanut";"..Irrigation fee";77
+"Peanut";"..Interest payment on crop loan";795
+"Peanut";"..Transport of inputs";216
+"Peanut";"..Food expense";1194
+"Peanut";"..Repairs";1350
+"Peanut";"NON-CASH COSTS";4192
+"Peanut";"..Seeds/planting materials paid in kind";2490
+"Peanut";"..Hired labor paid in kind";105
+"Peanut";"..Landlord's share";935
+"Peanut";"..Harvester's share";661
+"Peanut";"..Irrigation fee paid in kind";0
+"Peanut";"IMPUTED COSTS";15281
+"Peanut";"..Operator/family labor";7390
+"Peanut";"..Exchange labor";278
+"Peanut";"..Depreciation";4358
+"Peanut";"..Interest on operating capital";1394
+"Peanut";"..Rental value of owned land";1861
+"Peanut";"ALL  COSTS";44124
+"Peanut";"GROSS RETURNS";70257
+"Peanut";"RETURNS ABOVE CASH COST";45606
+"Peanut";"RETURNS ABOVE CASH AND NON-CASH COSTS";41414
+"Peanut";"NET RETURNS";26133
+"Peanut";"NET PROFIT-COST RATIO";1
+"Peanut";"Cost per kilogram (pesos)";26
+"Peanut";"Yield per hectare (kg)";1684
+"Peanut";"Farmgate price (pesos/kg)";42

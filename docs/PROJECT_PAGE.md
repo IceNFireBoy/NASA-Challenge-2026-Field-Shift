@@ -66,7 +66,7 @@ Links: https://gpm.nasa.gov/data/imerg , https://power.larc.nasa.gov/ , https://
 6. Doorenbos, J., Kassam, A. H. (1979). Yield response to water. FAO Irrigation and Drainage Paper 33; values as given in Paper 66. https://www.fao.org/4/i2800e/i2800e02.pdf
 7. Poggio, L., et al. (2021). SoilGrids 2.0. SOIL 7, 217-240. https://doi.org/10.5194/soil-7-217-2021
 8. DOST-PCAARRD (2018). Isabela town celebrates Mungbean FIESTA. https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta
-9. Philippine Statistics Authority. Regional farmgate price releases, 2023 to 2025. https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices
+9. Philippine Statistics Authority, OpenSTAT. Farmgate prices, Region II, January to May 2026; Legumes costs and returns, 2021. https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices
 10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station. https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
 11. Domingo, L. C. (8 April 2021). Isabela town benefits from mungbean. The Manila Times. https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138
 12. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/

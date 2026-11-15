@@ -12,7 +12,7 @@ export const SOURCES = {
   manilatimes: { label: 'Manila Times (2021): Isabela town benefits from mungbean', url: 'https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138' },
   philrice: { label: 'PhilRice Isabela R&D Highlights 2021 (rice-rice-mungbean and rice-rice-corn)', url: 'https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf' },
   pagasa: { label: 'PAGASA as reported by the Philippine Daily Inquirer (via Asia News Network), 5 Nov 2026: very strong El Nino, impacts into mid-2027', url: 'https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/' },
-  psa: { label: 'PSA farmgate price releases (regional, 2023-2025)', url: 'https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices' },
+  psa: { label: 'PSA OpenSTAT: farmgate prices (Region II, January to May 2026) and Costs and Returns for legumes (2021)', url: 'https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices' },
 };
 
 const pct = (x) => `${Math.round(100 * x)}%`;
@@ -89,14 +89,14 @@ export function buildWhyCard(r, { waterMode, scenarioLabel, rainSource, soilLabe
     card.risks.push('Highest water need and the most sensitive yield response to drought here (Ky 1.25).', 'High cash outlay for hybrid seed and fertiliser; losses are larger in a dry year.', 'Removes nitrogen and adds none.');
     card.validate.push('Whether pump or canal water is available through April.', 'Buyer and drying capacity near you.');
     card.pest = 'Corn and rice are both grasses, so some pests and diseases can carry over (armyworms, for example). The pest break is partial. Verify locally.';
-    card.gaps.push('Corn duration and production cost are assumptions, not from our sources.');
+    card.gaps.push('Corn duration is an assumption; corn yield and production cost are placeholders, not from our sources.');
   }
   if (r.id === 'rice_peanut') {
     card.benefits.push('Legume: adds nitrogen (amount not quantified in our sources).', 'Least sensitive yield response to water stress here (Ky 0.70).', 'Haulms are a good feed.');
     card.risks.push('Very labour-intensive: manual extraction and threshing alone take 15-23 man-days/ha.', 'Needs friable, well-drained soil; waterlogging and hard clay cut pod recovery.', 'Pods must dry well after harvest to avoid aflatoxin.');
     card.validate.push('Soil drainage of your specific field.', 'Labour availability at harvest.');
     card.pest = 'Not a grass, so it interrupts rice-specific pests. Watch for leaf spot and rust.';
-    card.gaps.push('No San Mateo peanut yield data in our sources; yield and cost are illustrative.');
+    card.gaps.push('No San Mateo peanut yield data in our sources; yield and cost are PSA national averages for 2021.');
   }
   if (r.heatFlag) card.risks.push('Hot spell likely during flowering, when flowers and pods are most sensitive to heat.');
   if (r.overlapsWetSeason) card.risks.push('Harvest falls after May 31 and may clash with wet-season rice land preparation.');
