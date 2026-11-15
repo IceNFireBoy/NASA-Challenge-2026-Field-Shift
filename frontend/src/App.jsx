@@ -13,6 +13,7 @@ import ScenarioPicker from './components/ScenarioPicker.jsx';
 import RotationCard from './components/RotationCard.jsx';
 import EconomicsPanel from './components/EconomicsPanel.jsx';
 import Footer from './components/Footer.jsx';
+import UncertaintyPanel from './components/UncertaintyPanel.jsx';
 import Tabs from './components/Tabs.jsx';
 import PastSeasons from './components/PastSeasons.jsx';
 import SeasonCalendar from './components/SeasonCalendar.jsx';
@@ -92,6 +93,7 @@ export default function App() {
             <section aria-labelledby="results">
               <h2 id="results" className="mb-2 text-lg font-bold text-green-900">Results: {scenarioLabel}</h2>
               <div className="space-y-3">
+                <UncertaintyPanel ranked={result.ranked} unc={unc} />
                 {result.ranked.map((r) => (
                   <RotationCard key={r.id} r={r} isCurrent={r.id === state.currentId} laborCap={state.laborCap} waterMode={state.waterMode}
                     topShare={unc.topShare[r.id]} beatsShare={unc.beatsCurrentShare[r.id]} draws={unc.draws}
