@@ -49,8 +49,15 @@ def fetch_ndvi(lat, lon, first_year, last_year):
     q = urllib.parse.urlencode({"latitude": lat, "longitude": lon})
     dates = [d for d in get_json(f"{MODIS_API}/dates?{q}")["dates"]
              if f"{first_year}-06-01" <= d["calendar_date"] <= f"{last_year}-05-31"]
-    out = []
+    # Each 10-date call can take about a minute, so finished chunks are saved and a restart resumes.
+    partial = CACHE / "ndvi_partial.json"
+    CACHE.mkdir(exist_ok=True)
+    done = json.loads(partial.read_text()) if partial.exists() else {}
     for group in chunks(dates, 10):
+        key = group[0]["modis_date"]
+        if key in done:
+            continue
+        rows = []
         params = urllib.parse.urlencode({"latitude": lat, "longitude": lon, "band": NDVI_BAND,
                                          "startDate": group[0]["modis_date"], "endDate": group[-1]["modis_date"],
                                          "kmAboveBelow": 0, "kmLeftRight": 0})
@@ -59,8 +66,11 @@ def fetch_ndvi(lat, lon, first_year, last_year):
         for row in res["subset"]:
             raw = row["data"][0]
             if raw is not None and raw > -3000:  # -3000 is the fill value
-                out.append({"date": row["calendar_date"], "ndvi": round(raw * scale, 4)})
-    CACHE.mkdir(exist_ok=True)
+                rows.append({"date": row["calendar_date"], "ndvi": round(raw * scale, 4)})
+        done[key] = rows
+        partial.write_text(json.dumps(done))
+        print(f"ndvi chunk {len(done)}/{len(chunks(dates, 10))}", flush=True)
+    out = sorted((row for rows in done.values() for row in rows), key=lambda x: x["date"])
     cache.write_text(json.dumps(out))
     return out
 
@@ -156,17 +166,6 @@ def main():
     years = [s["start_year"] for s in climate["seasons"]]
     today = time.strftime("%Y-%m-%d")
 
-    if not (args.offline and not (CACHE / "ndvi_mod13q1.json").exists()):
-        records = fetch_ndvi(loc["lat"], loc["lon"], min(years), max(years) + 1)
-        climate["ndvi"] = {
-            "product": "MOD13Q1 v061, 250 m, 16-day composites, band 250m_16_days_NDVI",
-            "source": "ORNL DAAC MODIS/VIIRS subsetting web service", "url": "https://modis.ornl.gov/rst/api/v1/",
-            "citation": "Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061. NASA LP DAAC. doi:10.5067/MODIS/MOD13Q1.061",
-            "accessed": today,
-            "note": "One 250 m pixel at the town-centre point; fill values dropped; no extra cloud or quality screening.",
-            **summarise_ndvi(records),
-        }
-        print(f"ndvi: {len(records)} composites")
     if not (args.offline and not (CACHE / "soilgrids.json").exists()):
         soil = summarise_soil(fetch_soil(loc["lat"], loc["lon"]))
         if soil:
@@ -178,6 +177,18 @@ def main():
                 **soil,
             }
             print(f"soilgrids: {soil}")
+    CLIMATE.write_text(json.dumps(climate, indent=1) + "\n", encoding="utf-8")  # soil hint lands before the slow NDVI loop
+    if not (args.offline and not (CACHE / "ndvi_mod13q1.json").exists()):
+        records = fetch_ndvi(loc["lat"], loc["lon"], min(years), max(years) + 1)
+        climate["ndvi"] = {
+            "product": "MOD13Q1 v061, 250 m, 16-day composites, band 250m_16_days_NDVI",
+            "source": "ORNL DAAC MODIS/VIIRS subsetting web service", "url": "https://modis.ornl.gov/rst/api/v1/",
+            "citation": "Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061. NASA LP DAAC. doi:10.5067/MODIS/MOD13Q1.061",
+            "accessed": today,
+            "note": "One 250 m pixel at the town-centre point; fill values dropped; no extra cloud or quality screening.",
+            **summarise_ndvi(records),
+        }
+        print(f"ndvi: {len(records)} composites")
     CLIMATE.write_text(json.dumps(climate, indent=1) + "\n", encoding="utf-8")
 
 
