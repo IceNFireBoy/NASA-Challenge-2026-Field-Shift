@@ -7,6 +7,9 @@
 - Phase 2: Compare view (field form, priority sliders, scenarios, ranked cards, why cards,
   editable prices/costs, banners, footer). Engine tests 14 passed; `npm run build` OK.
 
+- Phase 3.1: what-if sliders (rainfall change, warmer by). Irrigation card shows pumped mm; Reset all settings button.
+- Deployed: pushed to GitHub (main). Netlify import is a human step.
+
 ## Next
 - Human check of the dev server at phone and desktop width; one round of fixes.
 - Phase 4 deploy step early, then Phase 3 (Data & methods tab).

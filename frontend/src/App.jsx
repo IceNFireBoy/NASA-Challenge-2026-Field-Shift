@@ -65,7 +65,7 @@ export default function App() {
           <div className="space-y-4">
             <FieldForm state={state} dispatch={dispatch} />
             <PrioritySliders weights={state.weights} dispatch={dispatch} />
-            <ScenarioPicker climate={climate} scenarioId={state.scenarioId} dispatch={dispatch} />
+            <ScenarioPicker climate={climate} scenarioId={state.scenarioId} rainPct={state.rainPct} tempDelta={state.tempDelta} dispatch={dispatch} />
           </div>
           <div className="space-y-4">
             <section aria-labelledby="results">
