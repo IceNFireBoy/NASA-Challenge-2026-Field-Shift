@@ -8,6 +8,8 @@
   editable prices/costs, banners, footer). Engine tests 14 passed; `npm run build` OK.
 
 - Phase 3.1: what-if sliders (rainfall change, warmer by). Irrigation card shows pumped mm; Reset all settings button.
+- Phase 3.2: tab bar + Season calendar (bare fields, vulnerable months).
+- Docs (haiku subagent): README, SI_DISCLOSURE, docs/PROJECT_PAGE, docs/DEMO_SCRIPT drafted; placeholders [LIVE_URL] [DEMO_LINK] [LINK] [TEAM...] left; IMERG DOI marked [VERIFY]; LICENSE file still missing.
 - Deployed: pushed to GitHub (main). Netlify import is a human step.
 
 ## Next

@@ -1,5 +1,5 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
-import { useEffect, useMemo, useReducer } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import climate from './data/climate.json';
 import { evaluate, uncertainty, DEFAULT_WEIGHTS } from './engine/engine.js';
 import { buildWhyCard } from './engine/content.js';
@@ -13,6 +13,13 @@ import ScenarioPicker from './components/ScenarioPicker.jsx';
 import RotationCard from './components/RotationCard.jsx';
 import EconomicsPanel from './components/EconomicsPanel.jsx';
 import Footer from './components/Footer.jsx';
+import Tabs from './components/Tabs.jsx';
+import SeasonCalendar from './components/SeasonCalendar.jsx';
+
+const TABS = [
+  { id: 'compare', label: 'Compare' },
+  { id: 'calendar', label: 'Season calendar' },
+];
 
 const KEY = 'fieldshift.v1';
 const INITIAL = {
@@ -52,6 +59,7 @@ export default function App() {
   const inputs = useMemo(() => ({ climate, ...state }), [state]);
   const result = useMemo(() => evaluate(inputs), [inputs]);
   const unc = useMemo(() => uncertainty(inputs, { draws: 300, currentId: state.currentId }), [inputs, state.currentId]);
+  const [tab, setTab] = useState('compare');
   const rankCount = result.ranked.filter((r) => !r.blocked).length;
   const scenarioLabel = climate.scenarios[state.scenarioId].label;
 
@@ -61,7 +69,13 @@ export default function App() {
         <Header onReset={() => dispatch({ type: 'resetAll' })} />
         <Notice />
         <DataBanners meta={climate.meta} rainSource={result.rainSource} scenarioId={state.scenarioId} />
-        <div className="grid gap-4 lg:grid-cols-[380px_1fr]">
+        <Tabs tabs={TABS} active={tab} onChange={setTab} />
+        {tab === 'calendar' && (
+          <div role="tabpanel" id="panel-calendar" aria-labelledby="tab-calendar">
+            <SeasonCalendar result={result} state={state} climate={climate} scenarioLabel={scenarioLabel} />
+          </div>
+        )}
+        <div role="tabpanel" id="panel-compare" aria-labelledby="tab-compare" hidden={tab !== 'compare'} className="grid gap-4 lg:grid-cols-[380px_1fr]">
           <div className="space-y-4">
             <FieldForm state={state} dispatch={dispatch} />
             <PrioritySliders weights={state.weights} dispatch={dispatch} />
