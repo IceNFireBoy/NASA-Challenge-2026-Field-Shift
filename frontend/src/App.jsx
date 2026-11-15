@@ -15,6 +15,7 @@ import EconomicsPanel from './components/EconomicsPanel.jsx';
 import Footer from './components/Footer.jsx';
 import UncertaintyPanel from './components/UncertaintyPanel.jsx';
 import Community from './components/Community.jsx';
+import DataMethods from './components/DataMethods.jsx';
 import Tabs from './components/Tabs.jsx';
 import PastSeasons from './components/PastSeasons.jsx';
 import SeasonCalendar from './components/SeasonCalendar.jsx';
@@ -24,6 +25,7 @@ const TABS = [
   { id: 'calendar', label: 'Season calendar' },
   { id: 'past', label: 'Past seasons' },
   { id: 'community', label: 'Community' },
+  { id: 'data', label: 'Data & methods' },
 ];
 
 const KEY = 'fieldshift.v1';
@@ -88,6 +90,11 @@ export default function App() {
         {tab === 'community' && (
           <div role="tabpanel" id="panel-community" aria-labelledby="tab-community">
             <Community result={result} climate={climate} scenarioId={state.scenarioId} waterMode={state.waterMode} />
+          </div>
+        )}
+        {tab === 'data' && (
+          <div role="tabpanel" id="panel-data" aria-labelledby="tab-data">
+            <DataMethods climate={climate} />
           </div>
         )}
         <div role="tabpanel" id="panel-compare" aria-labelledby="tab-compare" hidden={tab !== 'compare'} className="grid gap-4 lg:grid-cols-[380px_1fr]">

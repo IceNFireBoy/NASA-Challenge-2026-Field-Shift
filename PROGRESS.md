@@ -12,12 +12,13 @@
 - Phase 3.3: Past seasons tab (trend charts, replay heatmap, monthly rain vs ET0; IMERG-vs-POWER toggle disabled since no IMERG data).
 - Phase 3.4: uncertainty panel above the cards (close-call note under 60%).
 - Phase 3.5: Community tab (illustrative: seed, labour, extra water, coordination prompt, who to involve).
+- Phase 3.6: Data & methods tab (sources, method, parameter table with badges, glossary, limitations). Phase 3 complete.
 - Docs (haiku subagent): README, SI_DISCLOSURE, docs/PROJECT_PAGE, docs/DEMO_SCRIPT drafted; placeholders [LIVE_URL] [DEMO_LINK] [LINK] [TEAM...] left; IMERG DOI marked [VERIFY]; LICENSE file still missing.
 - Deployed: pushed to GitHub (main). Netlify import is a human step.
 
 ## Next
 - Human check of the dev server at phone and desktop width; one round of fixes.
-- Phase 4 deploy step early, then Phase 3 (Data & methods tab).
+- Human: Netlify import, then put live URL in README. Then Phase 4C QA (docs/QA.md), LICENSE (MIT), README markers.
 - IMERG (optional): retry only if the human asks.
 
 ## Known issues
@@ -25,4 +26,4 @@
   gateway timeout (login itself OK). Stopped retrying per instruction; rainfall is NASA POWER.
   Cutoff for further attempts was 20:00. Reverted climate.json to the committed POWER version.
 - Node v26 / Python 3.14 default are outside spec ranges; everything works so far.
-- Plain Phase 2 gaps: user-edited prices show an "Assumption" badge; no rainPct/tempDelta controls yet.
+- Plain Phase 2 gaps: user-edited prices show an "Assumption" badge. Phone width unverified by me.
