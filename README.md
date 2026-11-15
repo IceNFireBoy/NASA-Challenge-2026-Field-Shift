@@ -3,7 +3,7 @@
 
 **A decision-support tool that compares dry-season options after rice for San Mateo, Isabela, using NASA climate data, crop-water science and the farmer's own priorities.**
 
-- Live app: [LIVE_URL]
+- Live app: https://hasbeanplanned.netlify.app
 - Demo video (28 seconds): [DEMO_LINK]
 - Built for the NASA Space Apps Challenge 2026, "Field Shift: Adapting Farms with NASA Data"
 
@@ -27,17 +27,17 @@ Mapped to the challenge objectives:
 |---|---|---|
 | Compare rotation options, including the current one | Ranks fallow, mungbean, corn and peanut side by side, with the current rotation included | Built |
 | Explain each option: why, evidence, benefits, gaps, risks | Each ranked card shows a "why" card, evidence, benefits, gaps, risks and pest notes | Built |
-| Show bare-field periods | Shows how long a field stays bare under each option | Planned / in progress [UPDATE WHEN SHIPPED] |
-| Show vulnerable months | Shows which months are most exposed to water stress | Planned / in progress [UPDATE WHEN SHIPPED] |
+| Show bare-field periods | Shows how long a field stays bare under each option | Built |
+| Show vulnerable months | Shows which months are most exposed to water stress | Built |
 | Pest-cycle notes | Pest and disease notes are shown on each card as qualitative guidance. There is no pest or disease model | Built (qualitative) |
 | Farmer priorities and constraints | Priority sliders and field inputs shape the ranking | Built |
-| Uncertainty | Uncertainty lines appear on each card. A full uncertainty panel is planned | Partly built; panel planned / in progress [UPDATE WHEN SHIPPED] |
-| What-if sliders | Lets the user change rainfall, temperature and price assumptions and see the result | Planned / in progress [UPDATE WHEN SHIPPED] |
-| Season calendar and past-season replay | Shows a calendar of the season and replays past seasons | Planned / in progress [UPDATE WHEN SHIPPED] |
-| Trend charts | Shows how past seasons compare | Planned / in progress [UPDATE WHEN SHIPPED] |
-| Community view | A tab for community input | Planned / in progress [UPDATE WHEN SHIPPED] |
-| Plain-language glossary | Explains terms used in the app | Planned / in progress [UPDATE WHEN SHIPPED] |
-| Satellite vs ground data explained | Explains where the numbers come from and what a satellite estimate is | Planned / in progress [UPDATE WHEN SHIPPED] |
+| Uncertainty | Uncertainty lines appear on each card. | Built |
+| What-if sliders | Lets the user change rainfall and temperature assumptions (prices are editable in the Prices and costs panel) and see the result | Built |
+| Season calendar and past-season replay | Shows a calendar of the season and replays past seasons | Built |
+| Trend charts | Shows how past seasons compare | Built |
+| Community view | A tab for community input | Built |
+| Plain-language glossary | Explains terms used in the app | Built |
+| Satellite vs ground data explained | Explains where the numbers come from and what a satellite estimate is | Built |
 
 **Built today (Compare view):** the field form, priority sliders, the scenario picker, ranked option cards with why, evidence, benefits, gaps, risks and pest notes, uncertainty lines per card, editable prices and costs with status badges, banners that flag data and assumption status, and a reset button.
 

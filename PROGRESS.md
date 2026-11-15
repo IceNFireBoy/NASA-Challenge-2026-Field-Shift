@@ -13,7 +13,7 @@
 - Phase 3.4: uncertainty panel above the cards (close-call note under 60%).
 - Phase 3.5: Community tab (illustrative: seed, labour, extra water, coordination prompt, who to involve).
 - Phase 3.6: Data & methods tab (sources, method, parameter table with badges, glossary, limitations). Phase 3 complete.
-- Docs (haiku subagent): README, SI_DISCLOSURE, docs/PROJECT_PAGE, docs/DEMO_SCRIPT drafted; placeholders [LIVE_URL] [DEMO_LINK] [LINK] [TEAM...] left; IMERG DOI marked [VERIFY]; LICENSE file still missing.
+- Docs (haiku subagent): README, SI_DISCLOSURE, docs/PROJECT_PAGE, docs/DEMO_SCRIPT drafted; placeholders [DEMO_LINK] [LINK] [TEAM...] left; IMERG DOI marked [VERIFY]; LICENSE file still missing.
 - Deployed: pushed to GitHub (main). Netlify import is a human step.
 
 ## Next

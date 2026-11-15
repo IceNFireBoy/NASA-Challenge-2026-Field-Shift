@@ -23,7 +23,7 @@ Features in progress include what-if sliders, a season calendar showing bare-fie
 
 Status and limitations are stated openly in the app. Past seasons are not forecasts. Economic values are illustrative where marked. There is no pest or disease model, no groundwater or capillary rise, and the model has not yet been validated against field records.
 
-Live app: [LINK]
+Live app: https://hasbeanplanned.netlify.app
 Demo video: [LINK]
 Source code: [LINK]
 

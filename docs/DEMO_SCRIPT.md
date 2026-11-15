@@ -37,4 +37,4 @@ Use this if the video cannot be finished. The limit is 7 slides, including the t
 4. **Screenshot of the Compare view.** Show the field form, priority sliders and one ranked card with its uncertainty line. Caption: the tool supports, not replaces, farmer and expert judgement.
 5. **Data and method.** NASA POWER daily climate data. Daily water balance (FAO-56). Yield loss from water stress (FAO-33). Editable prices with status badges. GPM IMERG is not used in the current build.
 6. **Limits and honesty.** Past seasons are not forecasts. NASA POWER is a gridded estimate, not a weather station. Economics are illustrative where marked. No pest model. No groundwater or capillary rise. Not yet validated with field records.
-7. **Links, team and SI disclosure.** Live app [LIVE_URL]. Demo [DEMO_LINK]. Code and licence (MIT). Team [TEAM NAME]. SI use disclosed in SI_DISCLOSURE.md. References on the project page.
+7. **Links, team and SI disclosure.** Live app https://hasbeanplanned.netlify.app. Demo [DEMO_LINK]. Code and licence (MIT). Team [TEAM NAME]. SI use disclosed in SI_DISCLOSURE.md. References on the project page.
