@@ -2,7 +2,7 @@
 # Has Bean Planned: progress
 
 Team NASApusomo. NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
-Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:35 that day.
+Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:28 that day.
 
 ## Where things stand right now
 
@@ -106,7 +106,7 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
   Past seasons has a chart with a typical-year view (least green in Nov at 0.44, greenest in
   Aug at 0.59) and an each-dry-season view. The crop model does not use NDVI.
 
-### IMERG groundwork (branch `phase-5`, not merged, 21:35)
+### IMERG groundwork (branch `phase-5`, not merged, 21:28)
 - `fetch_climate.py --imerg-csv PATH` (+ optional `--imerg-units`): reads a Giovanni
   area-averaged time-series CSV, skips the comment lines and fill values, converts with the
   existing unit table and plausibility check, and returns the same monthly series as the
