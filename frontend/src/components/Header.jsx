@@ -3,7 +3,7 @@ import { LANGS } from '../lib/i18n.js';
 
 function Segmented({ label, options, value, onChange }) {
   return (
-    <div role="group" aria-label={label} className="inline-flex rounded-xl border-2 border-stone-500 bg-white p-0.5">
+    <div role="group" aria-label={label} className="inline-flex max-w-full rounded-xl border-2 border-stone-500 bg-white p-0.5">
       {options.map((o) => (
         <button key={o.id} type="button" aria-pressed={value === o.id} onClick={() => onChange(o.id)}
           className={`pressable min-h-[2.75rem] rounded-lg px-3 font-semibold focus:outline-none focus-visible:ring-4 focus-visible:ring-green-500 ${value === o.id ? 'bg-green-800 text-white' : 'text-stone-800'}`}>

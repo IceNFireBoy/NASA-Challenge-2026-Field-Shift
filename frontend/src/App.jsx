@@ -1,5 +1,5 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useReducer, useState } from 'react';
 import climate from './data/climate.json';
 import { evaluate, uncertainty } from './engine/engine.js';
 import { buildWhyCard } from './engine/content.js';
@@ -19,9 +19,11 @@ import UncertaintyPanel from './components/UncertaintyPanel.jsx';
 import Community from './components/Community.jsx';
 import DataMethods from './components/DataMethods.jsx';
 import Tabs from './components/Tabs.jsx';
-import PastSeasons from './components/PastSeasons.jsx';
 import SeasonCalendar from './components/SeasonCalendar.jsx';
 import FarmerFlow from './components/farmer/FarmerFlow.jsx';
+
+// The chart library loads only when the Past seasons tab is opened, keeping the farmer view light on slow connections.
+const PastSeasons = lazy(() => import('./components/PastSeasons.jsx'));
 
 const TABS = [
   { id: 'compare', label: 'Compare' },
@@ -84,7 +86,7 @@ export default function App() {
             )}
             {tab === 'past' && (
               <div role="tabpanel" id="panel-past" aria-labelledby="tab-past">
-                <PastSeasons climate={climate} inputs={inputs} />
+                <Suspense fallback={<p className="card">Loading charts…</p>}><PastSeasons climate={climate} inputs={inputs} /></Suspense>
               </div>
             )}
             {tab === 'community' && (

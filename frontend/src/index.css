@@ -8,8 +8,12 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Farmer mode: 18 px base text. Every rem-based size (type, spacing, touch targets) scales with it. */
-html.farmer { font-size: 112.5%; }
+/* 18 px base text in both views. Every rem-based size (type, spacing, touch targets) scales with it. */
+html { font-size: 112.5%; }
+
+@layer components {
+  .card { @apply rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-6; }
+}
 
 /* Phone basics: no grey tap flash, no double-tap delay, no text selection on controls. */
 html { -webkit-tap-highlight-color: transparent; }
@@ -38,9 +42,12 @@ button { -webkit-user-select: none; user-select: none; }
 /* Score and progress bars grow by scaling, never by resizing. */
 .fit-fill { transform-origin: left center; transition: transform 250ms var(--ease-out); }
 
+/* Heatmap cells and chart toggles answer the pointer with colour only; data never moves for style. */
+.heat-col { transition: background-color 150ms ease; }
+
 /* Reduced motion: every animation and transition above is switched off. */
 @media (prefers-reduced-motion: reduce) {
   .step-enter, .rise-in { animation: none; }
-  .pressable, .fit-fill { transition: none; }
+  .pressable, .fit-fill, .heat-col { transition: none; }
   .pressable:active:not(:disabled) { transform: none; }
 }

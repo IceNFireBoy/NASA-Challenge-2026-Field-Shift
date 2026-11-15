@@ -13,7 +13,7 @@ const STYLE = {
 // Not a parameter status: marks a number the user typed in.
 const EXTRA_LABELS = { user: 'Your value' };
 
-export default function StatusBadge({ status, title, size = 'text-xs' }) {
+export default function StatusBadge({ status, title, size = 'text-sm' }) {
   return (
     <span title={title} className={`inline-block rounded border px-1.5 py-0.5 font-medium ${size} ${STYLE[status] ?? STYLE.illustrative}`}>
       {STATUS_LABELS[status] ?? EXTRA_LABELS[status] ?? status}

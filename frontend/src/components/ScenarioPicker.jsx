@@ -13,8 +13,8 @@ export default function ScenarioPicker({ climate, scenarioId, rainPct, tempDelta
     refs.current[next]?.focus();
   };
   return (
-    <section aria-labelledby="step3" className="rounded-lg border border-stone-300 bg-white p-4">
-      <h2 id="step3" className="text-lg font-bold text-green-900">Step 3. Scenario</h2>
+    <section aria-labelledby="step3" className="card">
+      <h2 id="step3" className="text-xl font-bold text-green-950">Step 3. Scenario</h2>
       <div role="radiogroup" aria-labelledby="step3" className="mt-2 grid gap-2">
         {SCENARIO_IDS.map((id, i) => (
           <button key={id} ref={(el) => { refs.current[id] = el; }} type="button" role="radio" aria-checked={scenarioId === id}
@@ -39,7 +39,7 @@ export default function ScenarioPicker({ climate, scenarioId, rainPct, tempDelta
           <input id="tempdelta" type="range" min="0" max="3" step="0.5" value={tempDelta} aria-valuetext={`Warmer by ${tempDelta} degrees Celsius`}
             onChange={(e) => dispatch({ type: 'set', key: 'tempDelta', value: Number(e.target.value) })} className="h-11 w-full accent-green-800" />
         </div>
-        <p className="text-xs text-stone-600">Warming raises crop water use (ET0); it does not recount hot days.</p>
+        <p className="text-sm text-stone-600">Warming raises crop water use (ET0); it does not recount hot days.</p>
       </div>
     </section>
   );

@@ -50,13 +50,13 @@ export default function DataMethods({ climate }) {
   const m = climate.meta;
   return (
     <div className="space-y-4">
-      <section aria-labelledby="dm-src" className="rounded-lg border border-stone-300 bg-white p-4">
-        <h2 id="dm-src" className="text-lg font-bold text-green-900">Data sources</h2>
+      <section aria-labelledby="dm-src" className="card">
+        <h2 id="dm-src" className="text-xl font-bold text-green-950">Data sources</h2>
         <ul className="mt-2 space-y-3 text-sm">
           {(m.sources || []).map((s) => (
             <li key={s.id}>
               <a className="font-semibold text-sky-800 underline" href={s.url} target="_blank" rel="noreferrer">{s.name}</a>
-              <span className="ml-2 rounded border border-stone-300 bg-stone-100 px-1.5 py-0.5 text-xs">status: {s.status}</span>
+              <span className="ml-2 rounded border border-stone-300 bg-stone-100 px-1.5 py-0.5 text-sm">status: {s.status}</span>
               {s.resolution_note && <p className="text-stone-700">{s.resolution_note}</p>}
               {s.citation && <p className="text-stone-600">{s.citation}</p>}
             </li>
@@ -69,8 +69,8 @@ export default function DataMethods({ climate }) {
         </ul>
       </section>
 
-      <section aria-labelledby="dm-method" className="rounded-lg border border-stone-300 bg-white p-4">
-        <h2 id="dm-method" className="text-lg font-bold text-green-900">How it works, in plain words</h2>
+      <section aria-labelledby="dm-method" className="card">
+        <h2 id="dm-method" className="text-xl font-bold text-green-950">How it works, in plain words</h2>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">{METHOD.map((t) => <li key={t}>{t}</li>)}</ul>
         <h3 className="mt-3 font-semibold">Harmonising data</h3>
         <p className="text-sm">Everything is resampled to one point and a monthly time step. NASA POWER cells are about 50 km and IMERG cells about 11 km, so field-scale differences are not captured.</p>
@@ -78,8 +78,8 @@ export default function DataMethods({ climate }) {
         <p className="text-sm">Rules and statistics are transparent and can be checked by farmers and extension workers, and they work with small local data. SI was used only as a coding assistant.</p>
       </section>
 
-      <section aria-labelledby="dm-par" className="rounded-lg border border-stone-300 bg-white p-4">
-        <h2 id="dm-par" className="text-lg font-bold text-green-900">Parameters and their status</h2>
+      <section aria-labelledby="dm-par" className="card">
+        <h2 id="dm-par" className="text-xl font-bold text-green-950">Parameters and their status</h2>
         <div className="mt-2 overflow-x-auto">
           <table className="w-full min-w-[640px] text-left text-sm">
             <caption className="sr-only">Model parameters with value, range, status and source</caption>
@@ -99,9 +99,9 @@ export default function DataMethods({ climate }) {
         </div>
       </section>
 
-      <section aria-labelledby="dm-farmer" className="rounded-lg border border-stone-300 bg-white p-4">
-        <h2 id="dm-farmer" className="flex flex-wrap items-center gap-2 text-lg font-bold text-green-900">Farmer view rules <StatusBadge status="assumption" /></h2>
-        <p className="mt-1 text-sm">The Farmer view uses the same engine and settings as this Expert view. These simplifications are our own choices:</p>
+      <section aria-labelledby="dm-farmer" className="card">
+        <h2 id="dm-farmer" className="flex flex-wrap items-center gap-2 text-xl font-bold text-green-950">Farmer view rules <StatusBadge status="assumption" /></h2>
+        <p className="mt-1 text-sm">The Farmer view uses the same engine and settings as this Analytics and Community view. These simplifications are our own choices:</p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
           <li>Priorities: each picked card (up to {MAX_PICKS}) sets its criterion to weight {PICK_WEIGHTS.picked}; every other criterion gets {PICK_WEIGHTS.other}. No pick keeps the default weights. Cards map to: {PRIORITIES.map((p) => `${p.id} = ${p.criterion}`).join(', ')}.</li>
           <li>El Niño question: "yes" uses the strong El Niño scenario; "no" and "not sure" use the typical year, and the result also states what a strong El Niño year would change.</li>
@@ -114,8 +114,8 @@ export default function DataMethods({ climate }) {
         </ul>
       </section>
 
-      <section aria-labelledby="dm-gl"className="rounded-lg border border-stone-300 bg-white p-4">
-        <h2 id="dm-gl" className="text-lg font-bold text-green-900">Glossary</h2>
+      <section aria-labelledby="dm-gl"className="card">
+        <h2 id="dm-gl" className="text-xl font-bold text-green-950">Glossary</h2>
         <dl className="mt-2 space-y-2 text-sm">{GLOSSARY.map((g) => <div key={g.term}><dt className="font-semibold">{g.term}</dt><dd className="text-stone-700">{g.text}</dd></div>)}</dl>
         <h3 className="mt-4 font-semibold">How rotations build soil health</h3>
         <dl className="mt-1 space-y-2 text-sm">{SOIL_HEALTH_PRIMER.map((g) => <div key={g.title}><dt className="font-semibold">{g.title}</dt><dd className="text-stone-700">{g.text}</dd></div>)}</dl>

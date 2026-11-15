@@ -17,6 +17,7 @@
 - Deployed: https://hasbeanplanned.netlify.app (Netlify from GitHub main). LICENSE (MIT) and docs/QA.md added.
 - UX redesign (branch `ux-redesign`, not merged): Farmer view is the default (welcome, 5 picture-card questions, loading, one answer card with reasons + traffic lights, rain slider, "Try a dry year", English/Filipino); Expert toggle keeps the old tabs; settings shared. Community tab is now "Plan together" with 3 SAMPLE Q&A from the glossary (no MAO link: no official contact page found). CSS-only motion (<= 250 ms, off under reduced motion). New `src/lib/{farmer,i18n,state}.js` + tests (22 pass); build OK; checked at 360, 375 and 1280 px.
 - Bugs fixed: Compare panel leaked under every tab; `dateOfDay` "Jun 45" (content.js, approved); stale footer text; calendar legend clipped + low-contrast labels; price fields could not be cleared, now badged "Your value"; "05" number inputs; blocked crop stayed picked in Plan together; hard-coded "24 seasons"; duplicate typical bars; unsafe saved settings; scenario radio keys; favicon.
+- Analytics pass: "Expert" renamed "Analytics and Community"; 18 px base, card/pill-tab restyle and no text under ~14 px in that view; Past seasons charts rebuilt with Recharts 2.15.4 (tooltips, rainfall/heat toggle, clickable replay heatmap with season detail), lazy-loaded so the farmer bundle stays ~85 kB gzip; decorative and warning emoji removed.
 
 ## Next
 - Human: review the Netlify preview on the draft PR, native check of the Filipino labels, then merge.

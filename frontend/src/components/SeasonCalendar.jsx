@@ -40,8 +40,8 @@ export default function SeasonCalendar({ result, state, climate, scenarioLabel }
   });
 
   return (
-    <section aria-labelledby="cal-title" className="rounded-lg border border-stone-300 bg-white p-4">
-      <h2 id="cal-title" className="text-lg font-bold text-green-900">Season calendar: bare fields and vulnerable months</h2>
+    <section aria-labelledby="cal-title" className="card">
+      <h2 id="cal-title" className="text-xl font-bold text-green-950">Season calendar: bare fields and vulnerable months</h2>
       <p className="text-sm text-stone-600">Scenario: {scenarioLabel}. June to November shows wet-season rice as an assumption; adjust your field situation in Compare.</p>
       <div className="mt-3 overflow-x-auto">
         <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="cal-svg-title cal-svg-desc" className="min-w-[640px] w-full">
@@ -79,7 +79,7 @@ export default function SeasonCalendar({ result, state, climate, scenarioLabel }
           })}
         </svg>
       </div>
-      <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-stone-800">
+      <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-stone-800">
         <li className="flex items-center gap-1"><span aria-hidden="true" className="inline-block h-3.5 w-3.5 border border-stone-600" style={{ background: '#cfe3d4' }} />Wet-season rice (assumed)</li>
         {dryRice && <li className="flex items-center gap-1"><span aria-hidden="true" className="inline-block h-3.5 w-3.5 border border-stone-600" style={{ background: '#9fc7ad' }} />Dry-season rice</li>}
         <li className="flex items-center gap-1"><span aria-hidden="true" className="inline-block h-3.5 w-3.5 border border-stone-400" style={{ background: 'repeating-linear-gradient(45deg, #f3efe8 0 3px, #b8ae9c 3px 5px)' }} />Bare field (hatched)</li>

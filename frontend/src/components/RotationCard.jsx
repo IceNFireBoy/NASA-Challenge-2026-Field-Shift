@@ -18,7 +18,7 @@ export default function RotationCard({ r, isCurrent, laborCap, waterMode, topSha
           ? <span className="rounded bg-red-100 px-2 py-0.5 text-sm font-bold text-red-900">Blocked</span>
           : <span className="rounded-full bg-green-800 px-2.5 py-0.5 text-sm font-bold text-white" aria-label={`Rank ${r.rank}`}>#{r.rank}</span>}
         <h3 className="text-lg font-bold">{r.crop.name}</h3>
-        {isCurrent && <span className="rounded bg-stone-200 px-2 py-0.5 text-xs font-semibold">Your current rotation</span>}
+        {isCurrent && <span className="rounded bg-stone-200 px-2 py-0.5 text-sm font-semibold">Your current rotation</span>}
       </header>
 
       {r.blocked ? (
@@ -29,7 +29,7 @@ export default function RotationCard({ r, isCurrent, laborCap, waterMode, topSha
           <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-sm sm:grid-cols-4">
             <div><dt className="text-stone-600">Water need met</dt><dd className="font-semibold">
               {r.fallow ? 'no crop' : waterMode === 'irrigated' ? `100% with irrigation (about ${Math.round(r.irrigationMm).toLocaleString('en-PH')} mm pumped)` : pc(r.pctMet)}
-              {!r.fallow && waterMode === 'irrigated' && <span className="block text-xs font-normal text-stone-600">Rain + soil water alone: {pc(r.pctMet)}</span>}
+              {!r.fallow && waterMode === 'irrigated' && <span className="block text-sm font-normal text-stone-600">Rain + soil water alone: {pc(r.pctMet)}</span>}
             </dd></div>
             <div><dt className="text-stone-600">Net per ha</dt><dd className="font-semibold">{formatPhp(r.net)}</dd></div>
             <div><dt className="text-stone-600">Labour</dt><dd className={`font-semibold ${overLabor ? 'text-red-800' : ''}`}>{r.laborMd.toLocaleString('en-PH')} man-days{overLabor && ' (above your limit)'}</dd></div>

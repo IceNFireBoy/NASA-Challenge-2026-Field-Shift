@@ -6,9 +6,9 @@ import { useNormalizedWeights } from '../hooks/useNormalizedWeights.js';
 export default function PrioritySliders({ weights, dispatch }) {
   const { percents } = useNormalizedWeights(weights);
   return (
-    <section aria-labelledby="step2" className="rounded-lg border border-stone-300 bg-white p-4">
+    <section aria-labelledby="step2" className="card">
       <div className="flex items-center justify-between">
-        <h2 id="step2" className="text-lg font-bold text-green-900">Step 2. Your priorities</h2>
+        <h2 id="step2" className="text-xl font-bold text-green-950">Step 2. Your priorities</h2>
         <button type="button" onClick={() => dispatch({ type: 'resetWeights' })} className="min-h-[44px] rounded border border-stone-400 px-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700">Reset</button>
       </div>
       <p className="text-sm text-stone-600">Move a slider up for what matters more. Shares always add up to 100%.</p>
@@ -25,7 +25,7 @@ export default function PrioritySliders({ weights, dispatch }) {
               aria-valuetext={`${c.label} ${weights[c.id]}, ${percents[c.id]}% of total`}
               onChange={(e) => dispatch({ type: 'weight', key: c.id, value: Number(e.target.value) })}
               className="h-11 w-full accent-green-800" />
-            <p className="text-xs text-stone-600">{c.hint}</p>
+            <p className="text-sm text-stone-600">{c.hint}</p>
           </div>
         ))}
       </div>

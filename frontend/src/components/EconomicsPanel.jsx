@@ -11,8 +11,8 @@ const FIELDS = [
 
 export default function EconomicsPanel({ overrides, dispatch }) {
   return (
-    <details className="rounded-lg border border-stone-300 bg-white p-4">
-      <summary className="min-h-[44px] cursor-pointer py-2 text-lg font-bold text-green-900">Prices and costs (editable)</summary>
+    <details className="card">
+      <summary className="min-h-[44px] cursor-pointer py-2 text-xl font-bold text-green-950">Prices and costs (editable)</summary>
       <p className="text-sm text-stone-600">Many of these are illustrative. Replace them with your own numbers; the ranking updates immediately.</p>
       <div className="mt-3 space-y-4">
         {ROTATION_IDS.filter((id) => !CROPS[id].isFallow).map((id) => (
@@ -30,7 +30,7 @@ export default function EconomicsPanel({ overrides, dispatch }) {
                       value={cur ?? p.value}
                       onChange={(v) => dispatch({ type: 'override', id, key, value: v })} />
                     <div className="mt-1"><StatusBadge status={cur !== undefined ? 'user' : p.status} title={cur !== undefined ? 'You typed this value; clear the box to go back to the default' : (p.source ?? p.note ?? '')} /></div>
-                    {p.source && <p className="mt-1 text-xs text-stone-600">{p.source}</p>}
+                    {p.source && <p className="mt-1 text-sm text-stone-600">{p.source}</p>}
                   </div>
                 );
               })}

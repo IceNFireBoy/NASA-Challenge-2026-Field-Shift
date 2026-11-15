@@ -10,8 +10,8 @@ export default function FieldForm({ state, dispatch }) {
   const planting = resolvePlanting(state.situationId, state.plantingId);
   const set = (key) => (e) => dispatch({ type: 'set', key, value: e.target.value });
   return (
-    <section aria-labelledby="step1" className="rounded-lg border border-stone-300 bg-white p-4">
-      <h2 id="step1" className="text-lg font-bold text-green-900">Step 1. Your field</h2>
+    <section aria-labelledby="step1" className="card">
+      <h2 id="step1" className="text-xl font-bold text-green-950">Step 1. Your field</h2>
 
       <fieldset className="mt-3">
         <legend className="text-sm font-semibold">Field situation</legend>
@@ -41,7 +41,7 @@ export default function FieldForm({ state, dispatch }) {
         </div>
         <div>
           <label htmlFor="planting" className="text-sm font-semibold">
-            Planting date {!state.plantingId && <span className="ml-1 rounded bg-stone-200 px-1.5 py-0.5 text-xs font-medium">default</span>}
+            Planting date {!state.plantingId && <span className="ml-1 rounded bg-stone-200 px-1.5 py-0.5 text-sm font-medium">default</span>}
           </label>
           <select id="planting" className={field} value={planting.id} onChange={(e) => dispatch({ type: 'set', key: 'plantingId', value: e.target.value === defaultPlanting ? null : e.target.value })}>
             {PLANTING_OPTIONS.map((p) => <option key={p.id} value={p.id}>{p.label}{p.id === defaultPlanting ? ' (default)' : ''}</option>)}
