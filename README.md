@@ -148,8 +148,8 @@ All calculations live in one engine (`frontend/src/engine/engine.js`) with autom
 
 These are results from the committed data with the default settings (after wet-season rice, loose soil, rain only, default priorities). They describe past seasons and are not a forecast.
 
-- **Typical year:** Mungbean scores 83, peanut 70, corn 65, fallow 48. Mungbean comes first in 77% of the 300 what-if runs.
-- **Strong El Niño year:** Mungbean 83, peanut 50, fallow 48, corn 37. Corn falls below leaving the field idle, and mungbean comes first in 99% of runs.
+- **Typical year:** Mungbean scores 81, peanut 69, corn 67, fallow 48. Mungbean comes first in 77% of the 300 what-if runs.
+- **Strong El Niño year:** Mungbean 83, peanut 50, fallow 48, corn 39. Corn falls below leaving the field idle, and mungbean comes first in 99% of runs.
 - **Replay:** mungbean met at least 80% of its water need in 23 of 24 past dry seasons.
 - **Rainfall:** typical dry-season months are 176, 87, 63, 85, 79 and 202 mm (December to May, IMERG); a strong El Niño year totals 573 mm against 692 mm.
 - **Greenness:** the town-centre pixel is least green in November (NDVI 0.44) and greenest in August (0.59), with a second peak in January.
@@ -161,7 +161,7 @@ Income figures rest on illustrative prices and costs until local ones are entere
 On 15 November 2026 every cited link was opened and the cited figures were compared with the pages. Details are in [SI_DISCLOSURE.md](SI_DISCLOSURE.md). In short:
 
 - **Confirmed:** FAO-56 crop coefficients and FAO-33 yield-response factors; mungbean nitrogen fixation (21 to 85 kg N/ha); San Mateo mungbean yield (800 to 1,000 kg/ha) and area; the PhilRice rotation project; the Manila Times and PAGASA statements; the IMERG and MODIS DOIs; mungbean and peanut farmgate prices.
-- **Corrected:** the ENSO table now uses NOAA's current ERSSTv6 ONI instead of ERSSTv5 (two season labels changed; no scenario or ranking changed); the yellow-corn price is now badged Illustrative because one of its two cited figures was for palay, not corn; a 7,000-hectare figure is now credited to DOST-PCAARRD; the IMERG citation year is 2023.
+- **Corrected:** the ENSO table now uses NOAA's current ERSSTv6 ONI instead of ERSSTv5 (two season labels changed; no scenario or ranking changed); the yellow-corn price is now the confirmed PSA Central Luzon figure (₱18.14/kg, first quarter 2023) because the other figure it had cited was for palay, not corn; a 7,000-hectare figure is now credited to DOST-PCAARRD; the IMERG citation year is 2023.
 - **Still secondary, not checked against a primary source:** mungbean and peanut crop duration, and peanut harvest labour. They are badged Secondary source or Assumption in the app.
 
 ## Limitations

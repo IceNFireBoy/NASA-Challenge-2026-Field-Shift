@@ -52,7 +52,7 @@ Near the deadline the team had Claude Code open every cited link and compare the
 - **Confirmed against the source:** FAO-56 crop coefficients (mid and end season) and FAO-33 yield-response factors for beans, maize and groundnut; mungbean nitrogen fixation; San Mateo mungbean yield and area (DOST-PCAARRD); the PhilRice rice-rice-mungbean and rice-rice-corn project; the Manila Times "Munggo Capital" and idle-fields statements; the PAGASA El Niño report; the IMERG and MOD13Q1 DOIs and citations; the mungbean and peanut farmgate prices.
 - **Corrected:**
   - The ENSO table was moved from NOAA's ERSSTv5 ONI to the current ERSSTv6 ONI. Two labels changed (2018-19 is now a moderate El Niño, 2024-25 is now La Niña); no scenario and no ranking changed.
-  - A yellow-corn farmgate price had been attributed to a PSA figure that is actually for palay. The corn price is now badged **Illustrative** and cites only the confirmed PSA Central Luzon figure.
+  - A yellow-corn farmgate price had been attributed to a PSA figure that is actually for palay. The corn price is now the confirmed PSA Central Luzon figure (₱18.14/kg, first quarter 2023).
   - A 7,000-hectare figure had been attributed to The Manila Times; it is from DOST-PCAARRD.
   - The IMERG citation year was corrected to 2023.
 - **Could not be opened by an automated client** (the sites refuse them; they open in a normal browser): PSA OpenSTAT and the PSA regional release pages. The Manila Times article is partly behind a paywall.
