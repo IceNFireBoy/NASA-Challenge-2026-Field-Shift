@@ -2,22 +2,22 @@
 # Has Bean Planned: progress
 
 Team NASApusomo. NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
-Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:15 that day.
+Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:20 that day.
 
 ## Where things stand right now
 
 | Item | State |
 | --- | --- |
-| Live site (https://hasbeanplanned.netlify.app) | Serves `main` at commit `2baafc8`: the UX redesign, without Phase 5 |
-| Branch `main` | UX redesign merged (PR 1). Tests and build pass |
-| Branch `phase-5` | Pushed, **not merged**. Rename, peso sign, Filipino in both views, map, NDVI and SoilGrids code |
-| SoilGrids soil data | **In `climate.json`** on `phase-5`: clay loam (32% clay, 42% sand, top 30 cm). Soil hint checked in the browser |
-| MODIS NDVI data | **In `climate.json`** on `phase-5`: 552 composites, 2001-06-10 to 2025-05-25. Chart checked in the browser |
-| Tests | Frontend 22 pass, pipeline 14 pass, `npm run build` OK (on `phase-5`) |
+| Live site (https://hasbeanplanned.netlify.app) | Serves `main` at merge commit `b752b35`: UX redesign plus Phase 5. New title and bundle confirmed at 21:15; live pages not clicked through |
+| Branch `main` | UX redesign (PR 1) and Phase 5 both merged. Tests and build pass |
+| Branch `phase-5` | Merged into `main` at 21:14 on the human's instruction. Branch kept on GitHub |
+| SoilGrids soil data | **In `climate.json`** on `main`: clay loam (32% clay, 42% sand, top 30 cm). Soil hint checked in the browser |
+| MODIS NDVI data | **In `climate.json`** on `main`: 552 composites, 2001-06-10 to 2025-05-25. Chart checked in the browser |
+| Tests | Frontend 22 pass, pipeline 14 pass, `npm run build` OK (on `main` after the merge) |
 
 ## Waiting on
 
-- **Human decision only:** merge `phase-5` into `main`. Nothing is downloading any more.
+- Nothing is running or downloading. Everything left is on the human's list at the bottom.
 
 ## Done
 
@@ -73,7 +73,7 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 - A stale saved setting in localStorage could crash the app to a white screen.
 - Scenario radio group had no arrow-key support. No favicon.
 
-### Phase 5 (branch `phase-5`, not merged)
+### Phase 5 (merged to `main`, live)
 - App and docs renamed "Has Bean Planned"; team and contact email filled in; source-code link set.
 - "PHP" replaced by the peso sign across the app. This touched `engine.js` (money formatter
   and one hint) and `params.js` (source notes); no maths changed.
@@ -135,4 +135,3 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 - README line 111 says `[ADD LICENSE FILE TO REPOSITORY]`; the LICENSE file exists, so delete the tag.
 - IMERG DOI: README and PROJECT_PAGE cite `3B-HH` marked `[VERIFY]`; the app uses `3B-MONTH`.
 - Native read of the Filipino labels.
-- Decide on merging `phase-5`.
