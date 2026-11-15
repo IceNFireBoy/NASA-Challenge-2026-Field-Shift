@@ -2,7 +2,7 @@
 # Has Bean Planned: progress
 
 Team NASApusomo. NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
-Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 20:45 that day.
+Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 20:55 that day.
 
 ## Where things stand right now
 
@@ -11,16 +11,17 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 | Live site (https://hasbeanplanned.netlify.app) | Serves `main` at commit `2baafc8`: the UX redesign, without Phase 5 |
 | Branch `main` | UX redesign merged (PR 1). Tests and build pass |
 | Branch `phase-5` | Pushed, **not merged**. Rename, peso sign, Filipino in both views, map, NDVI and SoilGrids code |
-| NDVI + SoilGrids download | **Running in the background** (second attempt, started 20:44). Data not in `climate.json` yet |
+| SoilGrids soil data | **In `climate.json`** on `phase-5`: clay loam (32% clay, 42% sand, top 30 cm). Soil hint checked in the browser |
+| NDVI download | **Running in the background** (third attempt, started 20:50, resuming from 3 of 56 requests) |
 | Tests | Frontend 22 pass, pipeline 14 pass, `npm run build` OK (on `phase-5`) |
 
 ## Waiting on
 
-- **MODIS NDVI and SoilGrids data** (`pipeline/fetch_extras.py`). The MODIS service answers one
-  10-date request in about 50 seconds and 56 requests are needed, so expect 45 to 50 minutes.
-  Until it finishes, the NDVI chart (Past seasons) and the soil hint (under the Soil dropdown)
-  stay hidden; both appear on their own once the optional `ndvi` / `soilgrids` blocks exist.
-- When it finishes: check the chart and hint in the browser, commit `climate.json`, push `phase-5`.
+- **MODIS NDVI data** (`pipeline/fetch_extras.py`). The MODIS service is slow today: about
+  80 seconds per 10-date request, 53 requests left, so roughly 70 minutes if it keeps answering.
+  Until it finishes the NDVI chart (Past seasons) stays hidden; it appears on its own once the
+  optional `ndvi` block exists. If it fails once more the same way, stop retrying (rule 9).
+- When it finishes: check the chart in the browser, commit `climate.json`, push `phase-5`.
 - **Human decision:** merge `phase-5` into `main`. The human asked to wait for NDVI first.
   If NDVI is not done by about 22:45, merge without it; the app works with the blocks absent.
 
@@ -88,14 +89,18 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 - Stretch 2, map: Leaflet 1.9.4 + OpenStreetMap in Data & methods with the point, one NASA
   POWER cell and one IMERG cell, attribution shown. Boxes are centred on the point to show
   cell size, not the true grid position (the caption says so). Checked in the browser.
-- Stretch 3 and 4, code only so far: `pipeline/fetch_extras.py` adds optional `ndvi` and
-  `soilgrids` blocks to `climate.json` (new keys only), with an NDVI chart and a soil hint.
+- Stretch 4, SoilGrids: done. `pipeline/fetch_extras.py` added a `soilgrids` block (new key
+  only; existing keys verified unchanged). A hint under the Soil dropdown says the global map
+  suggests clay loam; it never changes the setting.
+- Stretch 3, NDVI: code done (chart in Past seasons), data still downloading.
 
 ## What went wrong
 
 - **GPM IMERG never loaded.** Two attempts (full run, then `--imerg-limit 6`) hit an Earthdata
   gateway timeout; login worked. Stopped per the two-failures rule. All rainfall is NASA POWER,
   and the app says so in a banner. The "IMERG vs POWER" chart toggle is disabled.
+- **Second NDVI download timed out.** After 3 of 56 requests the MODIS server stopped accepting
+  connections (WinError 10060). Those 3 are saved; a third run is resuming from them.
 - **First NDVI download was lost.** It ran in the background, the session ended before it
   finished, and the script only saved at the very end, so nothing was kept. The script now
   saves after every request and resumes, and fetches SoilGrids first.
