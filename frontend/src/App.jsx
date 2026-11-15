@@ -14,11 +14,13 @@ import RotationCard from './components/RotationCard.jsx';
 import EconomicsPanel from './components/EconomicsPanel.jsx';
 import Footer from './components/Footer.jsx';
 import Tabs from './components/Tabs.jsx';
+import PastSeasons from './components/PastSeasons.jsx';
 import SeasonCalendar from './components/SeasonCalendar.jsx';
 
 const TABS = [
   { id: 'compare', label: 'Compare' },
   { id: 'calendar', label: 'Season calendar' },
+  { id: 'past', label: 'Past seasons' },
 ];
 
 const KEY = 'fieldshift.v1';
@@ -73,6 +75,11 @@ export default function App() {
         {tab === 'calendar' && (
           <div role="tabpanel" id="panel-calendar" aria-labelledby="tab-calendar">
             <SeasonCalendar result={result} state={state} climate={climate} scenarioLabel={scenarioLabel} />
+          </div>
+        )}
+        {tab === 'past' && (
+          <div role="tabpanel" id="panel-past" aria-labelledby="tab-past">
+            <PastSeasons climate={climate} inputs={inputs} />
           </div>
         )}
         <div role="tabpanel" id="panel-compare" aria-labelledby="tab-compare" hidden={tab !== 'compare'} className="grid gap-4 lg:grid-cols-[380px_1fr]">
