@@ -1,6 +1,7 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
 import { FIELD_SITUATIONS, SOILS, CROPS, ROTATION_IDS } from '../engine/params.js';
 import { PLANTING_OPTIONS, resolvePlanting } from '../engine/engine.js';
+import NumField from './NumField.jsx';
 
 const field = 'min-h-[44px] w-full rounded border border-stone-400 bg-white px-3 py-2 text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700';
 
@@ -9,8 +10,8 @@ export default function FieldForm({ state, dispatch }) {
   const planting = resolvePlanting(state.situationId, state.plantingId);
   const set = (key) => (e) => dispatch({ type: 'set', key, value: e.target.value });
   return (
-    <section aria-labelledby="step1" className="rounded-lg border border-stone-300 bg-white p-4">
-      <h2 id="step1" className="text-lg font-bold text-green-900">Step 1. Your field</h2>
+    <section aria-labelledby="step1" className="card">
+      <h2 id="step1" className="text-xl font-bold text-green-950">Step 1. Your field</h2>
 
       <fieldset className="mt-3">
         <legend className="text-sm font-semibold">Field situation</legend>
@@ -40,7 +41,7 @@ export default function FieldForm({ state, dispatch }) {
         </div>
         <div>
           <label htmlFor="planting" className="text-sm font-semibold">
-            Planting date {!state.plantingId && <span className="ml-1 rounded bg-stone-200 px-1.5 py-0.5 text-xs font-medium">default</span>}
+            Planting date {!state.plantingId && <span className="ml-1 rounded bg-stone-200 px-1.5 py-0.5 text-sm font-medium">default</span>}
           </label>
           <select id="planting" className={field} value={planting.id} onChange={(e) => dispatch({ type: 'set', key: 'plantingId', value: e.target.value === defaultPlanting ? null : e.target.value })}>
             {PLANTING_OPTIONS.map((p) => <option key={p.id} value={p.id}>{p.label}{p.id === defaultPlanting ? ' (default)' : ''}</option>)}
@@ -54,8 +55,8 @@ export default function FieldForm({ state, dispatch }) {
         </div>
         <div>
           <label htmlFor="labor" className="text-sm font-semibold">Labour available (man-days per ha)</label>
-          <input id="labor" type="number" min="0" max="200" inputMode="numeric" className={field} value={state.laborCap}
-            onChange={(e) => dispatch({ type: 'set', key: 'laborCap', value: Math.max(0, Number(e.target.value) || 0) })} />
+          <NumField id="labor" max={200} inputMode="numeric" className={field} value={state.laborCap}
+            onChange={(v) => dispatch({ type: 'set', key: 'laborCap', value: v })} />
         </div>
       </div>
     </section>

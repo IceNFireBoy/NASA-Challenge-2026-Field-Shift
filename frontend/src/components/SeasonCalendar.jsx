@@ -1,12 +1,15 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useState } from 'react';
 import { SEASON_DAYS, SEASON_LENGTH, monthlyStress } from '../engine/engine.js';
 import { dateOfDay } from '../engine/content.js';
 import { ROTATION_COLORS } from '../lib/colors.js';
 
 const MONTHS = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'];
-const W = 720; const LEFT = 150; const COL = (W - LEFT) / 12;
+const WET = '#cfe3d4'; const DRY_RICE = '#9fc7ad';
+const BARE = 'repeating-linear-gradient(45deg, #f5f1ea 0 6px, #d9d0c1 6px 9px)';
+const cols = { gridTemplateColumns: '7rem repeat(12, minmax(0, 1fr))' };
 
-// Season day (0 = Dec 1) -> position along Jun..May axis, in months.
+// Season day (0 = Dec 1) -> position along the Jun..May axis, in months.
 function pos(d) {
   if (d >= SEASON_LENGTH) return 12;
   let rest = d;
@@ -16,87 +19,118 @@ function pos(d) {
   }
   return 12;
 }
-const x = (p) => LEFT + p * COL;
+const pct = (months) => `${(months / 12) * 100}%`;
+
+const Swatch = ({ bg, children }) => (
+  <li className="flex items-center gap-1.5"><span aria-hidden="true" className="inline-block h-4 w-6 rounded border border-stone-400" style={{ background: bg }} />{children}</li>
+);
 
 export default function SeasonCalendar({ result, state, climate, scenarioLabel }) {
   const monthly = climate.scenarios[state.scenarioId].monthly;
   const stress = monthlyStress(monthly, { rainPct: state.rainPct, tempDelta: state.tempDelta });
   const dryRice = state.situationId === 'after_dry_rice';
   const start = result.planting.day;
-  const rowH = 34; const top = 78;
-  const H = top + result.ranked.length * rowH + 40;
+  const firstFlag = stress.findIndex((s) => s.waterStress || s.heatStress);
+  const [month, setMonth] = useState(null);
+  const [rowId, setRowId] = useState(null);
+  const mi = month ?? (firstFlag >= 0 ? firstFlag : 0);
+  const sel = stress[mi];
 
   const rows = result.ranked.map((r) => {
-    const segs = [{ from: 0, to: 6, label: 'Wet-season rice (typical, assumed)', fill: '#cfe3d4' }];
+    const segs = [{ from: 0, to: 6, label: 'Wet-season rice', fill: WET }];
     let covered = 0;
-    if (dryRice && !r.blocked) { segs.push({ from: 6, to: pos(start), label: 'Dry-season rice', fill: '#9fc7ad' }); covered += start; }
+    if (dryRice && !r.blocked) { segs.push({ from: 6, to: pos(start), label: 'Dry-season rice', fill: DRY_RICE }); covered += start; }
     if (!r.blocked && !r.fallow) {
       const endDay = Math.min(r.end, SEASON_LENGTH);
-      segs.push({ from: pos(start), to: pos(endDay), label: r.crop.short, fill: ROTATION_COLORS[r.id], crop: true });
+      segs.push({ from: pos(start), to: pos(endDay), label: r.crop.short, fill: ROTATION_COLORS[r.id] });
       covered += endDay - start;
     }
-    const bareDays = Math.max(0, SEASON_LENGTH - covered);
-    return { r, segs, bareDays };
+    return { r, segs, bareDays: Math.max(0, SEASON_LENGTH - covered) };
   });
+  const picked = rows.find((x) => x.r.id === rowId) ?? rows[0];
+  const describe = ({ r, bareDays }) => (r.blocked ? 'Blocked on this soil, so it is not placed on the calendar.'
+    : r.fallow ? `The field stays bare for about ${(bareDays / 30.4).toFixed(0)} months of December to May.`
+      : `Covers the field for ${r.crop.duration} days, from ${dateOfDay(r.start)} to about ${dateOfDay(r.end)}. About ${(bareDays / 30.4).toFixed(1)} months of December to May stay bare.`);
+  const flags = stress.filter((s) => s.waterStress).map((s) => `${s.month} (water)`).concat(stress.filter((s) => s.heatStress).map((s) => `${s.month} (heat)`));
 
   return (
-    <section aria-labelledby="cal-title" className="rounded-lg border border-stone-300 bg-white p-4">
-      <h2 id="cal-title" className="text-lg font-bold text-green-900">Season calendar: bare fields and vulnerable months</h2>
-      <p className="text-sm text-stone-600">Scenario: {scenarioLabel}. June to November shows wet-season rice as an assumption; adjust your field situation in Compare.</p>
-      <div className="mt-3 overflow-x-auto">
-        <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="cal-svg-title cal-svg-desc" className="min-w-[640px] w-full">
-          <title id="cal-svg-title">Twelve-month field calendar, June to May, for each rotation</title>
-          <desc id="cal-svg-desc">Bars show wet-season rice, the dry-season crop and bare field. Top rows mark months of water stress and heat.</desc>
-          <defs>
-            <pattern id="bare" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#f3efe8" /><line x1="0" y1="0" x2="0" y2="6" stroke="#b8ae9c" strokeWidth="2" /></pattern>
-          </defs>
-          {MONTHS.map((m, i) => <text key={m} x={x(i) + COL / 2} y={14} textAnchor="middle" fontSize="12" fill="#44403c">{m}</text>)}
-          <text x={LEFT - 8} y={34} textAnchor="end" fontSize="11" fill="#44403c">Water stress</text>
-          <text x={LEFT - 8} y={58} textAnchor="end" fontSize="11" fill="#44403c">Heat (35 °C+)</text>
-          {stress.map((s, i) => (
-            <g key={s.month}>
-              <rect x={x(6 + i) + 1} y={22} width={COL - 2} height={18} rx="3" fill={s.waterStress ? '#fde68a' : '#f5f5f4'} stroke={s.waterStress ? '#b45309' : '#d6d3d1'} />
-              <text x={x(6 + i) + COL / 2} y={35} textAnchor="middle" fontSize="11" fontWeight="600" fill="#292524">{s.waterStress ? '⚠ dry' : 'ok'}</text>
-              <rect x={x(6 + i) + 1} y={46} width={COL - 2} height={18} rx="3" fill={s.heatStress ? '#fecaca' : '#f5f5f4'} stroke={s.heatStress ? '#b91c1c' : '#d6d3d1'} />
-              <text x={x(6 + i) + COL / 2} y={59} textAnchor="middle" fontSize="11" fontWeight="600" fill="#292524">{s.heatStress ? `⚠ ${Math.round(s.hotDays)} d` : 'ok'}</text>
-            </g>
+    <section aria-labelledby="cal-title" className="card">
+      <h2 id="cal-title" className="text-xl font-bold text-green-950">Season calendar: bare fields and vulnerable months</h2>
+      <p className="text-sm text-stone-700">Scenario: {scenarioLabel}. June to November shows wet-season rice as an assumption. Pick a month or a row for details.</p>
+
+      <div className="mt-4 overflow-x-auto pb-1">
+        <div className="min-w-[760px] space-y-1.5">
+          <div className="grid items-end" style={cols}>
+            <span />
+            {MONTHS.map((m, i) => <span key={m} className={`pb-1 text-center text-sm font-semibold ${i >= 6 ? 'text-stone-900' : 'text-stone-500'}`}>{m}</span>)}
+          </div>
+
+          {[['Water', 'waterStress', 'dry'], ['Heat (35 °C+)', 'heatStress', null]].map(([name, key, word]) => (
+            <div key={key} className="grid items-center" style={cols}>
+              <span className="pr-2 text-sm font-semibold">{name}</span>
+              <span className="col-span-6 mx-px flex h-9 items-center justify-center rounded-md bg-stone-100 text-sm text-stone-600">not assessed (wet season)</span>
+              {stress.map((s, i) => {
+                const flag = s[key];
+                return (
+                  <button key={s.month} type="button" aria-pressed={mi === i} onClick={() => setMonth(i)}
+                    aria-label={`${s.month}: ${name} ${flag ? 'flagged' : 'ok'}`}
+                    className={`heat-col mx-px flex h-9 items-center justify-center rounded-md border text-sm font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700 ${flag ? 'border-stone-900 bg-stone-900 text-white' : 'border-stone-300 bg-white text-stone-700'} ${mi === i ? 'ring-2 ring-green-800 ring-offset-1' : ''}`}>
+                    {flag ? (word ?? `${Math.round(s.hotDays)} d`) : 'ok'}
+                  </button>
+                );
+              })}
+            </div>
           ))}
-          {rows.map(({ r, segs }, k) => {
-            const y = top + k * rowH;
+
+          <div className="pt-2" />
+          {rows.map((row) => {
+            const { r, segs } = row; const on = picked.r.id === r.id;
             return (
-              <g key={r.id}>
-                <text x={LEFT - 8} y={y + 19} textAnchor="end" fontSize="12" fontWeight="600" fill="#292524">{r.crop.short}</text>
-                <rect x={LEFT} y={y + 4} width={12 * COL} height={22} fill="url(#bare)" stroke="#b8ae9c" />
-                {segs.map((s) => s.to > s.from && (
-                  <g key={s.label}>
-                    <rect x={x(s.from)} y={y + 4} width={(s.to - s.from) * COL} height={22} fill={s.fill} stroke="#57534e" />
-                    {(s.to - s.from) * COL > 38 && <text x={x(s.from) + 4} y={y + 19} fontSize="11" fill={s.crop ? '#fff' : '#1c1917'} fontWeight="600">{s.crop ? s.label : s.label.length > 22 && (s.to - s.from) < 8 ? 'Rice' : s.label}</text>}
-                  </g>
-                ))}
-                {r.blocked && <text x={LEFT + 6 * COL + 6} y={y + 19} fontSize="11" fill="#7f1d1d" fontWeight="600">Blocked on this soil</text>}
-              </g>
+              <button key={r.id} type="button" aria-pressed={on} onClick={() => setRowId(r.id)} aria-label={`${r.crop.short}: ${describe(row)}`}
+                className={`heat-col grid w-full items-center rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700 ${on ? 'bg-stone-200' : ''}`} style={cols}>
+                <span className="px-2 text-sm font-bold">{r.crop.short}</span>
+                <span className="relative col-span-12 my-1 mr-1 block h-10 overflow-hidden rounded-md border border-stone-400" style={{ background: BARE }}>
+                  {segs.map((s) => s.to > s.from && (
+                    <span key={s.label} className="absolute inset-y-0 flex items-center overflow-hidden whitespace-nowrap border-r border-stone-600 px-2 text-sm font-semibold text-stone-950"
+                      style={{ left: pct(s.from), width: pct(s.to - s.from), background: s.fill }}>
+                      {s.to - s.from >= 1 ? s.label : ''}
+                    </span>
+                  ))}
+                  {r.blocked && <span className="absolute inset-y-0 flex items-center bg-white/80 px-2 text-sm font-semibold" style={{ left: pct(6), width: pct(6) }}>Blocked on this soil</span>}
+                </span>
+              </button>
             );
           })}
-          <g transform={`translate(${LEFT}, ${H - 20})`} fontSize="11" fill="#292524">
-            <rect width="14" height="14" fill="#cfe3d4" stroke="#57534e" /><text x="20" y="11">Wet-season rice (assumed)</text>
-            {dryRice && <><rect x="190" width="14" height="14" fill="#9fc7ad" stroke="#57534e" /><text x="210" y="11">Dry-season rice</text></>}
-            <rect x="330" width="14" height="14" fill="url(#bare)" stroke="#b8ae9c" /><text x="350" y="11">Bare field (hatched)</text>
-            <rect x="480" width="14" height="14" fill="#009E73" stroke="#57534e" /><text x="500" y="11">Dry-season crop (colour per crop)</text>
-          </g>
-        </svg>
+        </div>
       </div>
-      <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
-        {rows.map(({ r, bareDays }) => (
-          <li key={r.id}>
-            {r.blocked ? `${r.crop.short}: blocked on this soil.`
-              : r.fallow ? `Fallow leaves the field bare for about ${(bareDays / 30.4).toFixed(0)} months of Dec-May.`
-                : `${r.crop.short} covers the field for ${r.crop.duration} days (${dateOfDay(r.start)} to about ${dateOfDay(r.end)}); about ${(bareDays / 30.4).toFixed(1)} months of Dec-May stay bare.`}
-          </li>
-        ))}
+
+      <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-stone-800">
+        <Swatch bg={WET}>Wet-season rice (assumed)</Swatch>
+        {dryRice && <Swatch bg={DRY_RICE}>Dry-season rice</Swatch>}
+        <Swatch bg={BARE}>Bare field</Swatch>
+        <Swatch bg={ROTATION_COLORS.rice_mungbean}>Dry-season crop (colour per crop)</Swatch>
+        <li className="flex items-center gap-1.5"><span aria-hidden="true" className="inline-block rounded bg-stone-900 px-1.5 text-xs font-bold text-white">dry</span>Flagged month</li>
       </ul>
-      <p className="mt-2 text-sm">
-        Vulnerable months in this scenario: {stress.filter((s) => s.waterStress).map((s) => `${s.month} (water)`).concat(stress.filter((s) => s.heatStress).map((s) => `${s.month} (heat)`)).join(', ') || 'none flagged'}.
-        Water stress means effective rain below half of a full-cover crop's need; heat means 5 or more days at 35 °C or hotter. Scenarios summarise past seasons; they are not forecasts.
+
+      <div aria-live="polite" className="mt-4 grid gap-3 md:grid-cols-2">
+        <div className="rounded-xl border border-stone-200 bg-stone-50 p-3 text-sm">
+          <p className="font-bold">{sel.month}: {sel.waterStress ? 'water stress flagged' : 'water ok'}, {sel.heatStress ? 'heat flagged' : 'heat ok'}</p>
+          <dl className="mt-1 grid grid-cols-[1fr_auto] gap-x-3 tabular-nums">
+            <dt>Usable rain</dt><dd className="text-right font-semibold">{Math.round(sel.peffMm)} mm</dd>
+            <dt>Need of a full-cover crop</dt><dd className="text-right font-semibold">{Math.round(sel.demandMm)} mm</dd>
+            <dt>Rain as share of need</dt><dd className="text-right font-semibold">{Math.round(100 * sel.ratio)}%</dd>
+            <dt>Days at 35 °C or hotter</dt><dd className="text-right font-semibold">{Math.round(sel.hotDays)}</dd>
+          </dl>
+        </div>
+        <div className="rounded-xl border border-stone-200 bg-stone-50 p-3 text-sm">
+          <p className="font-bold">{picked.r.crop.name}</p>
+          <p className="mt-1">{describe(picked)}</p>
+        </div>
+      </div>
+
+      <p className="mt-3 text-sm">
+        Vulnerable months in this scenario: <strong>{flags.join(', ') || 'none flagged'}</strong>.
+        Water stress means usable rain below half of a full-cover crop's need; heat means 5 or more days at 35 °C or hotter. Scenarios summarise past seasons; they are not forecasts.
       </p>
     </section>
   );

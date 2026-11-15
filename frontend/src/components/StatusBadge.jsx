@@ -7,12 +7,16 @@ const STYLE = {
   secondary: 'bg-sky-100 text-sky-900 border-sky-300',
   assumption: 'bg-amber-100 text-amber-900 border-amber-300',
   illustrative: 'bg-stone-100 text-stone-800 border-stone-400',
+  user: 'bg-violet-100 text-violet-900 border-violet-300',
 };
 
-export default function StatusBadge({ status, title }) {
+// Not a parameter status: marks a number the user typed in.
+const EXTRA_LABELS = { user: 'Your value' };
+
+export default function StatusBadge({ status, title, size = 'text-sm' }) {
   return (
-    <span title={title} className={`inline-block rounded border px-1.5 py-0.5 text-xs font-medium ${STYLE[status] ?? STYLE.illustrative}`}>
-      {STATUS_LABELS[status] ?? status}
+    <span title={title} className={`inline-block rounded border px-1.5 py-0.5 font-medium ${size} ${STYLE[status] ?? STYLE.illustrative}`}>
+      {STATUS_LABELS[status] ?? EXTRA_LABELS[status] ?? status}
     </span>
   );
 }

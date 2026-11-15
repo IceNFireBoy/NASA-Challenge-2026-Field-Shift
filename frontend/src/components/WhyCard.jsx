@@ -7,9 +7,9 @@ const SECTIONS = [
   ['validate', 'Check locally'],
 ];
 
-export default function WhyCard({ card }) {
+export default function WhyCard({ card, className = 'text-sm' }) {
   return (
-    <div className="mt-3 space-y-3 text-sm text-stone-800">
+    <div className={`mt-3 space-y-3 text-stone-800 ${className}`}>
       <section>
         <h4 className="font-semibold">Why it ranks here</h4>
         <p>{card.why}</p>

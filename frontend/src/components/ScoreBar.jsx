@@ -8,7 +8,7 @@ export default function ScoreBar({ final, contributions }) {
     <div>
       <div className="flex items-center gap-3">
         <div
-          className="flex h-4 flex-1 overflow-hidden rounded bg-stone-200"
+          className="flex h-5 flex-1 overflow-hidden rounded-full bg-stone-200"
           role="img"
           aria-label={`Score ${Math.round(final)} out of 100`}
         >
@@ -18,7 +18,7 @@ export default function ScoreBar({ final, contributions }) {
         </div>
         <span className="w-14 text-right text-lg font-bold tabular-nums">{Math.round(final)}<span className="text-sm font-normal text-stone-600">/100</span></span>
       </div>
-      <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-stone-700">
+      <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-stone-700">
         {CRITERIA.filter((c) => contributions[c.id] >= 0.5).map((c) => (
           <li key={c.id} className="flex items-center gap-1">
             <span className="inline-block h-3 w-3 rounded-sm" style={{ background: CRITERION_COLORS[c.id] }} aria-hidden="true" />

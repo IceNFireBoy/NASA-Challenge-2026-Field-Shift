@@ -1,6 +1,7 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
 import { CROPS, ROTATION_IDS } from '../engine/params.js';
 import StatusBadge from './StatusBadge.jsx';
+import NumField from './NumField.jsx';
 
 const FIELDS = [
   ['yieldKgHa', 'Yield (kg/ha)'],
@@ -10,8 +11,8 @@ const FIELDS = [
 
 export default function EconomicsPanel({ overrides, dispatch }) {
   return (
-    <details className="rounded-lg border border-stone-300 bg-white p-4">
-      <summary className="min-h-[44px] cursor-pointer py-2 text-lg font-bold text-green-900">Prices and costs (editable)</summary>
+    <details className="card">
+      <summary className="min-h-[44px] cursor-pointer py-2 text-xl font-bold text-green-950">Prices and costs (editable)</summary>
       <p className="text-sm text-stone-600">Many of these are illustrative. Replace them with your own numbers; the ranking updates immediately.</p>
       <div className="mt-3 space-y-4">
         {ROTATION_IDS.filter((id) => !CROPS[id].isFallow).map((id) => (
@@ -24,12 +25,12 @@ export default function EconomicsPanel({ overrides, dispatch }) {
                 return (
                   <div key={key}>
                     <label htmlFor={`${id}-${key}`} className="text-sm font-medium">{label}</label>
-                    <input id={`${id}-${key}`} type="number" min="0" step="any" inputMode="decimal"
+                    <NumField id={`${id}-${key}`} step="any" inputMode="decimal" emptyValue={undefined}
                       className="min-h-[44px] w-full rounded border border-stone-400 px-3 text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700"
                       value={cur ?? p.value}
-                      onChange={(e) => dispatch({ type: 'override', id, key, value: e.target.value === '' ? undefined : Math.max(0, Number(e.target.value)) })} />
-                    <div className="mt-1"><StatusBadge status={cur !== undefined ? 'assumption' : p.status} title={p.source ?? p.note ?? ''} /></div>
-                    {p.source && <p className="mt-1 text-xs text-stone-600">{p.source}</p>}
+                      onChange={(v) => dispatch({ type: 'override', id, key, value: v })} />
+                    <div className="mt-1"><StatusBadge status={cur !== undefined ? 'user' : p.status} title={cur !== undefined ? 'You typed this value; clear the box to go back to the default' : (p.source ?? p.note ?? '')} /></div>
+                    {p.source && <p className="mt-1 text-sm text-stone-600">{p.source}</p>}
                   </div>
                 );
               })}
