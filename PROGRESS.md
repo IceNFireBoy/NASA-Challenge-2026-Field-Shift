@@ -2,13 +2,19 @@
 # Field Shift: progress
 
 ## Done
-- Phase 0: kit extracted (26 files), venv (Python 3.13) created, placeholder climate data written.
-- Pipeline tests: 13 passed. Frontend tests: 14 passed. `npm run build` OK.
+- Phase 0: kit extracted, venv (Python 3.13), placeholder data.
+- Phase 1 Step 1: real NASA POWER data committed (`data_status=real`, `precip_source=power`).
+- Phase 2: Compare view (field form, priority sliders, scenarios, ranked cards, why cards,
+  editable prices/costs, banners, footer). Engine tests 14 passed; `npm run build` OK.
 
 ## Next
-- Phase 1: real NASA data (POWER + IMERG), then UI phases 2-4.
+- Human check of the dev server at phone and desktop width; one round of fixes.
+- Phase 4 deploy step early, then Phase 3 (Data & methods tab).
+- IMERG (optional): retry only if the human asks.
 
 ## Known issues
-- Toolchain is outside the spec ranges: default Python is 3.14 (venv uses 3.13, fine), Node is v26.3.0 (spec wants 20/22). Everything works so far.
-- `climate.json` is placeholder data (`data_status=placeholder`), not real NASA data.
-- npm warns esbuild's postinstall is not in allowScripts; build still works.
+- GPM IMERG failed twice (full run, then `--imerg-limit 6`) with an Earthdata Launchpad
+  gateway timeout (login itself OK). Stopped retrying per instruction; rainfall is NASA POWER.
+  Cutoff for further attempts was 20:00. Reverted climate.json to the committed POWER version.
+- Node v26 / Python 3.14 default are outside spec ranges; everything works so far.
+- Plain Phase 2 gaps: user-edited prices show an "Assumption" badge; no rainPct/tempDelta controls yet.

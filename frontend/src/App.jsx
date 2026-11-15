@@ -1,23 +1,87 @@
-// SI-ASSISTED: drafted by Claude (Anthropic); reviewed by the team.
-// Phase-0 shell: proves data + engine + build work. Claude Code replaces this in Phase 2.
+// SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useEffect, useMemo, useReducer } from 'react';
 import climate from './data/climate.json';
-import { evaluate, DEFAULT_WEIGHTS, formatPhp } from './engine/engine.js';
+import { evaluate, uncertainty, DEFAULT_WEIGHTS } from './engine/engine.js';
+import { buildWhyCard } from './engine/content.js';
+import { SOILS, DEFAULT_CURRENT } from './engine/params.js';
+import Header from './components/Header.jsx';
+import Notice from './components/Notice.jsx';
+import DataBanners from './components/DataBanners.jsx';
+import FieldForm from './components/FieldForm.jsx';
+import PrioritySliders from './components/PrioritySliders.jsx';
+import ScenarioPicker from './components/ScenarioPicker.jsx';
+import RotationCard from './components/RotationCard.jsx';
+import EconomicsPanel from './components/EconomicsPanel.jsx';
+import Footer from './components/Footer.jsx';
+
+const KEY = 'fieldshift.v1';
+const INITIAL = {
+  scenarioId: 'typical', situationId: 'after_wet_rice', soilId: 'loam', waterMode: 'rainfed',
+  plantingId: null, currentId: DEFAULT_CURRENT, weights: DEFAULT_WEIGHTS, overrides: {},
+  laborCap: 40, rainPct: 0, tempDelta: 0,
+};
+
+function load() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY));
+    return saved ? { ...INITIAL, ...saved } : INITIAL;
+  } catch { return INITIAL; }
+}
+
+function reducer(s, a) {
+  switch (a.type) {
+    case 'set': return { ...s, [a.key]: a.value };
+    case 'situation': return { ...s, situationId: a.value, plantingId: null };
+    case 'weight': return { ...s, weights: { ...s.weights, [a.key]: a.value } };
+    case 'resetWeights': return { ...s, weights: DEFAULT_WEIGHTS };
+    case 'override': {
+      const cur = { ...(s.overrides[a.id] || {}) };
+      if (a.value === undefined) delete cur[a.key]; else cur[a.key] = a.value;
+      return { ...s, overrides: { ...s.overrides, [a.id]: cur } };
+    }
+    case 'resetOverrides': return { ...s, overrides: {} };
+    default: return s;
+  }
+}
 
 export default function App() {
-  const { ranked, rainSource } = evaluate({ climate, scenarioId: 'typical', situationId: 'after_wet_rice', soilId: 'loam', waterMode: 'rainfed', weights: DEFAULT_WEIGHTS });
+  const [state, dispatch] = useReducer(reducer, undefined, load);
+  useEffect(() => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* storage unavailable */ } }, [state]);
+
+  const inputs = useMemo(() => ({ climate, ...state }), [state]);
+  const result = useMemo(() => evaluate(inputs), [inputs]);
+  const unc = useMemo(() => uncertainty(inputs, { draws: 300, currentId: state.currentId }), [inputs, state.currentId]);
+  const rankCount = result.ranked.filter((r) => !r.blocked).length;
+  const scenarioLabel = climate.scenarios[state.scenarioId].label;
+
   return (
-    <main className="mx-auto max-w-3xl p-4">
-      <p className="rounded bg-amber-100 p-3 text-sm">Decision support only: this tool highlights historical patterns to support, not replace, local farmer judgment.</p>
-      {climate.meta.data_status === 'placeholder' && <p className="mt-2 rounded bg-red-100 p-3 text-sm font-semibold">Placeholder data - not real observations.</p>}
-      <h1 className="mt-4 text-2xl font-bold">Field Shift - San Mateo, Isabela</h1>
-      <p className="text-sm text-stone-600">Rain source: {rainSource}</p>
-      <ol className="mt-4 space-y-2">
-        {ranked.map((r) => (
-          <li key={r.id} className="rounded border bg-white p-3">
-            <b>{r.crop.name}</b>: {r.blocked ? 'blocked' : `${Math.round(r.final)} / 100`} | water met {r.pctMet == null ? 'n/a' : `${Math.round(100 * r.pctMet)}%`} | net {formatPhp(r.net)}/ha
-          </li>
-        ))}
-      </ol>
-    </main>
+    <div className="min-h-screen bg-stone-100 text-stone-900">
+      <main className="mx-auto max-w-6xl space-y-4 px-4 py-6">
+        <Header />
+        <Notice />
+        <DataBanners meta={climate.meta} rainSource={result.rainSource} scenarioId={state.scenarioId} />
+        <div className="grid gap-4 lg:grid-cols-[380px_1fr]">
+          <div className="space-y-4">
+            <FieldForm state={state} dispatch={dispatch} />
+            <PrioritySliders weights={state.weights} dispatch={dispatch} />
+            <ScenarioPicker climate={climate} scenarioId={state.scenarioId} dispatch={dispatch} />
+          </div>
+          <div className="space-y-4">
+            <section aria-labelledby="results">
+              <h2 id="results" className="mb-2 text-lg font-bold text-green-900">Results: {scenarioLabel}</h2>
+              <div className="space-y-3">
+                {result.ranked.map((r) => (
+                  <RotationCard key={r.id} r={r} isCurrent={r.id === state.currentId} laborCap={state.laborCap}
+                    topShare={unc.topShare[r.id]} beatsShare={unc.beatsCurrentShare[r.id]} draws={unc.draws}
+                    card={buildWhyCard(r, { waterMode: state.waterMode, scenarioLabel, rainSource: result.rainSource, soilLabel: SOILS[state.soilId].label, rankCount })} />
+                ))}
+              </div>
+            </section>
+            <EconomicsPanel overrides={state.overrides} dispatch={dispatch} />
+          </div>
+        </div>
+        <Footer />
+      </main>
+    </div>
   );
 }
