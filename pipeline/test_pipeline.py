@@ -172,6 +172,24 @@ def test_read_imerg_csv_converts_units_and_skips_fill(tmp_path):
     assert "121.48,16.78,121.68,16.98" in meta["resolution_note"]
 
 
+def test_read_imerg_csv_real_giovanni_layout(tmp_path):
+    # Layout of the file Giovanni actually produced: no units in the title, two bounding boxes,
+    # spaces after the commas in the fill-value and header rows.
+    p = tmp_path / "giovanni_real.csv"
+    p.write_text('Title:,"Time Series, Area-Averaged of Merged satellite-gauge precipitation estimate - Final Run (recommended for general use) (monthly)"\n'
+                 'User Bounding Box:,"121.48,16.78,121.68,16.98"\n'
+                 'Data Bounding Box:,"121.55,16.85,121.65,16.95"\n'
+                 'Fill Value (mean_GPM_3IMERGM_07_precipitation):, -9999.9\n\n'
+                 'time, mean_GPM_3IMERGM_07_precipitation\n'
+                 '2001-12-01 00:00:00,0.236251667\n2002-01-01 00:00:00, -9999.9\n', encoding="utf-8")
+    with pytest.raises(RuntimeError):  # units are not in this file, so they must be given
+        fc.read_imerg_csv(p)
+    values, meta = fc.read_imerg_csv(p, units="mm/hr")
+    assert list(values) == [(2001, 12)]
+    assert abs(values[(2001, 12)] - 0.236251667 * 24 * 31) < 1e-9
+    assert meta["data_bounding_box"] == "121.55,16.85,121.65,16.95" and meta["rows_skipped"] == 1
+
+
 def test_read_imerg_csv_refuses_to_guess_units(tmp_path):
     p = tmp_path / "nounits.csv"
     p.write_text("Title:,Area-averaged precipitation\n\ntime,precip\n2016-01-01 00:00:00,0.1\n", encoding="utf-8")

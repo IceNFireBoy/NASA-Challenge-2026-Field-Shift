@@ -11,11 +11,12 @@ Usage (run from the repo root, inside the venv):
   python pipeline/fetch_climate.py --skip-imerg    # NASA POWER only (no login needed)
   python pipeline/fetch_climate.py                 # NASA POWER + GPM IMERG (Earthdata login)
   python pipeline/fetch_climate.py --imerg-direct  # IMERG over plain HTTPS from GES DISC (no earthaccess)
-  python pipeline/fetch_climate.py --imerg-csv pipeline/cache/imerg_giovanni.csv  # IMERG from a Giovanni CSV
+  python pipeline/fetch_climate.py --imerg-csv pipeline/data/imerg_giovanni.csv --imerg-units mm/hr  # IMERG from the committed Giovanni CSV (what the app ships with)
 
 Data:
   * NASA POWER daily point API (community AG): T2M_MAX, T2M_MIN, PRECTOTCORR, GWETROOT.
-  * GPM IMERG Final, monthly, 0.1 deg, V07 (GPM_3IMERGM) via earthaccess + h5py.
+  * GPM IMERG Final, monthly, 0.1 deg, V07 (GPM_3IMERGM): a NASA Giovanni area-averaged CSV
+    (--imerg-csv), plain HTTPS from GES DISC (--imerg-direct), or earthaccess + h5py (default).
   * NOAA CPC Oceanic Nino Index (ONI, DJF) to label seasons (table embedded below).
 Failures: POWER failure stops the run (fail loudly). IMERG failure falls back to POWER
 rainfall, records status "unavailable" and the error, and the app shows a banner.
@@ -446,10 +447,15 @@ def read_imerg_csv(path: Path, units: str | None = None) -> tuple[dict, dict]:
         values[(int(ts.year), int(ts.month))] = to_mm_per_month(rate, units, int(ts.year), int(ts.month))
     if not values:
         raise RuntimeError(f"{path}: no usable rows")
-    bbox = next((ln.split(":", 1)[1].strip(" ,") for ln in lines[:head] if "bounding box" in ln.lower()), None)
+    # Giovanni lists the box the user asked for and the box of grid cells it actually averaged;
+    # the second one is what the numbers describe.
+    boxes = {ln.split(":", 1)[0].strip().lower(): ln.split(":", 1)[1].strip(' ,"') for ln in lines[:head]
+             if "bounding box" in ln.lower() and ":" in ln}
+    bbox = boxes.get("data bounding box") or next(iter(boxes.values()), None)
     meta = {"units_in_files": [units], "via": "NASA Giovanni area-averaged time series (CSV)", "rows_skipped": skipped,
+            "file": Path(path).name, "data_bounding_box": bbox,
             "resolution_note": "Satellite-gauge estimate, 0.1 deg grid (~11 km), area-averaged by NASA Giovanni"
-                               + (f" over {bbox}" if bbox else "")}
+                               + (f" over lon/lat box {bbox}" if bbox else "")}
     log(f"IMERG CSV: {len(values)} months read from {path} (units {units}, {skipped} skipped)")
     return values, meta
 
@@ -771,8 +777,9 @@ def imerg_source(status: str, meta: dict | None, error: str | None = None) -> di
            "resolution_note": (meta or {}).get("resolution_note")
                               or "Satellite-gauge estimate, 0.1 deg grid (~11 km), cells within +/-0.1 deg averaged",
            "citation": IMERG_CITATION, "fetched_at": utc_now()}
-    if (meta or {}).get("via"):
-        src["via"] = meta["via"]
+    for key in ("via", "file", "data_bounding_box"):
+        if (meta or {}).get(key):
+            src[key] = meta[key]
     if error:
         src["error"] = error[:500]
     return src

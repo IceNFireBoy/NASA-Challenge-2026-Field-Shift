@@ -30,7 +30,7 @@ Source code: https://github.com/IceNFireBoy/NASA-Challenge-2026-Field-Shift
 ## Use of NASA data
 
 - **NASA POWER** (daily gridded meteorological data, including rainfall in the current build) is the main climate input. It is used to build a daily soil-water balance and to replay past seasons.
-- **GPM IMERG V07** (satellite precipitation) was planned as a rainfall source but is not used in the current build. Downloads failed during the project. The app uses NASA POWER rainfall instead.
+- **GPM IMERG V07** (satellite-gauge precipitation, monthly, 0.1 degree) is the rainfall source for all 24 dry seasons, retrieved as an area-averaged time series through NASA Giovanni. NASA POWER rainfall is kept for a side-by-side comparison chart.
 
 Links: https://power.larc.nasa.gov/ and https://gpm.nasa.gov/data/imerg
 
@@ -46,7 +46,7 @@ Links: https://power.larc.nasa.gov/ and https://gpm.nasa.gov/data/imerg
 ## References
 
 1. NASA POWER Project. https://power.larc.nasa.gov/
-2. Huffman, G. J., et al. GPM IMERG V07. https://gpm.nasa.gov/data/imerg. DOI: 10.5067/GPM/IMERG/3B-HH/07 [VERIFY]
+2. Huffman, G. J., et al. GPM IMERG Final Precipitation L3 1 month 0.1 degree V07 (GPM_3IMERGM). https://gpm.nasa.gov/data/imerg. DOI: 10.5067/GPM/IMERG/3B-MONTH/07
 3. NOAA Climate Prediction Center. Oceanic Niño Index. https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php
 4. Allen, R. G., Pereira, L. S., Raes, D., Smith, M. (1998). Crop evapotranspiration: Guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper 56.
 5. Doorenbos, J., and Kassam, A. H. (1979). Yield response to water. FAO Irrigation and Drainage Paper 33.

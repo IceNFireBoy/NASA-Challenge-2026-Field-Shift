@@ -45,8 +45,8 @@ Mapped to the challenge objectives:
 
 ### NASA data
 - **NASA POWER** (daily gridded meteorological data, including rainfall in the current build): https://power.larc.nasa.gov/
-- **GPM IMERG V07** (satellite precipitation, Final Run, half-hourly product): https://gpm.nasa.gov/data/imerg. DOI: 10.5067/GPM/IMERG/3B-HH/07 [VERIFY DOI ON GES DISC BEFORE SUBMISSION]
-- **Current rainfall status:** the app uses NASA POWER rainfall. GPM IMERG downloads failed twice with an Earthdata gateway timeout, so IMERG is **not used** in the current build. IMERG is an optional step and will be used only if it is retrieved successfully.
+- **GPM IMERG V07** (satellite-gauge precipitation, Final Run, monthly, 0.1 degree; product GPM_3IMERGM): https://gpm.nasa.gov/data/imerg. DOI: 10.5067/GPM/IMERG/3B-MONTH/07
+- **Current rainfall status:** the app uses **GPM IMERG** rainfall for every dry season, 2001-02 to 2024-25. It was exported from NASA Giovanni as an area-averaged monthly time series (data box 121.55 to 121.65 E, 16.85 to 16.95 N, one 0.1 degree cell, mm/hr) and is committed as `pipeline/data/imerg_giovanni.csv`. Reproduce with `python pipeline/fetch_climate.py --imerg-csv pipeline/data/imerg_giovanni.csv --imerg-units mm/hr`. NASA POWER rainfall is kept alongside it for the "IMERG vs POWER" comparison chart; the two typical-year totals differ by about 2%. Direct downloads from GES DISC (`--imerg-direct`, or earthaccess) did not work for us: the Earthdata login was refused.
 
 ### Other data
 - **NOAA Oceanic Niño Index (ONI)** for El Niño and La Niña context: https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php
@@ -76,7 +76,7 @@ The calculations live in a single engine with automated tests. Changes to the en
 - **No pest or disease model.** Pest-cycle notes are qualitative only.
 - **No groundwater or capillary rise.** The water balance does not include groundwater contribution or capillary rise from a water table.
 - **No field validation yet.** The model has not yet been checked against farm records or harvest data from San Mateo.
-- **Satellite rainfall (IMERG) is not used** in the current build.
+- **Satellite rainfall (IMERG) is one 0.1 degree cell** (about 11 km) from a Giovanni area average, not a rain gauge on a farm.
 
 ## Run and test
 
@@ -118,7 +118,7 @@ NASApusomo
 ## References
 
 1. NASA POWER Project. https://power.larc.nasa.gov/
-2. Huffman, G. J., et al. NASA Global Precipitation Measurement (GPM) Integrated Multi-satellitE Retrievals for GPM (IMERG), Version 07. https://gpm.nasa.gov/data/imerg. DOI: 10.5067/GPM/IMERG/3B-HH/07 [VERIFY]
+2. Huffman, G. J., E. F. Stocker, D. T. Bolvin, E. J. Nelkin, J. Tan. GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07 (GPM_3IMERGM). NASA GES DISC. https://gpm.nasa.gov/data/imerg. DOI: 10.5067/GPM/IMERG/3B-MONTH/07. Retrieved through NASA Giovanni, 15 Nov 2026.
 3. NOAA Climate Prediction Center. Oceanic Niño Index (ONI). https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php
 4. Allen, R. G., Pereira, L. S., Raes, D., Smith, M. (1998). *Crop evapotranspiration: Guidelines for computing crop water requirements*. FAO Irrigation and Drainage Paper 56. Food and Agriculture Organization of the United Nations.
 5. Doorenbos, J., and Kassam, A. H. (1979). *Yield response to water*. FAO Irrigation and Drainage Paper 33. Food and Agriculture Organization of the United Nations.

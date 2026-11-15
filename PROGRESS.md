@@ -2,7 +2,7 @@
 # Has Bean Planned: progress
 
 Team NASApusomo. NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
-Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:28 that day.
+Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:50 that day.
 
 ## Where things stand right now
 
@@ -13,27 +13,13 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 | Branch `phase-5` | Merged into `main` at 21:14 on the human's instruction. Branch kept on GitHub |
 | SoilGrids soil data | **In `climate.json`** on `main`: clay loam (32% clay, 42% sand, top 30 cm). Soil hint checked in the browser |
 | MODIS NDVI data | **In `climate.json`** on `main`: 552 composites, 2001-06-10 to 2025-05-25. Chart checked in the browser |
-| Tests | Frontend 22 pass, pipeline 14 pass, `npm run build` OK (on `main` after the merge) |
+| GPM IMERG rainfall | **In `climate.json` on `phase-5`, not on `main` yet.** `precip_source=imerg` for all 24 seasons, from a Giovanni CSV |
+| Tests | Frontend 22 pass, pipeline 19 pass, `npm run build` OK (on `phase-5`) |
 
 ## Waiting on
 
-- **IMERG, blocked on the human (rule 9: failed twice the same way).** The new direct download
-  (`--imerg-direct`) was refused twice with `HTTP 401 from urs.earthdata.nasa.gov`, first with
-  one login path and then after trying every configured method (token and netrc). The listing
-  for one year never loaded, so no file name pattern was learned and no month was fetched.
-  `climate.json` was not touched. Two ways forward:
-  1. **Giovanni CSV (no login needed from the pipeline).** In a browser, sign in at
-     https://giovanni.gsfc.nasa.gov, plot "Time Series, Area-Averaged" of GPM_3IMERGM v07
-     precipitation for 2001-12 to 2025-05 over box `121.48,16.78,121.68,16.98`, download the
-     CSV, save it as `pipeline/cache/imerg_giovanni.csv`, then run
-     `PY pipeline/fetch_climate.py --imerg-csv pipeline/cache/imerg_giovanni.csv`.
-  2. **Fix the Earthdata login.** Generate a fresh token at https://urs.earthdata.nasa.gov
-     (tokens expire after 60 days), put it in `pipeline/.env`, and approve the application
-     "NASA GESDISC DATA ARCHIVE" under Applications > Authorized Apps. Then run
-     `PY pipeline/fetch_climate.py --imerg-direct --imerg-limit 2` to test.
-- After either works: sanity checks (10 to 400 mm per month, IMERG vs POWER typical totals
-  within about 40%), confirm `soilgrids` and `ndvi` survive, browser check of the IMERG banner
-  and the "IMERG vs POWER" toggle, then the 3B-MONTH DOI fix in README and PROJECT_PAGE.
+- **Human decision:** merge `phase-5` into `main` (target 22:45). It holds the IMERG switch.
+- **Human check before recording the demo:** the El Nino story. Summary of what changed is below.
 
 ## Done
 
@@ -106,20 +92,34 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
   Past seasons has a chart with a typical-year view (least green in Nov at 0.44, greenest in
   Aug at 0.59) and an each-dry-season view. The crop model does not use NDVI.
 
-### IMERG groundwork (branch `phase-5`, not merged, 21:28)
-- `fetch_climate.py --imerg-csv PATH` (+ optional `--imerg-units`): reads a Giovanni
-  area-averaged time-series CSV, skips the comment lines and fill values, converts with the
-  existing unit table and plausibility check, and returns the same monthly series as the
-  earthaccess path. Refuses to guess if the file does not state its units.
-- `fetch_climate.py --imerg-direct`: HTTPS download from GES DISC with `requests`, file names
-  read from each year's directory listing, per-month append to `pipeline/cache/imerg_monthly.csv`,
-  resume from cache, 60 s timeout, 3 retries with backoff, tries token, then
-  username/password, then netrc. Written and unit-tested for the listing parser; **not yet
-  proven against the real server** because the login is refused.
-- `climate.json` rewrite now keeps top-level keys the script does not produce (`soilgrids`,
-  `ndvi`), so re-running the climate fetch no longer wipes the Phase 5 blocks.
-- Pipeline tests 14 -> 18 (CSV parsing, unit refusal, listing parser, key carry-over).
-  No maths changed.
+### GPM IMERG rainfall (branch `phase-5`, not merged, 21:50)
+- **Source file:** `pipeline/data/imerg_giovanni.csv` (committed, 286 monthly rows, Dec 2001 to
+  Sep 2025). NASA Giovanni "Time Series, Area-Averaged" of GPM_3IMERGM v07 precipitation; data
+  box 121.55 to 121.65 E, 16.85 to 16.95 N (one 0.1 degree cell); values in mm/hr. The file
+  itself does not state the units, so the run passes `--imerg-units mm/hr`.
+- **Reproduce:** `PY pipeline/fetch_climate.py --imerg-csv pipeline/data/imerg_giovanni.csv --imerg-units mm/hr`
+- **Pipeline changes:** `--imerg-csv` / `--imerg-units` (Giovanni reader using the existing unit
+  table and plausibility check; refuses to guess units), `--imerg-direct` (HTTPS from GES DISC;
+  written and unit-tested but never proven, the login is refused), and `climate.json` rewrites
+  now keep keys the script does not produce (`soilgrids`, `ndvi`). Pipeline tests 14 -> 19.
+  No maths changed in the pipeline or the engine.
+- **Sanity checks (phase-1 spec):** typical-year months are 176, 87, 63, 85, 79, 202 mm
+  (all within 10 to 400). Typical total IMERG 692 mm vs POWER 680 mm (ratio 1.02); strong
+  El Nino 573 vs 551 (1.04); 2015-16 analog 900 vs 910 (0.99). All far inside the 40% rule.
+  `soilgrids` and `ndvi` are byte-for-byte unchanged; POWER rain, ET0, temperatures, wetness
+  and hot days are unchanged.
+- **What changed in the app:** rainfall in every calculation is now IMERG. The "IMERG was not
+  used" banner is gone, why-cards say "GPM IMERG satellite rainfall", the "IMERG vs POWER"
+  toggle in Past seasons works, and Data & methods shows IMERG as `status: ok`.
+- **Rankings (defaults: after wet-season rice, loam, rainfed, default weights):**
+  - Typical year: Mungbean 83 > Peanut 70 > Corn 65 > Fallow 48 (peanut was 74 with POWER).
+  - Strong El Nino: Mungbean 83 > Peanut 50 > Fallow 48 > Corn 37 (was 51 / 48 / 38). Same
+    order, same story: corn falls below fallow in a strong El Nino.
+  - 2015-16 analog: Mungbean 83 > Corn 65 > Peanut 65 (peanut and corn swapped; they are tied).
+  - Mungbean is the top choice in 77% / 99% / 85% of the 300 what-if runs (was 75 / 98 / 82).
+  - Mungbean met 80% of its water need in 23 of 24 past seasons (was 22).
+- **Rainfall trend changed a lot:** +28 mm per decade with IMERG, against +245 with POWER.
+  The POWER figure was driven by one very wet season. Check any demo line that quotes a trend.
 
 ## MODIS NDVI in detail (Phase 5, stretch 3)
 
@@ -187,10 +187,9 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 
 ## What went wrong
 
-- **GPM IMERG never loaded.** Two attempts (full run, then `--imerg-limit 6`) hit an Earthdata
-  gateway timeout; login worked. Stopped per the two-failures rule. All rainfall is NASA POWER,
-  and the app says so in a banner. The "IMERG vs POWER" chart toggle is disabled.
-- **IMERG direct download refused (401) twice.** See "Waiting on". The earlier earthaccess
+- **GPM IMERG through the pipeline's own login never worked.** earthaccess hit a gateway
+  timeout twice. IMERG now comes from a Giovanni CSV the human downloaded in a browser.
+- **IMERG direct download refused (401) twice** with every configured login method. The earlier earthaccess
   runs reported "login OK" but earthaccess does not check a token against the data server,
   so the token may have been invalid all along.
 - **Second NDVI download timed out.** After 3 of 56 requests the MODIS server stopped accepting
@@ -231,5 +230,4 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
 - README references still open: PSA, DOST-PCAARRD, PhilRice, Manila Times
   (`[ADD SPECIFIC ...]`), same four on PROJECT_PAGE.
 - README line 111 says `[ADD LICENSE FILE TO REPOSITORY]`; the LICENSE file exists, so delete the tag.
-- IMERG DOI: README and PROJECT_PAGE cite `3B-HH` marked `[VERIFY]`; the app uses `3B-MONTH`.
 - Native read of the Filipino labels.
