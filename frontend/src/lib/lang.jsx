@@ -1,7 +1,7 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
 // Filipino labels for the main controls and card headings of the Analytics and Community view
 // (Phase 5 stretch 1). English stays the default; anything not listed here stays in English.
-// The Filipino text was drafted with SI and must be checked by a native speaker on the team.
+// The Filipino text was drafted with SI and then checked by native speakers on the team.
 import { createContext, useContext } from 'react';
 
 export const ANALYTICS_FIL = {

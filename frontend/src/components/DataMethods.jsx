@@ -130,7 +130,7 @@ export default function DataMethods({ climate }) {
           <li>Income light: good when net return per hectare is positive, okay at zero, risky when negative (illustrative prices unless you edit them).</li>
           <li>Work light: good up to {LIGHT_RULES.work.good * 100}% of your labour limit, okay up to {LIGHT_RULES.work.ok * 100}%, risky above.</li>
           <li>Technical asides (crop coefficients, yield-response factors) are hidden from the Farmer view's why-card; the figures themselves are unchanged.</li>
-          <li>Filipino labels were drafted with SI and are being reviewed by the team.</li>
+          <li>Filipino labels were drafted with SI and checked by native speakers on the team.</li>
         </ul>
       </section>
 

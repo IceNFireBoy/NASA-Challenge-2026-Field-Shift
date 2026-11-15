@@ -1,6 +1,6 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
 // Farmer-mode labels in English and Filipino. The Filipino text was drafted with SI and
-// must be checked by a native speaker on the team. Numbers are always passed in as {vars}.
+// was then checked by native speakers on the team. Numbers are always passed in as {vars}.
 
 export const LANGS = [
   { id: 'en', label: 'English' },

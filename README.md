@@ -18,17 +18,15 @@
 1. [The problem](#the-problem)
 2. [San Mateo is the test drive; the goal is national](#san-mateo-is-the-test-drive-the-goal-is-national)
 3. [What the app does](#what-the-app-does)
-4. [How it maps to the challenge](#how-it-maps-to-the-challenge)
-5. [Data used](#data-used)
-6. [Method](#method)
-7. [What the data shows for San Mateo](#what-the-data-shows-for-san-mateo)
-8. [Source check](#source-check)
-9. [Limitations](#limitations)
-10. [Repository layout](#repository-layout)
-11. [Run, test and reproduce](#run-test-and-reproduce)
-12. [Accessibility and language](#accessibility-and-language)
-13. [Use of SI (AI) tools](#use-of-si-ai-tools)
-14. [Licence, team, references](#licence)
+4. [Data used](#data-used)
+5. [Method](#method)
+6. [What the data shows for San Mateo](#what-the-data-shows-for-san-mateo)
+7. [Limitations](#limitations)
+8. [Repository layout](#repository-layout)
+9. [Run, test and reproduce](#run-test-and-reproduce)
+10. [Accessibility and language](#accessibility-and-language)
+11. [Use of SI (AI) tools](#use-of-si-ai-tools)
+12. [Licence, team, references](#licence)
 
 ---
 
@@ -84,24 +82,6 @@ Made for extension workers, cooperatives and analysts. It was first called "Expe
 | **Plan together** | A cooperative calculator (seed, labour and extra water for a given area and adoption share), a coordination prompt, who to involve, and a "Farmer Q&A (coming soon)" section with three clearly labelled SAMPLE questions answered from the glossary |
 | **Data & methods** | Sources and their status, a map showing how large one NASA grid cell is next to the town, the method in plain words, every parameter with its value, range, status and source, the Farmer-view rules, a glossary and the limitations |
 
-## How it maps to the challenge
-
-| Challenge objective | What Has Bean Planned does | Status |
-|---|---|---|
-| Compare rotation options, including the current one | Ranks fallow, mungbean, corn and peanut side by side; the current rotation is marked | Built |
-| Explain each option | Why-card per option: why it ranks there, evidence, benefits, information gaps, risks, what to check locally, pest notes | Built |
-| Bare-field periods | Season calendar shows how long the field is bare under each option | Built |
-| Vulnerable months | Water and heat flags for each dry-season month, with the underlying numbers | Built |
-| Vegetation from satellite | MODIS NDVI chart for the point, shown as an independent check | Built (not used by the model) |
-| Pest cycles | Qualitative pest notes on each why-card | Built (no pest model) |
-| Farmer priorities and constraints | Picture-card priorities in the Farmer view; sliders, labour limit and field settings in Compare | Built |
-| Uncertainty | 300 what-if runs vary yields, prices, costs, durations, water-use factors, starting soil water and weights; the share of runs each option wins is shown, with a close-call note | Built |
-| What-if exploration | Rainfall and warming sliders; editable prices and costs; "Try a dry year" | Built |
-| Past-season replay and trends | Replay heatmap and trend charts over 24 seasons | Built |
-| Community use | Plan together tab | Built (illustrative; no posting) |
-| Plain language | Farmer view, glossary, Filipino labels | Built |
-| Satellite versus ground data | Glossary entry, resolution map, IMERG-versus-POWER chart | Built |
-
 ## Data used
 
 ### NASA data
@@ -156,14 +136,6 @@ These are results from the committed data with the default settings (after wet-s
 
 Income figures rest on illustrative prices and costs until local ones are entered.
 
-## Source check
-
-On 15 November 2026 every cited link was opened and the cited figures were compared with the pages. Details are in [SI_DISCLOSURE.md](SI_DISCLOSURE.md). In short:
-
-- **Confirmed:** FAO-56 crop coefficients and FAO-33 yield-response factors; mungbean nitrogen fixation (21 to 85 kg N/ha); San Mateo mungbean yield (800 to 1,000 kg/ha) and area; the PhilRice rotation project; the Manila Times and PAGASA statements; the IMERG and MODIS DOIs; mungbean and peanut farmgate prices.
-- **Corrected:** the ENSO table now uses NOAA's current ERSSTv6 ONI instead of ERSSTv5 (two season labels changed; no scenario or ranking changed); the yellow-corn price is now the confirmed PSA Central Luzon figure (₱18.14/kg, first quarter 2023) because the other figure it had cited was for palay, not corn; a 7,000-hectare figure is now credited to DOST-PCAARRD; the IMERG citation year is 2023.
-- **Still secondary, not checked against a primary source:** mungbean and peanut crop duration, and peanut harvest labour. They are badged Secondary source or Assumption in the app.
-
 ## Limitations
 
 - **Past seasons are not forecasts.** Scenarios summarise what happened; they do not predict 2026-27.
@@ -174,8 +146,8 @@ On 15 November 2026 every cited link was opened and the cited figures were compa
 - **NDVI is one 250 m pixel** at the town centre, which can include buildings and roads, with no cloud screening beyond the 16-day composite. The model does not use it.
 - **No pest or disease model,** no groundwater or capillary rise, and crops that run past 31 May reuse May conditions.
 - **No field validation yet.** The model has not been checked against farm records or harvest data.
-- **Filipino labels** were drafted with SI and are still being reviewed by native speakers. Why-cards, sources and chart captions are in English only.
-- **Not tested on real phones.** Checked at 360, 375 and 1280 px in a desktop browser.
+- **Filipino labels** were drafted with SI and then checked by native speakers on the team. Why-cards, sources and chart captions are in English only.
+- **Phones:** the team has tried the app on a phone. Layout was also checked at 360, 375 and 1280 px in a desktop browser.
 
 ## Repository layout
 
@@ -196,7 +168,6 @@ frontend/src/
   components/farmer/    the guided Farmer view
   components/           the Analytics and Community tabs
 docs/                   project page, demo script, QA table, phase specs
-PROGRESS.md             running log, including what went wrong
 SI_DISCLOSURE.md        how SI tools were used
 ```
 
@@ -237,7 +208,7 @@ Other pipeline modes: `--placeholder` writes clearly labelled synthetic data wit
 This project used SI tools. Details are in [SI_DISCLOSURE.md](SI_DISCLOSURE.md). In short:
 
 - **Claude (claude.ai):** research, verification, drafting of the core pipeline and engine, and the first documentation.
-- **Claude Code (Anthropic):** the user interface, the Farmer view, charts, pipeline extensions, documentation and deployment.
+- **Claude Code (Anthropic):** the user interface, pipeline extensions, and documentation.
 - **Gemini:** an early literature summary, used only as a secondary reference.
 - **Image or video generation:** none.
 
