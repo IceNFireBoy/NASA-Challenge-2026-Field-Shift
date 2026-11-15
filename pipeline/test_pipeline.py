@@ -145,3 +145,66 @@ def test_usda_texture_classes():
     out = summarise_ndvi([{"date": "2020-12-03", "ndvi": 0.4}, {"date": "2021-01-01", "ndvi": 0.6}, {"date": "2021-07-12", "ndvi": 0.8}])
     assert out["season_mean"] == [{"start_year": 2020, "ndvi": 0.5, "n": 2}]
     assert [m["ndvi"] for m in out["monthly_mean"] if m["month"] == 7] == [0.8]
+
+
+GIOVANNI_CSV = """Title:,"Time Series, Area-Averaged of Merged satellite-gauge precipitation estimate monthly 0.1 deg. [GPM GPM_3IMERGM v07] mm/hr"
+User Start Date:,2015-12-01T00:00:00Z
+User End Date:,2016-03-31T23:59:59Z
+Bounding Box:,"121.48,16.78,121.68,16.98"
+Fill Value (mean_GPM_3IMERGM_07_precipitation):,-9999.9
+
+time,mean_GPM_3IMERGM_07_precipitation
+2015-12-01 00:00:00,0.25
+2016-01-01 00:00:00,0.1
+2016-02-01 00:00:00,-9999.9
+2016-03-01 00:00:00,0.05
+"""
+
+
+def test_read_imerg_csv_converts_units_and_skips_fill(tmp_path):
+    p = tmp_path / "giovanni.csv"
+    p.write_text(GIOVANNI_CSV, encoding="utf-8")
+    values, meta = fc.read_imerg_csv(p)
+    assert set(values) == {(2015, 12), (2016, 1), (2016, 3)}  # the fill-value month is dropped
+    assert abs(values[(2015, 12)] - 0.25 * 24 * 31) < 1e-9  # mm/hr x hours in December
+    assert abs(values[(2016, 1)] - fc.to_mm_per_month(0.1, "mm/hr", 2016, 1)) < 1e-9
+    assert meta["units_in_files"] == ["mm/hr"] and meta["rows_skipped"] == 1
+    assert "121.48,16.78,121.68,16.98" in meta["resolution_note"]
+
+
+def test_read_imerg_csv_refuses_to_guess_units(tmp_path):
+    p = tmp_path / "nounits.csv"
+    p.write_text("Title:,Area-averaged precipitation\n\ntime,precip\n2016-01-01 00:00:00,0.1\n", encoding="utf-8")
+    with pytest.raises(RuntimeError):
+        fc.read_imerg_csv(p)
+    values, _ = fc.read_imerg_csv(p, units="mm/day")
+    assert abs(values[(2016, 1)] - 3.1) < 1e-9
+    bad = tmp_path / "bad.csv"
+    bad.write_text("Title:,precip mm/hr\n\ntime,precip\n2016-01-01 00:00:00,50\n", encoding="utf-8")
+    with pytest.raises(RuntimeError):  # existing plausibility check still applies
+        fc.read_imerg_csv(bad)
+
+
+def test_list_imerg_files_reads_names_from_the_listing():
+    html = '<a href="3B-MO.MS.MRG.3IMERG.20160101-S000000-E235959.01.V07B.HDF5">x</a> <a href="3B-MO.MS.MRG.3IMERG.20160201-S000000-E235959.02.V07B.HDF5">y</a> <a href="doc.xml">z</a>'
+
+    class Resp:
+        text = html
+    import unittest.mock as mock
+    with mock.patch.object(fc, "_get_with_retry", return_value=Resp()):
+        out = fc.list_imerg_files(None, 2016)
+    assert out == {(2016, 1): "3B-MO.MS.MRG.3IMERG.20160101-S000000-E235959.01.V07B.HDF5",
+                   (2016, 2): "3B-MO.MS.MRG.3IMERG.20160201-S000000-E235959.02.V07B.HDF5"}
+
+
+def test_extra_top_level_keys_survive_a_rewrite(tmp_path):
+    out = tmp_path / "climate.json"
+    out.write_text(json.dumps({"meta": {"old": True}, "soilgrids": {"usda_texture": "clay loam"}, "ndvi": {"n_composites": 552}}), encoding="utf-8")
+    payload = fc.placeholder_payload()
+    kept = fc.carry_over_extra_keys(payload, out)
+    assert sorted(kept) == ["ndvi", "soilgrids"]
+    assert payload["soilgrids"] == {"usda_texture": "clay loam"} and payload["ndvi"] == {"n_composites": 552}
+    assert payload["meta"]["data_status"] == "placeholder"  # produced keys are never overwritten
+    fc.validate_climate(payload)
+    assert fc.carry_over_extra_keys(fc.placeholder_payload(), tmp_path / "missing.json") == []
+
