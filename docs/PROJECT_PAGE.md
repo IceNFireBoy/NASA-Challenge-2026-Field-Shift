@@ -7,15 +7,15 @@ Paste each block into the matching field on the Space Apps project page.
 
 ## Project name
 
-Field Shift: San Mateo, Isabela
+Has Bean Planned: San Mateo, Isabela
 
 ## High-level summary (about 150 words)
 
-Field Shift helps rice farmers in San Mateo, Isabela, Philippines choose what to plant after the wet-season harvest. It compares fallow, mungbean, corn and peanut, including the current rotation. Each option shows its reasons, evidence, benefits, gaps, risks and pest-cycle notes, ranked by the farmer's own priorities, with its uncertainty stated. NASA POWER daily climate data drives a water balance and a water-stress yield estimate, using FAO-56 and FAO-33 methods. Prices and costs are editable and labelled with their data status. Past seasons summarise what has happened, not what will happen. Field Shift supports, and does not replace, farmer and expert judgement. NASA POWER is a gridded estimate, not a weather station.
+Has Bean Planned helps rice farmers in San Mateo, Isabela, Philippines choose what to plant after the wet-season harvest. It compares fallow, mungbean, corn and peanut, including the current rotation. Each option shows its reasons, evidence, benefits, gaps, risks and pest-cycle notes, ranked by the farmer's own priorities, with its uncertainty stated. NASA POWER daily climate data drives a water balance and a water-stress yield estimate, using FAO-56 and FAO-33 methods. Prices and costs are editable and labelled with their data status. Past seasons summarise what has happened, not what will happen. Has Bean Planned supports, and does not replace, farmer and expert judgement. NASA POWER is a gridded estimate, not a weather station.
 
 ## Project details
 
-Field Shift is a web application for farmers, cooperatives and local extension staff in San Mateo, Isabela. The problem is that dry-season choices after rice involve uncertain water, uncertain prices and up-front costs. El Niño conditions expected in the 2026-27 season make this harder.
+Has Bean Planned is a web application for farmers, cooperatives and local extension staff in San Mateo, Isabela. The problem is that dry-season choices after rice involve uncertain water, uncertain prices and up-front costs. El Niño conditions expected in the 2026-27 season make this harder.
 
 The app compares fallow, mungbean, corn and peanut side by side. It lets users set field details and rank their priorities, and it shows a ranked list of options with plain-language reasons. Current features include the Compare view, the ranked option cards, uncertainty lines per card, editable prices and costs with status badges, and reset.
 
@@ -25,7 +25,7 @@ Status and limitations are stated openly in the app. Past seasons are not foreca
 
 Live app: https://hasbeanplanned.netlify.app
 Demo video: [LINK]
-Source code: [LINK]
+Source code: https://github.com/IceNFireBoy/NASA-Challenge-2026-Field-Shift
 
 ## Use of NASA data
 

@@ -1,9 +1,11 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useTr } from '../lib/lang.jsx';
 import { CRITERIA } from '../engine/engine.js';
 import { CRITERION_COLORS } from '../lib/colors.js';
 
 // Stacked bar: each segment is that criterion's points; total length = final score out of 100.
 export default function ScoreBar({ final, contributions }) {
+  const tr = useTr();
   return (
     <div>
       <div className="flex items-center gap-3">
@@ -22,7 +24,7 @@ export default function ScoreBar({ final, contributions }) {
         {CRITERIA.filter((c) => contributions[c.id] >= 0.5).map((c) => (
           <li key={c.id} className="flex items-center gap-1">
             <span className="inline-block h-3 w-3 rounded-sm" style={{ background: CRITERION_COLORS[c.id] }} aria-hidden="true" />
-            {c.label} {contributions[c.id].toFixed(0)}
+            {tr(c.label)} {contributions[c.id].toFixed(0)}
           </li>
         ))}
       </ul>

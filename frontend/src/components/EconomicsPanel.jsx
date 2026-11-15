@@ -1,18 +1,20 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useTr } from '../lib/lang.jsx';
 import { CROPS, ROTATION_IDS } from '../engine/params.js';
 import StatusBadge from './StatusBadge.jsx';
 import NumField from './NumField.jsx';
 
 const FIELDS = [
   ['yieldKgHa', 'Yield (kg/ha)'],
-  ['pricePhpKg', 'Price (PHP/kg)'],
-  ['costPhpHa', 'Cost (PHP/ha)'],
+  ['pricePhpKg', 'Price (₱/kg)'],
+  ['costPhpHa', 'Cost (₱/ha)'],
 ];
 
 export default function EconomicsPanel({ overrides, dispatch }) {
+  const tr = useTr();
   return (
     <details className="card">
-      <summary className="min-h-[44px] cursor-pointer py-2 text-xl font-bold text-green-950">Prices and costs (editable)</summary>
+      <summary className="min-h-[44px] cursor-pointer py-2 text-xl font-bold text-green-950">{tr('Prices and costs (editable)')}</summary>
       <p className="text-sm text-stone-600">Many of these are illustrative. Replace them with your own numbers; the ranking updates immediately.</p>
       <div className="mt-3 space-y-4">
         {ROTATION_IDS.filter((id) => !CROPS[id].isFallow).map((id) => (
@@ -38,7 +40,7 @@ export default function EconomicsPanel({ overrides, dispatch }) {
           </fieldset>
         ))}
       </div>
-      <button type="button" onClick={() => dispatch({ type: 'resetOverrides' })} className="mt-3 min-h-[44px] rounded border border-stone-400 px-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700">Reset to defaults</button>
+      <button type="button" onClick={() => dispatch({ type: 'resetOverrides' })} className="mt-3 min-h-[44px] rounded border border-stone-400 px-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-green-700">{tr('Reset to defaults')}</button>
     </details>
   );
 }

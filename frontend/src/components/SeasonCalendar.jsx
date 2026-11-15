@@ -1,4 +1,5 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useTr } from '../lib/lang.jsx';
 import { useState } from 'react';
 import { SEASON_DAYS, SEASON_LENGTH, monthlyStress } from '../engine/engine.js';
 import { dateOfDay } from '../engine/content.js';
@@ -26,6 +27,7 @@ const Swatch = ({ bg, children }) => (
 );
 
 export default function SeasonCalendar({ result, state, climate, scenarioLabel }) {
+  const tr = useTr();
   const monthly = climate.scenarios[state.scenarioId].monthly;
   const stress = monthlyStress(monthly, { rainPct: state.rainPct, tempDelta: state.tempDelta });
   const dryRice = state.situationId === 'after_dry_rice';
@@ -55,7 +57,7 @@ export default function SeasonCalendar({ result, state, climate, scenarioLabel }
 
   return (
     <section aria-labelledby="cal-title" className="card">
-      <h2 id="cal-title" className="text-xl font-bold text-green-950">Season calendar: bare fields and vulnerable months</h2>
+      <h2 id="cal-title" className="text-xl font-bold text-green-950">{tr('Season calendar: bare fields and vulnerable months')}</h2>
       <p className="text-sm text-stone-700">Scenario: {scenarioLabel}. June to November shows wet-season rice as an assumption. Pick a month or a row for details.</p>
 
       <div className="mt-4 overflow-x-auto pb-1">

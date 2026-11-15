@@ -5,6 +5,7 @@ import { evaluate, uncertainty } from './engine/engine.js';
 import { buildWhyCard } from './engine/content.js';
 import { SOILS } from './engine/params.js';
 import { makeT } from './lib/i18n.js';
+import { makeTr, TrContext } from './lib/lang.jsx';
 import { INITIAL, reducer, sanitize } from './lib/state.js';
 import Header from './components/Header.jsx';
 import Notice from './components/Notice.jsx';
@@ -53,19 +54,21 @@ export default function App() {
   const [tab, setTab] = useState('compare');
   const [step, setStep] = useState('welcome'); // farmer-flow screen; kept here so switching views does not lose it
   const farmer = state.mode === 'farmer';
-  const t = useMemo(() => makeT(farmer ? state.lang : 'en'), [farmer, state.lang]);
+  const t = useMemo(() => makeT(state.lang), [state.lang]);
+  const tr = useMemo(() => makeTr(state.lang), [state.lang]);
 
   // Farmer mode: larger base text (see index.css) and the right document language.
   useEffect(() => {
     const el = document.documentElement;
     el.classList.toggle('farmer', farmer);
-    el.lang = farmer && state.lang === 'fil' ? 'fil' : 'en';
+    el.lang = state.lang === 'fil' ? 'fil' : 'en';
   }, [farmer, state.lang]);
 
   const rankCount = result.ranked.filter((r) => !r.blocked).length;
   const scenarioLabel = climate.scenarios[scenarioId].label;
 
   return (
+    <TrContext.Provider value={tr}>
     <div className="min-h-screen bg-stone-100 text-stone-900">
       <main className="mx-auto max-w-6xl space-y-4 px-4 py-6">
         <Header mode={state.mode} lang={state.lang} t={t}
@@ -76,7 +79,7 @@ export default function App() {
           <FarmerFlow state={state} dispatch={dispatch} result={result} unc={unc} inputs={inputs} climate={climate} t={t} step={step} setStep={setStep} />
         ) : (
           <>
-            <Notice />
+            <Notice partial={state.lang === 'fil'} />
             <DataBanners meta={climate.meta} rainSource={result.rainSource} scenarioId={scenarioId} />
             <Tabs tabs={TABS} active={tab} onChange={setTab} />
             {tab === 'calendar' && (
@@ -103,13 +106,13 @@ export default function App() {
                 class (not the attribute, which Tailwind's `grid` would override) removes it from view. */}
             <div role="tabpanel" id="panel-compare" aria-labelledby="tab-compare" className={tab === 'compare' ? 'grid gap-4 lg:grid-cols-[380px_1fr]' : 'hidden'}>
               <div className="space-y-4">
-                <FieldForm state={state} dispatch={dispatch} />
+                <FieldForm state={state} dispatch={dispatch} soilMap={climate.soilgrids} />
                 <PrioritySliders weights={weights} dispatch={dispatch} />
                 <ScenarioPicker climate={climate} scenarioId={scenarioId} rainPct={rainPct} tempDelta={tempDelta} dispatch={dispatch} />
               </div>
               <div className="space-y-4">
                 <section aria-labelledby="results">
-                  <h2 id="results" className="mb-2 text-lg font-bold text-green-900">Results: {scenarioLabel}</h2>
+                  <h2 id="results" className="mb-2 text-lg font-bold text-green-900">{tr('Results')}: {scenarioLabel}</h2>
                   <div className="space-y-3">
                     <UncertaintyPanel ranked={result.ranked} unc={unc} />
                     {result.ranked.map((r) => (
@@ -127,5 +130,6 @@ export default function App() {
         <Footer />
       </main>
     </div>
+    </TrContext.Provider>
   );
 }

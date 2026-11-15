@@ -1,7 +1,7 @@
 <!-- SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team. -->
-# SI (AI) use disclosure: Field Shift: San Mateo, Isabela
+# SI (AI) use disclosure: Has Bean Planned: San Mateo, Isabela
 
-This document discloses how Synthetic Intelligence (SI) tools were used in the NASA Space Apps 2026 project "Field Shift: San Mateo, Isabela". It is written to meet the Space Apps requirement to label SI use.
+This document discloses how Synthetic Intelligence (SI) tools were used in the NASA Space Apps 2026 project "Has Bean Planned: San Mateo, Isabela". It is written to meet the Space Apps requirement to label SI use.
 
 ## Tools used and what for
 
@@ -40,4 +40,4 @@ This document discloses how Synthetic Intelligence (SI) tools were used in the N
 
 ## Contact
 
-For questions about this disclosure, contact the team: [TEAM CONTACT EMAIL]
+For questions about this disclosure, contact the team: marxus.antonio.magisa@student.ateneo.edu

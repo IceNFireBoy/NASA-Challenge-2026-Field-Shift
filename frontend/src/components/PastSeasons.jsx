@@ -1,4 +1,5 @@
 // SI-ASSISTED: generated with Claude Code (Anthropic); reviewed by the team.
+import { useTr } from '../lib/lang.jsx';
 import { useMemo, useState } from 'react';
 import { Bar, CartesianGrid, Cell, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { replaySeasons, pickRain, SEASON_MONTHS, formatPhp } from '../engine/engine.js';
@@ -52,6 +53,7 @@ const Key = ({ color, dashed, children }) => (
 );
 
 function TrendChart({ climate }) {
+  const tr = useTr();
   const [metric, setMetric] = useState('rain');
   const { series } = climate.trend;
   const t = climate.trend;
@@ -70,7 +72,7 @@ function TrendChart({ climate }) {
   return (
     <section aria-labelledby="trend-t" className="card">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 id="trend-t" className="text-xl font-bold text-green-950">Long-term trend, {series.length} dry seasons</h2>
+        <h2 id="trend-t" className="text-xl font-bold text-green-950">{tr('Long-term trend')}, {series.length} {tr('dry seasons')}</h2>
         <Toggle label="Measure" value={metric} onChange={setMetric} options={[['rain', 'Rainfall'], ['tmax', 'Heat']]} />
       </div>
       <p className="text-sm text-stone-700">{rain ? 'Total December to May rainfall per season, in mm.' : 'Average daily maximum temperature, December to May.'} Hover or tap a season for its numbers.</p>
@@ -107,6 +109,7 @@ function TrendChart({ climate }) {
 }
 
 function Replay({ inputs }) {
+  const tr = useTr();
   const [mode, setMode] = useState('water');
   const rows = useMemo(() => replaySeasons(inputs), [inputs]);
   const [sel, setSel] = useState(null);
@@ -125,7 +128,7 @@ function Replay({ inputs }) {
   return (
     <section aria-labelledby="rep-t" className="card">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 id="rep-t" className="text-xl font-bold text-green-950">Replay: every past season with your settings</h2>
+        <h2 id="rep-t" className="text-xl font-bold text-green-950">{tr('Replay: every past season with your settings')}</h2>
         <Toggle label="Replay measure" value={mode} onChange={setMode} options={[['water', 'Water need met'], ['net', 'Profit or loss']]} />
       </div>
       <p className="text-sm text-stone-700">Each column is one past dry season. Pick a season to see its details below.</p>
@@ -182,6 +185,7 @@ function Replay({ inputs }) {
 }
 
 function ScenarioChart({ climate, scenarioId }) {
+  const tr = useTr();
   const [src, setSrc] = useState('scenario');
   const typ = climate.scenarios.typical.monthly; const sc = climate.scenarios[scenarioId].monthly;
   const hasImerg = Array.isArray(typ.rain_imerg_mm);
@@ -194,7 +198,7 @@ function ScenarioChart({ climate, scenarioId }) {
   return (
     <section aria-labelledby="sc-t" className="card">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 id="sc-t" className="text-xl font-bold text-green-950">Monthly rain vs crop water demand (mm)</h2>
+        <h2 id="sc-t" className="text-xl font-bold text-green-950">{tr('Monthly rain vs crop water demand (mm)')}</h2>
         <Toggle label="Comparison" value={src} onChange={setSrc} options={[['scenario', 'Typical vs scenario'], ['source', 'IMERG vs POWER', !hasImerg]]} />
       </div>
       {!hasImerg && <p className="text-sm text-sky-900">IMERG vs POWER is unavailable: IMERG data was not downloaded, so only NASA POWER rainfall is shown.</p>}
@@ -220,13 +224,53 @@ function ScenarioChart({ climate, scenarioId }) {
   );
 }
 
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// Observed greenness of the 250 m pixel at the point (MODIS MOD13Q1). Shown only when the optional block exists.
+function NdviChart({ ndvi }) {
+  const tr = useTr();
+  const [view, setView] = useState('month');
+  const byMonth = view === 'month';
+  const data = byMonth
+    ? ndvi.monthly_mean.filter((d) => d.ndvi != null).map((d) => ({ name: MONTH_NAMES[d.month - 1], ndvi: d.ndvi, n: d.n }))
+    : ndvi.season_mean.filter((d) => d.ndvi != null).map((d) => ({ name: label(d.start_year), ndvi: d.ndvi, n: d.n }));
+  const low = byMonth && data.length ? data.reduce((a, b) => (b.ndvi < a.ndvi ? b : a)) : null;
+  const high = byMonth && data.length ? data.reduce((a, b) => (b.ndvi > a.ndvi ? b : a)) : null;
+  return (
+    <section aria-labelledby="ndvi-t" className="card">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 id="ndvi-t" className="text-xl font-bold text-green-950">{tr('Vegetation greenness from satellite (NDVI)')}</h2>
+        <Toggle label="NDVI view" value={view} onChange={setView} options={[['month', 'Typical year'], ['season', 'Each dry season']]} />
+      </div>
+      <p className="text-sm text-stone-700">{byMonth ? 'Average NDVI for each month, June to May, across all years.' : 'Average December to May NDVI for each season.'} Higher means greener, denser plants; low values mean bare or freshly tilled ground.</p>
+      <div className="mt-3 overflow-x-auto">
+        <div className={`h-72 ${byMonth ? '' : 'min-w-[600px]'}`} role="img" aria-label={byMonth ? 'Line chart of average NDVI by month' : 'Line chart of average December to May NDVI by season'}>
+          <ResponsiveContainer width="100%" height="100%">
+            <ComposedChart data={data} margin={{ top: 8, right: 12, bottom: 4, left: 4 }}>
+              <CartesianGrid vertical={false} stroke="#e7e5e4" />
+              <XAxis dataKey="name" {...axis} {...(byMonth ? {} : { interval: 0, angle: -55, textAnchor: 'end', height: 56, tick: { fontSize: 11, fill: '#44403c' } })} />
+              <YAxis {...axis} width={52} domain={[0, 1]} />
+              <Tooltip cursor={{ stroke: '#a8a29e' }} content={<Tip title={(d) => d.name} rows={(d) => [['Mean NDVI', d.ndvi.toFixed(2), '#009E73'], ['Composites averaged', d.n]]} />} />
+              <Line dataKey="ndvi" stroke="#009E73" strokeWidth={2.5} dot={{ r: 4, fill: '#009E73', strokeWidth: 0 }} activeDot={{ r: 7 }} {...anim()} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+      {low && high && <p className="mt-2 text-sm">In a typical year the pixel is least green in <strong>{low.name}</strong> (NDVI {low.ndvi.toFixed(2)}) and greenest in <strong>{high.name}</strong> ({high.ndvi.toFixed(2)}).</p>}
+      <p className="mt-1 text-sm text-stone-700">{ndvi.product}; {ndvi.n_composites} composites from {ndvi.first_date} to {ndvi.last_date}. {ndvi.note} The crop model does not use NDVI; it is shown as an independent check on when fields are green or bare.</p>
+    </section>
+  );
+}
+
 export default function PastSeasons({ climate, inputs }) {
+  const tr = useTr();
   return (
     <div className="space-y-4">
-      <p className="callout text-sm font-semibold">Past seasons show what happened; they are not forecasts of 2026-27.</p>
+      <p className="callout text-sm font-semibold">{tr('Past seasons show what happened; they are not forecasts of 2026-27.')}</p>
       <TrendChart climate={climate} />
       <Replay inputs={inputs} />
       <ScenarioChart climate={climate} scenarioId={inputs.scenarioId} />
+      {climate.ndvi && <NdviChart ndvi={climate.ndvi} />}
     </div>
   );
 }

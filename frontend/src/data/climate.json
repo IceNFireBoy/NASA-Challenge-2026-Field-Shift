@@ -2238,5 +2238,212 @@
   ],
   "rain_mm_per_decade": 245.0,
   "tmax_c_per_decade": 0.04
+ },
+ "soilgrids": {
+  "source": "ISRIC SoilGrids 2.0 (250 m), CC BY 4.0",
+  "url": "https://soilgrids.org/",
+  "citation": "Poggio, L. et al. (2021). SoilGrids 2.0. SOIL 7, 217-240. doi:10.5194/soil-7-217-2021",
+  "accessed": "2026-11-15",
+  "note": "Global map prediction at one point, not a field soil test.",
+  "depth": "0-30 cm",
+  "sand_pct": 41.9,
+  "silt_pct": 26.6,
+  "clay_pct": 31.5,
+  "usda_texture": "clay loam"
+ },
+ "ndvi": {
+  "product": "MOD13Q1 v061, 250 m, 16-day composites, band 250m_16_days_NDVI",
+  "source": "ORNL DAAC MODIS/VIIRS subsetting web service",
+  "url": "https://modis.ornl.gov/rst/api/v1/",
+  "citation": "Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061. NASA LP DAAC. doi:10.5067/MODIS/MOD13Q1.061",
+  "accessed": "2026-11-15",
+  "note": "One 250 m pixel at the town-centre point; fill values dropped; no extra cloud or quality screening.",
+  "monthly_mean": [
+   {
+    "month": 6,
+    "ndvi": 0.503,
+    "n": 48
+   },
+   {
+    "month": 7,
+    "ndvi": 0.526,
+    "n": 48
+   },
+   {
+    "month": 8,
+    "ndvi": 0.589,
+    "n": 48
+   },
+   {
+    "month": 9,
+    "ndvi": 0.514,
+    "n": 48
+   },
+   {
+    "month": 10,
+    "ndvi": 0.458,
+    "n": 30
+   },
+   {
+    "month": 11,
+    "ndvi": 0.444,
+    "n": 42
+   },
+   {
+    "month": 12,
+    "ndvi": 0.449,
+    "n": 48
+   },
+   {
+    "month": 1,
+    "ndvi": 0.543,
+    "n": 48
+   },
+   {
+    "month": 2,
+    "ndvi": 0.509,
+    "n": 48
+   },
+   {
+    "month": 3,
+    "ndvi": 0.449,
+    "n": 48
+   },
+   {
+    "month": 4,
+    "ndvi": 0.477,
+    "n": 48
+   },
+   {
+    "month": 5,
+    "ndvi": 0.501,
+    "n": 48
+   }
+  ],
+  "season_mean": [
+   {
+    "start_year": 2001,
+    "ndvi": 0.5,
+    "n": 12
+   },
+   {
+    "start_year": 2002,
+    "ndvi": 0.518,
+    "n": 12
+   },
+   {
+    "start_year": 2003,
+    "ndvi": 0.474,
+    "n": 12
+   },
+   {
+    "start_year": 2004,
+    "ndvi": 0.492,
+    "n": 12
+   },
+   {
+    "start_year": 2005,
+    "ndvi": 0.463,
+    "n": 12
+   },
+   {
+    "start_year": 2006,
+    "ndvi": 0.507,
+    "n": 12
+   },
+   {
+    "start_year": 2007,
+    "ndvi": 0.524,
+    "n": 12
+   },
+   {
+    "start_year": 2008,
+    "ndvi": 0.472,
+    "n": 12
+   },
+   {
+    "start_year": 2009,
+    "ndvi": 0.453,
+    "n": 12
+   },
+   {
+    "start_year": 2010,
+    "ndvi": 0.417,
+    "n": 12
+   },
+   {
+    "start_year": 2011,
+    "ndvi": 0.544,
+    "n": 12
+   },
+   {
+    "start_year": 2012,
+    "ndvi": 0.571,
+    "n": 12
+   },
+   {
+    "start_year": 2013,
+    "ndvi": 0.506,
+    "n": 12
+   },
+   {
+    "start_year": 2014,
+    "ndvi": 0.496,
+    "n": 12
+   },
+   {
+    "start_year": 2015,
+    "ndvi": 0.549,
+    "n": 12
+   },
+   {
+    "start_year": 2016,
+    "ndvi": 0.498,
+    "n": 12
+   },
+   {
+    "start_year": 2017,
+    "ndvi": 0.44,
+    "n": 12
+   },
+   {
+    "start_year": 2018,
+    "ndvi": 0.49,
+    "n": 12
+   },
+   {
+    "start_year": 2019,
+    "ndvi": 0.474,
+    "n": 12
+   },
+   {
+    "start_year": 2020,
+    "ndvi": 0.396,
+    "n": 12
+   },
+   {
+    "start_year": 2021,
+    "ndvi": 0.533,
+    "n": 12
+   },
+   {
+    "start_year": 2022,
+    "ndvi": 0.457,
+    "n": 12
+   },
+   {
+    "start_year": 2023,
+    "ndvi": 0.483,
+    "n": 12
+   },
+   {
+    "start_year": 2024,
+    "ndvi": 0.453,
+    "n": 12
+   }
+  ],
+  "n_composites": 552,
+  "first_date": "2001-06-10",
+  "last_date": "2025-05-25"
  }
 }

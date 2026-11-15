@@ -134,3 +134,14 @@ def test_missing_temperature_fails_loudly():
     }}}
     with pytest.raises(RuntimeError):
         fc.parse_power_payload(payload)
+
+
+def test_usda_texture_classes():
+    from fetch_extras import summarise_ndvi, usda_texture
+    assert usda_texture(40, 40, 20) == "loam"
+    assert usda_texture(30, 35, 35) == "clay loam"
+    assert usda_texture(20, 20, 60) == "clay"
+    assert usda_texture(90, 5, 5) == "sand"
+    out = summarise_ndvi([{"date": "2020-12-03", "ndvi": 0.4}, {"date": "2021-01-01", "ndvi": 0.6}, {"date": "2021-07-12", "ndvi": 0.8}])
+    assert out["season_mean"] == [{"start_year": 2020, "ndvi": 0.5, "n": 2}]
+    assert [m["ndvi"] for m in out["monthly_mean"] if m["month"] == 7] == [0.8]

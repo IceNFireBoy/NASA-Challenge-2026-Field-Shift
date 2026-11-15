@@ -99,7 +99,7 @@ export const CROPS = {
     nFixed: { text: '21-85 kg N/ha per cycle', range: [21, 85], status: 'secondary', source: 'SI-assisted literature summary (team PDF) citing a field evaluation of N2 fixation by mungbean in the Philippines (OSTI ETDEWEB 634524)' },
     econ: {
       yieldKgHa: { value: 900, range: [800, 1000], status: 'local-sourced', source: 'DOST-PCAARRD: San Mateo produces 800-1,000 kg/ha' },
-      pricePhpKg: { value: 60, status: 'illustrative', source: 'PSA regional farmgate releases put mongo near PHP 60+/kg (e.g., PHP 62.80, Biliran Q1 2024); replace with the Cagayan Valley value from PSA OpenSTAT' },
+      pricePhpKg: { value: 60, status: 'illustrative', source: 'PSA regional farmgate releases put mongo near ₱60+/kg (e.g., ₱62.80, Biliran Q1 2024); replace with the Cagayan Valley value from PSA OpenSTAT' },
       costPhpHa: { value: 25000, status: 'illustrative', source: 'Placeholder production cost; replace with PSA costs-and-returns or local data' },
     },
     seedRateKgHa: { value: 25, status: 'illustrative', source: 'Verify with DA-RFO2 / Philippine Mungbean Center (ISU San Mateo)' },
@@ -120,7 +120,7 @@ export const CROPS = {
     nFixed: { text: 'none; removes soil N', status: 'sourced' },
     econ: {
       yieldKgHa: { value: 5000, range: [4000, 6000], status: 'illustrative', source: 'Placeholder hybrid yellow-corn yield; replace with PSA Isabela data' },
-      pricePhpKg: { value: 17.5, range: [16, 19], status: 'sourced', source: 'PSA regional farmgate releases: yellow corn about PHP 17.49/kg (Biliran Q1 2025) and PHP 18.14/kg (Central Luzon Q1 2023)' },
+      pricePhpKg: { value: 17.5, range: [16, 19], status: 'sourced', source: 'PSA regional farmgate releases: yellow corn about ₱17.49/kg (Biliran Q1 2025) and ₱18.14/kg (Central Luzon Q1 2023)' },
       costPhpHa: { value: 60000, status: 'illustrative', source: 'Placeholder production cost; replace with PSA costs-and-returns or local data' },
     },
     seedRateKgHa: { value: 18, status: 'illustrative', source: 'Verify with seed suppliers / DA-RFO2' },
@@ -141,7 +141,7 @@ export const CROPS = {
     nFixed: { text: 'fixes N; amount not quantified in our sources', status: 'sourced' },
     econ: {
       yieldKgHa: { value: 1200, range: [900, 1500], status: 'illustrative', source: 'Placeholder dry-pod yield; replace with PSA Isabela data' },
-      pricePhpKg: { value: 58, range: [50, 65], status: 'sourced', source: 'PSA Central Luzon Q1 2023: dry peanut with shell PHP 58.24/kg' },
+      pricePhpKg: { value: 58, range: [50, 65], status: 'sourced', source: 'PSA Central Luzon Q1 2023: dry peanut with shell ₱58.24/kg' },
       costPhpHa: { value: 45000, status: 'illustrative', source: 'Placeholder production cost; replace with PSA costs-and-returns or local data' },
     },
     seedRateKgHa: { value: 100, status: 'illustrative', source: 'Verify with DA-RFO2' },
