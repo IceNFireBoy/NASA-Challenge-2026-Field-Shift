@@ -32,7 +32,7 @@ Has Bean Planned helps rice farmers decide what to do with their field in the dr
 
 **Scaling.** San Mateo is the test-drive area. Every data source is global and fetched by coordinates, so the next step is a location picker, regional prices and more crops and languages.
 
-**Limits, stated in the app.** One point is modelled; satellite and model grids are not rain gauges; economics are illustrative unless badged otherwise; no pest or disease model; no field validation yet.
+**Limits, stated in the app.** One point is modelled; satellite and model grids are not rain gauges; crop prices are PSA figures for Cagayan Valley, while some yields and costs are still placeholders and badged as such; no pest or disease model; no field validation yet.
 
 Live app: https://hasbeanplanned.netlify.app
 Demo video: [LINK]
@@ -53,7 +53,8 @@ Links: https://gpm.nasa.gov/data/imerg , https://power.larc.nasa.gov/ , https://
   - NOAA CPC Oceanic Niño Index (ERSSTv6), to label El Niño and La Niña seasons: https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/
   - FAO Irrigation and Drainage Papers 56 and 33, for crop water use and yield response
   - ISRIC SoilGrids 2.0, for a soil-texture hint: https://soilgrids.org/
-  - DOST-PCAARRD, PSA regional farmgate releases, PhilRice Isabela and The Manila Times, for local yields, prices and context
+  - PSA OpenSTAT, for farmgate prices (Region II, January to May 2026) and mungbean and peanut production costs (2021): https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices
+  - DOST-PCAARRD, PhilRice Isabela and The Manila Times, for San Mateo mungbean yield and local context
   - OpenStreetMap, for the base map
 
 ## References

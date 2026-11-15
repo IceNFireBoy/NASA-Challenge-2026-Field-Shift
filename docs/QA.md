@@ -9,7 +9,7 @@ Checked by code reading and a dev-browser pass (no console errors). Phone width 
 | Local soil | Field form (loam / heavy clay); clay blocks peanut | Done (two soil types only) |
 | Crop characteristics | Data & methods parameter table; why cards | Done; several values are Assumption/Illustrative and badged |
 | Farmer priorities | Priority sliders | Done |
-| Constraints (water, labour, prices) | Water access, labour cap, editable Prices and costs | Done; prices/costs are illustrative until replaced |
+| Constraints (water, labour, prices) | Water access, labour cap, editable Prices and costs | Done; crop prices and legume costs are PSA figures, corn yield and cost and peanut yield are placeholders |
 | 3+ strategies incl. existing | Four options; "Your current rotation" selector | Done (current rotation is assumed, user confirms) |
 | Why / evidence / benefits / gaps / risks | "Why this result" on each card | Done |
 | Bare-field periods | Season calendar tab | Done |
@@ -17,7 +17,7 @@ Checked by code reading and a dev-browser pass (no console errors). Phone width 
 | Pest-cycle disruption | Pest cycle section of each why card | Done as notes; no pest model |
 | Reduce water demand | Water need met and irrigation mm on cards | Done |
 | Infiltration / erosion (ground cover) | Cover score and cover criterion | Partly: a score, not a measured infiltration model |
-| Supplemental income | Net PHP/ha, economics panel | Done (illustrative economics) |
+| Supplemental income | Net return per hectare, economics panel | Done (PSA prices; some costs and yields still placeholders) |
 | Uncertainty | Uncertainty panel and card lines (300 runs) | Done |
 | Where human judgement matters | Notice, "Check locally", close-call note | Done |
 | Plain-language terms (ET, soil moisture anomaly, NDVI, frost, water balance) | Glossary in Data & methods | Done; NDVI and frost are explained but not used |

@@ -41,6 +41,13 @@ export const LIGHT_RULES = {
   work: { good: 0.75, ok: 1 }, // share of the labour limit
 };
 
+const STATUS_ORDER = ['illustrative', 'assumption', 'secondary', 'sourced', 'local-sourced'];
+// Weakest data status among the three numbers behind an option's income.
+export function incomeStatus(crop) {
+  const found = ['yieldKgHa', 'pricePhpKg', 'costPhpHa'].map((k) => crop?.econ?.[k]?.status).filter(Boolean);
+  return STATUS_ORDER.find((s) => found.includes(s)) ?? 'illustrative';
+}
+
 const level = (x, rule) => (x >= rule.good ? 'good' : x >= rule.ok ? 'ok' : 'risk');
 
 // Traffic lights for one engine result. Each light = { level, detail: { key, vars } }.
@@ -56,7 +63,7 @@ export function trafficLights(r, { waterMode, laborCap }) {
   return {
     water,
     soil: { level: soilLevel, detail: { key: `light.soil.${soilLevel}` } },
-    income: { level: net > 0 ? 'good' : net === 0 ? 'ok' : 'risk',
+    income: { status: incomeStatus(r.crop), level: net > 0 ? 'good' : net === 0 ? 'ok' : 'risk',
       detail: { key: net === 0 ? 'light.income.none' : 'light.income.detail', vars: { php: formatPhp(net) } } },
     work: { level: ratio <= LIGHT_RULES.work.good ? 'good' : ratio <= LIGHT_RULES.work.ok ? 'ok' : 'risk',
       detail: { key: 'light.work.detail', vars: { days: Math.round(r.laborMd) } } },

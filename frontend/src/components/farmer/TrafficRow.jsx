@@ -28,7 +28,7 @@ export default function TrafficRow({ lights, t }) {
             {t(`light.${l.level}`)}
           </p>
           <p className="mt-1 break-words">{t(l.detail.key, l.detail.vars)}</p>
-          {id === 'income' && l.level !== 'ok' && <p className="mt-1"><StatusBadge status="illustrative" size="text-base" /></p>}
+          {id === 'income' && l.level !== 'ok' && <p className="mt-1"><StatusBadge status={l.status ?? 'illustrative'} size="text-base" /></p>}
         </li>
       ))}
     </ul>

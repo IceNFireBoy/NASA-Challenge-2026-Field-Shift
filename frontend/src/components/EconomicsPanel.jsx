@@ -15,7 +15,7 @@ export default function EconomicsPanel({ overrides, dispatch }) {
   return (
     <details className="card">
       <summary className="min-h-[44px] cursor-pointer py-2 text-xl font-bold text-green-950">{tr('Prices and costs (editable)')}</summary>
-      <p className="text-sm text-stone-600">Many of these are illustrative. Replace them with your own numbers; the ranking updates immediately.</p>
+      <p className="text-sm text-stone-600">Prices are PSA farmgate prices for Cagayan Valley; some yields and costs are still placeholders (see the badges). Replace any of them with your own numbers; the ranking updates immediately.</p>
       <div className="mt-3 space-y-4">
         {ROTATION_IDS.filter((id) => !CROPS[id].isFallow).map((id) => (
           <fieldset key={id} className="rounded border border-stone-200 p-3">

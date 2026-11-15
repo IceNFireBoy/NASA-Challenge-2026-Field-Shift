@@ -101,7 +101,8 @@ Made for extension workers, cooperatives and analysts. It was first called "Expe
 | **FAO Irrigation and Drainage Paper 33** (values via Paper 66) | Yield response to water shortage |
 | **USDA-SCS effective rainfall** (as used in FAO CROPWAT) | The share of rain a crop can actually use |
 | **ISRIC SoilGrids 2.0** (250 m, CC BY 4.0) | A soil-texture hint for the point: clay loam, about 32% clay and 42% sand in the top 30 cm |
-| **PSA farmgate prices**, **DOST-PCAARRD**, **PhilRice Isabela**, **The Manila Times (2021)** | Local yields, prices and context for San Mateo |
+| **PSA OpenSTAT** | Farmgate prices for yellow corn, mungbean and peanut in Region II (Cagayan Valley), January to May 2026; production costs for mungbean and peanut (Costs and Returns, 2021, national) |
+| **DOST-PCAARRD**, **PhilRice Isabela**, **The Manila Times (2021)** | San Mateo mungbean yield and area, and local context |
 | **OpenStreetMap** | Base map tiles for the resolution map |
 
 Every number on screen comes from the climate data file, the parameter file or user input. Each economic and agronomic input carries a badge: **Sourced**, **Local source**, **Secondary source**, **Assumption** or **Illustrative**; a number the user types is badged **Your value**.
@@ -141,7 +142,7 @@ Prices are PSA farmgate prices for Cagayan Valley (January to May 2026). Mungbea
 - **Past seasons are not forecasts.** Scenarios summarise what happened; they do not predict 2026-27.
 - **One point.** Everything is modelled for the San Mateo town centre. A NASA POWER cell is about 55 by 66 km and an IMERG cell about 11 km, so two farms far apart get the same numbers.
 - **Gridded estimates, not gauges.** IMERG and POWER are satellite and model products.
-- **Economics are illustrative** unless badged otherwise. Farmers should enter their own prices and costs.
+- **Economics are partly sourced, partly placeholder.** Prices for mungbean, corn and peanut are PSA farmgate prices for Cagayan Valley (January to May 2026). Mungbean and peanut production costs are PSA national averages for 2021. Mungbean yield is a San Mateo figure from DOST-PCAARRD. Corn yield and cost, peanut yield, seed rates and the pumping cost are still placeholders, badged Illustrative. Costs are from 2021 and prices from 2026, so net returns for mungbean and peanut are on the generous side. Farmers should enter their own figures.
 - **Soil is the user's choice,** with a SoilGrids hint; it is not a soil test or a BSWM map lookup.
 - **NDVI is one 250 m pixel** at the town centre, which can include buildings and roads, with no cloud screening beyond the 16-day composite. The model does not use it.
 - **No pest or disease model,** no groundwater or capillary rise, and crops that run past 31 May reuse May conditions.

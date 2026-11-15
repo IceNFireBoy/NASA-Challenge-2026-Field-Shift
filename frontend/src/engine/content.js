@@ -96,7 +96,7 @@ export function buildWhyCard(r, { waterMode, scenarioLabel, rainSource, soilLabe
     card.risks.push('Very labour-intensive: manual extraction and threshing alone take 15-23 man-days/ha.', 'Needs friable, well-drained soil; waterlogging and hard clay cut pod recovery.', 'Pods must dry well after harvest to avoid aflatoxin.');
     card.validate.push('Soil drainage of your specific field.', 'Labour availability at harvest.');
     card.pest = 'Not a grass, so it interrupts rice-specific pests. Watch for leaf spot and rust.';
-    card.gaps.push('No San Mateo peanut yield data in our sources; yield and cost are PSA national averages for 2021.');
+    card.gaps.push('No San Mateo peanut yield data in our sources; the yield is a placeholder and the cost is a PSA national average for 2021.');
   }
   if (r.heatFlag) card.risks.push('Hot spell likely during flowering, when flowers and pods are most sensitive to heat.');
   if (r.overlapsWetSeason) card.risks.push('Harvest falls after May 31 and may clash with wet-season rice land preparation.');

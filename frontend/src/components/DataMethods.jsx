@@ -23,7 +23,7 @@ const METHOD = [
 const LIMITS = [
   'One point (San Mateo) is modelled; field-scale differences are not captured.',
   'Past seasons are not forecasts.',
-  'Economics are illustrative until replaced with local prices and costs.',
+  'Crop prices are PSA farmgate prices for Cagayan Valley (January to May 2026); mungbean and peanut costs are PSA national averages for 2021. Corn yield and cost and peanut yield are still placeholders.',
   'No pest or disease model.',
   'No groundwater or capillary rise.',
   'No field validation yet.',
@@ -127,7 +127,7 @@ export default function DataMethods({ climate }) {
           <li>El Niño question: "yes" uses the strong El Niño scenario; "no" and "not sure" use the typical year, and the result also states what a strong El Niño year would change.</li>
           <li>Water light: good above {LIGHT_RULES.water.good * 100}% of crop water need met by rain and stored soil water, okay from {LIGHT_RULES.water.ok * 100}%, risky below; good when irrigating.</li>
           <li>Soil light: good at soil-health tier {LIGHT_RULES.soil.good} or more, okay from {LIGHT_RULES.soil.ok}, risky below.</li>
-          <li>Income light: good when net return per hectare is positive, okay at zero, risky when negative (illustrative prices unless you edit them).</li>
+          <li>Income light: good when net return per hectare is positive, okay at zero, risky when negative (PSA prices and some placeholder costs unless you edit them).</li>
           <li>Work light: good up to {LIGHT_RULES.work.good * 100}% of your labour limit, okay up to {LIGHT_RULES.work.ok * 100}%, risky above.</li>
           <li>Technical asides (crop coefficients, yield-response factors) are hidden from the Farmer view's why-card; the figures themselves are unchanged.</li>
           <li>Filipino labels were drafted with SI and checked by native speakers on the team.</li>
