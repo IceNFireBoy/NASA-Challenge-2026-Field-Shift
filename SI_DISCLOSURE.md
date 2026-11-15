@@ -9,7 +9,7 @@ This document discloses how Synthetic Intelligence (SI) tools were used in the N
 |---|---|
 | **Claude (claude.ai)**, by Anthropic | Research, drafting of the core data pipeline and the calculation engine, and drafting of the first documentation |
 | **Claude Code**, by Anthropic | Building the user interface, pipeline extensions (Giovanni CSV reader, MODIS NDVI and SoilGrids fetch), and documentation  |
-| **Gemini**, by Google | An early literature summary. Used only as a pointer to primary sources. Values that came through it are badged **Secondary source** in the app. |
+| **Gemini**, by Google | An early literature summary. Used only as a pointer to primary sources. Values that first came through it have since been checked by the team against primary sources (crop durations and seed rates against the DA mungbean guide and a 1998 peanut report; nitrogen fixation against Rosales et al., 1998). |
 | **Image or video tools** | None. The app uses emoji and hand-made SVG only |
 
 ## What SI produced, stated plainly

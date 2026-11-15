@@ -32,7 +32,7 @@ describe('agro-climate maths', () => {
     const daily = dailySeries(flat(0));
     const r = simulate('rice_mungbean', { daily, plantingDay: 45, soilId: 'loam', waterMode: 'rainfed', wetRatio: 1 });
     const avgKc = 0.4 * 0.18 + ((0.4 + 1.05) / 2) * 0.27 + 1.05 * 0.35 + ((1.05 + 0.35) / 2) * 0.2;
-    expect(r.etc).toBeCloseTo(4 * 70 * avgKc, 0);
+    expect(r.etc).toBeCloseTo(4 * r.crop.duration * avgKc, 0); // duration comes from params.js (65 days, DA-BPI guide)
     expect(r.peff).toBe(0);
     expect(r.storedWater).toBeCloseTo(0.155 * 0.6 * 1000 * 0.6, 6); // after_wet_rice default fraction 0.6
     expect(r.yieldLoss).toBeCloseTo(Math.min(1, 1.15 * (1 - r.pctMet)), 9);

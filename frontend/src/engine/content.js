@@ -76,7 +76,7 @@ export function buildWhyCard(r, { waterMode, scenarioLabel, rainSource, soilLabe
 
   if (r.id === 'rice_mungbean') {
     card.evidence.push('San Mateo is called the Mungbean Capital of the Philippines, with about 7,000 ha planted to mungbean in the dry months (DOST-PCAARRD 2018).', 'Local yields of 800-1,000 kg/ha are reported (DOST-PCAARRD).');
-    card.benefits.push('Fixes 21-85 kg N/ha per cycle, cutting urea needs for the next rice crop.', 'Shortest crop here (60-80 days), so it can finish before the hottest, driest weeks.', 'Lowest water need of the three crops.');
+    card.benefits.push('Fixes 21-85 kg N/ha per cycle, cutting urea needs for the next rice crop.', 'Shortest crop here (60-70 days), so it can finish before the hottest, driest weeks.', 'Lowest water need of the three crops.');
     card.risks.push('Rain during pod drying can rot pods; hand-picking in several rounds adds labour.', 'Bean fly and pod borers in warm spells.');
     card.validate.push('Seed variety and local planting window with the Philippine Mungbean Center (ISU San Mateo) or the Municipal Agriculture Office.', 'Your actual farmgate price this season.');
     card.pest = 'Not a grass, so it interrupts rice-specific pests such as stem borers and planthoppers. It has its own pests; scout regularly.';
@@ -92,7 +92,7 @@ export function buildWhyCard(r, { waterMode, scenarioLabel, rainSource, soilLabe
   }
   if (r.id === 'rice_peanut') {
     card.benefits.push('Legume: adds nitrogen (amount not quantified in our sources).', 'Least sensitive yield response to water stress here (Ky 0.70).', 'Haulms are a good feed.');
-    card.risks.push('Very labour-intensive: manual extraction and threshing alone take 15-23 man-days/ha.', 'Needs friable, well-drained soil; waterlogging and hard clay cut pod recovery.', 'Pods must dry well after harvest to avoid aflatoxin.');
+    card.risks.push('Very labour-intensive: manual harvesting alone can take 15-23 man-days/ha.', 'Needs friable, well-drained soil; waterlogging and hard clay cut pod recovery.', 'Pods must dry well after harvest to avoid aflatoxin.');
     card.validate.push('Soil drainage of your specific field.', 'Labour availability at harvest.');
     card.pest = 'Not a grass, so it interrupts rice-specific pests. Watch for leaf spot and rust.';
     card.gaps.push('No San Mateo peanut yield data in our sources; the yield is a placeholder and the cost is a PSA national average for 2021.');

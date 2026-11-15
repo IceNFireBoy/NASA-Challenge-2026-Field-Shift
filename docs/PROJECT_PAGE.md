@@ -71,6 +71,8 @@ Links: https://gpm.nasa.gov/data/imerg , https://power.larc.nasa.gov/ , https://
 10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station. https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
 11. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
 12. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
+13. Department of Agriculture, Bureau of Plant Industry. Mungbean Production Guide (reproduced by DA-RAFIS MIMAROPA). Source page: http://bpi.da.gov.ph/index.php/production-guide/161-mungbean
+14. Palomar, M. K. (ed.) (1998). Peanut in Local and Global Food Systems Series Report No. 1. Department of Anthropology, University of Georgia.
 
 ## Use of SI tools
 

@@ -129,9 +129,9 @@ All calculations live in one engine (`frontend/src/engine/engine.js`) with autom
 
 These are results from the committed data with the default settings (after wet-season rice, loose soil, rain only, default priorities). They describe past seasons and are not a forecast.
 
-- **Typical year:** Mungbean scores 83, peanut 69, corn 58, fallow 48. Mungbean comes first in 90% of the 300 what-if runs.
-- **Strong El Niño year:** Mungbean 83, peanut 53, fallow 48, corn 38. Corn falls below leaving the field idle, and mungbean comes first in every one of the 300 runs.
-- **Replay:** mungbean met at least 80% of its water need in 23 of 24 past dry seasons.
+- **Typical year:** Mungbean scores 82, peanut 69, corn 58, fallow 48. Mungbean comes first in 88% of the 300 what-if runs.
+- **Strong El Niño year:** Mungbean 82, peanut 53, fallow 48, corn 38. Corn falls below leaving the field idle, and mungbean comes first in every one of the 300 runs.
+- **Replay:** mungbean met at least 80% of its water need in all 24 past dry seasons.
 - **Rainfall:** typical dry-season months are 176, 87, 63, 85, 79 and 202 mm (December to May, IMERG); a strong El Niño year totals 573 mm against 692 mm.
 - **Greenness:** the town-centre pixel is least green in November (NDVI 0.44) and greenest in August (0.59), with a second peak in January.
 
@@ -246,4 +246,6 @@ Contact: marxus.antonio.magisa@student.ateneo.edu
 10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station (Extracore Project 16, rice-rice-mungbean and rice-rice-corn). https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
 11. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
 12. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
-13. OpenStreetMap contributors. Map data and tiles. https://www.openstreetmap.org/copyright
+13. Department of Agriculture, Bureau of Plant Industry. Mungbean Production Guide (reproduced by DA-RAFIS MIMAROPA). Source page: http://bpi.da.gov.ph/index.php/production-guide/161-mungbean
+14. Palomar, M. K. (ed.) (1998). Peanut in Local and Global Food Systems Series Report No. 1. Department of Anthropology, University of Georgia.
+15. OpenStreetMap contributors. Map data and tiles. https://www.openstreetmap.org/copyright
