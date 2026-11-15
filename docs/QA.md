@@ -30,5 +30,4 @@ Checked by automated tests, a scripted pass over the live site at phone and desk
 
 ## Open items
 - IMERG rainfall: done through a Giovanni CSV (`pipeline/data/imerg_giovanni.csv`).
-- Add the demo video link to the README, demo script and project page.
 - No field validation; one grid point; past seasons are not forecasts.

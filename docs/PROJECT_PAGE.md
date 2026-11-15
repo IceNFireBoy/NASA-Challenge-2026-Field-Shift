@@ -35,7 +35,7 @@ Has Bean Planned helps rice farmers decide what to do with their field in the dr
 **Limits, stated in the app.** One point is modelled; satellite and model grids are not rain gauges; crop prices are PSA figures for Cagayan Valley, while some yields and costs are still placeholders and badged as such; no pest or disease model; no field validation yet.
 
 Live app: https://hasbeanplanned.netlify.app
-Demo video: [LINK]
+Demo: https://drive.google.com/drive/folders/1c5_yxTXJFlfG1PGAq1KJszDXvsmmTSom
 Source code: https://github.com/IceNFireBoy/NASA-Challenge-2026-Field-Shift
 
 ## Use of NASA data
@@ -71,7 +71,7 @@ Links: https://gpm.nasa.gov/data/imerg , https://power.larc.nasa.gov/ , https://
 10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station. https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
 11. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
 12. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
-13. Department of Agriculture, Bureau of Plant Industry. Mungbean Production Guide (reproduced by DA-RAFIS MIMAROPA). Source page: http://bpi.da.gov.ph/index.php/production-guide/161-mungbean
+13. Department of Agriculture, Bureau of Plant Industry. Mungbean Production Guide (reproduced by DA-RAFIS MIMAROPA). Source page as printed in the guide (it did not respond when checked on 15 Nov 2026): http://bpi.da.gov.ph/index.php/production-guide/161-mungbean
 14. Palomar, M. K. (ed.) (1998). Peanut in Local and Global Food Systems Series Report No. 1. Department of Anthropology, University of Georgia.
 
 ## Use of SI tools
