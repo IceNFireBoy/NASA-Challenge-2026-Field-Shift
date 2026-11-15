@@ -8,7 +8,7 @@ import WhyCard from './WhyCard.jsx';
 
 const pc = (x) => `${Math.round(100 * x)}%`;
 
-export default function RotationCard({ r, isCurrent, laborCap, topShare, beatsShare, card, draws }) {
+export default function RotationCard({ r, isCurrent, laborCap, waterMode, topShare, beatsShare, card, draws }) {
   const [open, setOpen] = useState(false);
   const overLabor = !r.blocked && r.laborMd > laborCap;
   return (
@@ -27,7 +27,10 @@ export default function RotationCard({ r, isCurrent, laborCap, topShare, beatsSh
         <>
           <div className="mt-3"><ScoreBar final={r.final} contributions={r.contributions} /></div>
           <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-sm sm:grid-cols-4">
-            <div><dt className="text-stone-600">Water need met</dt><dd className="font-semibold">{r.fallow ? 'no crop' : pc(r.pctMet)}</dd></div>
+            <div><dt className="text-stone-600">Water need met</dt><dd className="font-semibold">
+              {r.fallow ? 'no crop' : waterMode === 'irrigated' ? `100% with irrigation (about ${Math.round(r.irrigationMm).toLocaleString('en-PH')} mm pumped)` : pc(r.pctMet)}
+              {!r.fallow && waterMode === 'irrigated' && <span className="block text-xs font-normal text-stone-600">Rain + soil water alone: {pc(r.pctMet)}</span>}
+            </dd></div>
             <div><dt className="text-stone-600">Net per ha</dt><dd className="font-semibold">{formatPhp(r.net)}</dd></div>
             <div><dt className="text-stone-600">Labour</dt><dd className={`font-semibold ${overLabor ? 'text-red-800' : ''}`}>{r.laborMd.toLocaleString('en-PH')} man-days{overLabor && ' ⚠ above your limit'}</dd></div>
             <div><dt className="text-stone-600">Harvest</dt><dd className="font-semibold">{r.fallow ? 'n/a' : `about ${dateOfDay(r.end)}`}</dd></div>

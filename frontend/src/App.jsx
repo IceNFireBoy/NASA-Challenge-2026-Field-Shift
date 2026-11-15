@@ -39,6 +39,7 @@ function reducer(s, a) {
       if (a.value === undefined) delete cur[a.key]; else cur[a.key] = a.value;
       return { ...s, overrides: { ...s.overrides, [a.id]: cur } };
     }
+    case 'resetAll': return INITIAL;
     case 'resetOverrides': return { ...s, overrides: {} };
     default: return s;
   }
@@ -57,7 +58,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-stone-100 text-stone-900">
       <main className="mx-auto max-w-6xl space-y-4 px-4 py-6">
-        <Header />
+        <Header onReset={() => dispatch({ type: 'resetAll' })} />
         <Notice />
         <DataBanners meta={climate.meta} rainSource={result.rainSource} scenarioId={state.scenarioId} />
         <div className="grid gap-4 lg:grid-cols-[380px_1fr]">
@@ -71,7 +72,7 @@ export default function App() {
               <h2 id="results" className="mb-2 text-lg font-bold text-green-900">Results: {scenarioLabel}</h2>
               <div className="space-y-3">
                 {result.ranked.map((r) => (
-                  <RotationCard key={r.id} r={r} isCurrent={r.id === state.currentId} laborCap={state.laborCap}
+                  <RotationCard key={r.id} r={r} isCurrent={r.id === state.currentId} laborCap={state.laborCap} waterMode={state.waterMode}
                     topShare={unc.topShare[r.id]} beatsShare={unc.beatsCurrentShare[r.id]} draws={unc.draws}
                     card={buildWhyCard(r, { waterMode: state.waterMode, scenarioLabel, rainSource: result.rainSource, soilLabel: SOILS[state.soilId].label, rankCount })} />
                 ))}
