@@ -1,0 +1,8 @@
+# SI-ASSISTED: drafted by Claude (Anthropic); reviewed by the team.
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

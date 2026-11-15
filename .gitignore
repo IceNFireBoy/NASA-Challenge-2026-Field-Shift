@@ -1,0 +1,18 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+pipeline/cache/
+# Secrets
+.env
+pipeline/.env
+*.netrc
+# Node
+frontend/node_modules/
+frontend/dist/
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

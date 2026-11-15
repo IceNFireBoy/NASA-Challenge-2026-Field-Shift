@@ -1,0 +1,6 @@
+requests>=2.31
+numpy>=1.26
+pandas>=2.1
+h5py>=3.10
+earthaccess>=0.12
+pytest>=8.0
