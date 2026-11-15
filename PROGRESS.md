@@ -2,23 +2,23 @@
 # Has Bean Planned: progress
 
 Team NASApusomo. NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
-Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:50 that day.
+Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 21:55 that day.
 
 ## Where things stand right now
 
 | Item | State |
 | --- | --- |
-| Live site (https://hasbeanplanned.netlify.app) | Serves `main` at merge commit `b752b35`: UX redesign plus Phase 5. New title and bundle confirmed at 21:15; live pages not clicked through |
+| Live site (https://hasbeanplanned.netlify.app) | Serves `main` at merge commit `b752b35`: UX redesign, Phase 5 and IMERG rainfall. Live pages not clicked through |
 | Branch `main` | UX redesign (PR 1) and Phase 5 both merged. Tests and build pass |
 | Branch `phase-5` | Merged into `main` at 21:14 on the human's instruction. Branch kept on GitHub |
 | SoilGrids soil data | **In `climate.json`** on `main`: clay loam (32% clay, 42% sand, top 30 cm). Soil hint checked in the browser |
 | MODIS NDVI data | **In `climate.json`** on `main`: 552 composites, 2001-06-10 to 2025-05-25. Chart checked in the browser |
-| GPM IMERG rainfall | **In `climate.json` on `phase-5`, not on `main` yet.** `precip_source=imerg` for all 24 seasons, from a Giovanni CSV |
-| Tests | Frontend 22 pass, pipeline 19 pass, `npm run build` OK (on `phase-5`) |
+| GPM IMERG rainfall | **In `climate.json` on `main`, live.** `precip_source=imerg` for all 24 seasons, from a Giovanni CSV |
+| Tests | Frontend 22 pass, pipeline 19 pass, `npm run build` OK (on `main` after the IMERG merge) |
 
 ## Waiting on
 
-- **Human decision:** merge `phase-5` into `main` (target 22:45). It holds the IMERG switch.
+- Nothing is running. `phase-5` (IMERG) was merged into `main` at 21:50 on the human's instruction.
 - **Human check before recording the demo:** the El Nino story. Summary of what changed is below.
 
 ## Done
@@ -92,7 +92,7 @@ Deadline: Sun 15 Nov 2026, 23:59 Philippine time. This file was last updated at 
   Past seasons has a chart with a typical-year view (least green in Nov at 0.44, greenest in
   Aug at 0.59) and an each-dry-season view. The crop model does not use NDVI.
 
-### GPM IMERG rainfall (branch `phase-5`, not merged, 21:50)
+### GPM IMERG rainfall (merged to `main`, live)
 - **Source file:** `pipeline/data/imerg_giovanni.csv` (committed, 286 monthly rows, Dec 2001 to
   Sep 2025). NASA Giovanni "Time Series, Area-Averaged" of GPM_3IMERGM v07 precipitation; data
   box 121.55 to 121.65 E, 16.85 to 16.95 N (one 0.1 degree cell); values in mm/hr. The file
