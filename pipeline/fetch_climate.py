@@ -2,7 +2,7 @@
 # SI-ASSISTED: drafted by Claude (Anthropic, claude.ai) and tested in a sandbox; reviewed by the team.
 # Space Apps 2026 requires labelling SI (AI) tool use. See SI_DISCLOSURE.md.
 """
-Field Shift - NASA climate pipeline for San Mateo, Isabela, Philippines.
+Has Bean Planned - NASA climate pipeline for San Mateo, Isabela, Philippines.
 
 Writes frontend/src/data/climate.json (schema_version 1) for the web app.
 

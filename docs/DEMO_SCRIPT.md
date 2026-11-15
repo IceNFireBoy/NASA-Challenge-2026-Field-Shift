@@ -3,7 +3,7 @@
 
 **Format:** screen recording of the live app, 28 seconds, no voice-over required. English caption line on screen for each shot. Do not show any people. Do not show personal data in the form fields; use a sample field name.
 
-**Shot 5 depends on features marked in progress.** The season calendar and past-season replay are not shipped yet. If they are not ready, use the fallback in the last cell of that shot, which uses the Compare view only.
+**Everything in the shot list is shipped.** The app now opens in the Farmer view; switch to "Analytics and Community" for the Compare view, the season calendar and the past-season replay. With the default settings mungbean stays the best fit in an El Niño year; what changes is that corn drops below leaving the field idle.
 
 ## Shot list (28 seconds)
 
@@ -11,14 +11,13 @@
 |---|---|---|---|
 | 1 | 0:00 to 0:04 (4 s) | Title card, then a map pin on San Mateo, Isabela | "After rice, what should a San Mateo field plant next?" |
 | 2 | 0:04 to 0:10 (6 s) | Field form filled with a sample field. Move two priority sliders. Scenario set to the normal past-season picture | "Pick the field and set your priorities." |
-| 3 | 0:10 to 0:17 (7 s) | Switch from the normal scenario to the El Niño scenario. The top-ranked option changes. Highlight the change | "El Niño changes the answer. Has Bean Planned shows why." |
+| 3 | 0:10 to 0:17 (7 s) | Switch from the normal scenario to the El Niño scenario. Mungbean stays first; corn falls below fallow. Highlight the change | "In an El Niño year corn drops below an idle field. Has Bean Planned shows why." |
 | 4 | 0:17 to 0:23 (6 s) | Open the top card. Show the why card, evidence, benefits, gaps, risks and the uncertainty line | "Every answer shows its reasons, evidence and uncertainty." |
 | 5 | 0:23 to 0:28 (5 s) | **Primary:** season calendar with bare-field and vulnerable months, then a past-season replay label. **Fallback (if not shipped):** the Compare view banner that says the tool supports, not replaces, judgement and that past seasons are not forecasts | "Past seasons, not forecasts. Supports, not replaces, farmer judgement." |
 
 ### Shot 5 status
 
-- Primary content (calendar, past-season replay): **planned / in progress** [UPDATE WHEN SHIPPED]
-- Fallback content (Compare view banner): **built**
+- Season calendar and past-season replay: **built** (Analytics and Community view).
 
 ## Notes for the recording
 

@@ -4,7 +4,7 @@
 **A decision-support web app that helps rice farmers choose what to do with their field in the dry season, using NASA Earth data, FAO crop-water science and the farmer's own priorities.**
 
 - Live app: https://hasbeanplanned.netlify.app
-- Demo video (28 seconds): [DEMO_LINK]
+- Demo: https://drive.google.com/drive/u/1/folders/1c5_yxTXJFlfG1PGAq1KJszDXvsmmTSom
 - Source code: https://github.com/IceNFireBoy/NASA-Challenge-2026-Field-Shift
 - Team: NASApusomo (Marxus Magisa, Krizdarl Callo, Antonio Pasia, Kareena Macasiljig, Anica Begonia, Jonathan Serote)
 - Built for the NASA Space Apps Challenge 2026, "Field Shift: Adapting Farms with NASA Data"
@@ -103,6 +103,7 @@ Made for extension workers, cooperatives and analysts. It was first called "Expe
 | **ISRIC SoilGrids 2.0** (250 m, CC BY 4.0) | A soil-texture hint for the point: clay loam, about 32% clay and 42% sand in the top 30 cm |
 | **PSA OpenSTAT** | Farmgate prices for yellow corn, mungbean and peanut in Region II (Cagayan Valley), January to May 2026; production costs for mungbean and peanut (Costs and Returns, 2021, national) |
 | **DOST-PCAARRD**, **PhilRice Isabela** | San Mateo mungbean yield and area, and local context |
+| **DA Bureau of Plant Industry mungbean guide**; **Palomar (ed.), 1998 peanut report** | Crop duration and seed rate for mungbean and peanut |
 | **OpenStreetMap** | Base map tiles for the resolution map |
 
 Every number on screen comes from the climate data file, the parameter file or user input. Each economic and agronomic input carries a badge: **Sourced**, **Local source**, **Secondary source**, **Assumption** or **Illustrative**; a number the user types is badged **Your value**.
@@ -142,7 +143,7 @@ Prices are PSA farmgate prices for Cagayan Valley (January to May 2026). Mungbea
 - **Past seasons are not forecasts.** Scenarios summarise what happened; they do not predict 2026-27.
 - **One point.** Everything is modelled for the San Mateo town centre. A NASA POWER cell is about 55 by 66 km and an IMERG cell about 11 km, so two farms far apart get the same numbers.
 - **Gridded estimates, not gauges.** IMERG and POWER are satellite and model products.
-- **Economics are partly sourced, partly placeholder.** Prices for mungbean, corn and peanut are PSA farmgate prices for Cagayan Valley (January to May 2026). Mungbean and peanut production costs are PSA national averages for 2021. Mungbean yield is a San Mateo figure from DOST-PCAARRD. Corn yield and cost, peanut yield, seed rates and the pumping cost are still placeholders, badged Illustrative. Costs are from 2021 and prices from 2026, so net returns for mungbean and peanut are on the generous side. Farmers should enter their own figures.
+- **Economics are partly sourced, partly placeholder.** Prices for mungbean, corn and peanut are PSA farmgate prices for Cagayan Valley (January to May 2026). Mungbean and peanut production costs are PSA national averages for 2021. Mungbean yield is a San Mateo figure from DOST-PCAARRD. Corn yield, cost and seed rate, peanut yield and the pumping cost are still placeholders, badged Illustrative. Costs are from 2021 and prices from 2026, so net returns for mungbean and peanut are on the generous side. Farmers should enter their own figures.
 - **Soil is the user's choice,** with a SoilGrids hint; it is not a soil test or a BSWM map lookup.
 - **NDVI is one 250 m pixel** at the town centre, which can include buildings and roads, with no cloud screening beyond the 16-day composite. The model does not use it.
 - **No pest or disease model,** no groundwater or capillary rise, and crops that run past 31 May reuse May conditions.
@@ -157,6 +158,7 @@ pipeline/
   fetch_climate.py      NASA POWER + IMERG -> climate.json (tested)
   fetch_extras.py       MODIS NDVI + SoilGrids -> optional blocks in climate.json
   data/imerg_giovanni.csv   the IMERG series the app ships with
+  data/psa/             PSA costs-and-returns tables as downloaded
   test_pipeline.py      19 offline tests
 frontend/src/
   data/climate.json     the only data file the app reads
