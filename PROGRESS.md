@@ -13,12 +13,12 @@
 - Phase 3.4: uncertainty panel above the cards (close-call note under 60%).
 - Phase 3.5: Community tab (illustrative: seed, labour, extra water, coordination prompt, who to involve).
 - Phase 3.6: Data & methods tab (sources, method, parameter table with badges, glossary, limitations). Phase 3 complete.
-- Docs (haiku subagent): README, SI_DISCLOSURE, docs/PROJECT_PAGE, docs/DEMO_SCRIPT drafted; placeholders [DEMO_LINK] [LINK] [TEAM...] left; IMERG DOI marked [VERIFY]; LICENSE file still missing.
-- Deployed: pushed to GitHub (main). Netlify import is a human step.
+- Docs (haiku subagent): README, SI_DISCLOSURE, docs/PROJECT_PAGE, docs/DEMO_SCRIPT drafted; placeholders [DEMO_LINK] [LINK] [TEAM...] left; IMERG DOI marked [VERIFY].
+- Deployed: https://hasbeanplanned.netlify.app (Netlify from GitHub main). LICENSE (MIT) and docs/QA.md added.
 
 ## Next
 - Human check of the dev server at phone and desktop width; one round of fixes.
-- Human: Netlify import, then put live URL in README. Then Phase 4C QA (docs/QA.md), LICENSE (MIT), README markers.
+- Human: phone-width check; fill demo link, team, source-code link, verify IMERG DOI.
 - IMERG (optional): retry only if the human asks.
 
 ## Known issues
