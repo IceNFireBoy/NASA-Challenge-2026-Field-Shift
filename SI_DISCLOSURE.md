@@ -41,7 +41,7 @@ This document discloses how Synthetic Intelligence (SI) tools were used in the N
 | El Niño and La Niña labels | NOAA CPC Oceanic Niño Index, ERSSTv6 table | Values copied from the NOAA table into the pipeline and checked against the page |
 | Crop coefficients, root depths, available soil water | FAO Irrigation and Drainage Paper 56 | `frontend/src/engine/params.js`, badged **Sourced** |
 | Yield response to water | FAO Irrigation and Drainage Paper 33 (values as given in Paper 66) | `params.js`, badged **Sourced** |
-| Local yields, prices and context | DOST-PCAARRD (2018), PSA OpenSTAT (farmgate prices for Region II, January to May 2026; legume costs and returns, 2021; tables downloaded by a team member, saved in `pipeline/data/psa/`), PhilRice Isabela (2021), The Manila Times (2021), Philippine Daily Inquirer (2026) | `params.js` and `content.js`, badged by status |
+| Local yields, prices and context | DOST-PCAARRD (2018), PSA OpenSTAT (farmgate prices for Region II, January to May 2026; legume costs and returns, 2021; tables downloaded by a team member, saved in `pipeline/data/psa/`), PhilRice Isabela (2021), Philippine Daily Inquirer (2026) | `params.js` and `content.js`, badged by status |
 | Base map | OpenStreetMap contributors | Tiles loaded in the browser |
 
 Every number on screen is traceable to the climate data file, the parameter file or user input, and every economic and agronomic input carries a status badge.

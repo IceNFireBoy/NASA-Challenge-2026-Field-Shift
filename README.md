@@ -38,7 +38,7 @@ Farmers, cooperatives and local agriculture offices need a way to compare the op
 
 ## San Mateo is the test drive; the goal is national
 
-This build covers **one place: San Mateo, Isabela**, in the Cagayan Valley of northern Luzon. We chose it as the test-drive area because it has a real, documented version of the question the app answers: San Mateo is known as the Munggo Capital, and about 7,000 hectares there are planted to mungbean in the dry months (DOST-PCAARRD, 2018).
+This build covers **one place: San Mateo, Isabela**, in the Cagayan Valley of northern Luzon. We chose it as the test-drive area because it has a real, documented version of the question the app answers: San Mateo is called the Mungbean Capital of the Philippines, and about 7,000 hectares there are planted to mungbean in the dry months (DOST-PCAARRD, 2018).
 
 **Given more time, Has Bean Planned is meant to be scaled to the whole Philippines.** San Mateo is where we proved the idea works end to end, not the limit of the idea. Nothing in the approach is specific to one town:
 
@@ -102,7 +102,7 @@ Made for extension workers, cooperatives and analysts. It was first called "Expe
 | **USDA-SCS effective rainfall** (as used in FAO CROPWAT) | The share of rain a crop can actually use |
 | **ISRIC SoilGrids 2.0** (250 m, CC BY 4.0) | A soil-texture hint for the point: clay loam, about 32% clay and 42% sand in the top 30 cm |
 | **PSA OpenSTAT** | Farmgate prices for yellow corn, mungbean and peanut in Region II (Cagayan Valley), January to May 2026; production costs for mungbean and peanut (Costs and Returns, 2021, national) |
-| **DOST-PCAARRD**, **PhilRice Isabela**, **The Manila Times (2021)** | San Mateo mungbean yield and area, and local context |
+| **DOST-PCAARRD**, **PhilRice Isabela** | San Mateo mungbean yield and area, and local context |
 | **OpenStreetMap** | Base map tiles for the resolution map |
 
 Every number on screen comes from the climate data file, the parameter file or user input. Each economic and agronomic input carries a badge: **Sourced**, **Local source**, **Secondary source**, **Assumption** or **Illustrative**; a number the user types is badged **Your value**.
@@ -244,7 +244,6 @@ Contact: marxus.antonio.magisa@student.ateneo.edu
 8. Philippine Statistics Authority, OpenSTAT. (a) Farmgate prices by geolocation, commodity, year and period: Cereals, and Beans and Legumes; Region II (Cagayan Valley), January to May 2026. (b) Legumes: Average Production Costs and Returns, 2021 (mongo, peanut; national). https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices . The downloaded costs-and-returns tables are in `pipeline/data/psa/`.
 9. DOST-PCAARRD (8 May 2018). Isabela town celebrates Mungbean FIESTA. https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta
 10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station (Extracore Project 16, rice-rice-mungbean and rice-rice-corn). https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
-11. Domingo, L. C. (8 April 2021). Isabela town benefits from mungbean. The Manila Times (partly behind a paywall). https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138
-12. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
-13. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
-14. OpenStreetMap contributors. Map data and tiles. https://www.openstreetmap.org/copyright
+11. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
+12. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
+13. OpenStreetMap contributors. Map data and tiles. https://www.openstreetmap.org/copyright

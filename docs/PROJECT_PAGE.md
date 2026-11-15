@@ -54,7 +54,7 @@ Links: https://gpm.nasa.gov/data/imerg , https://power.larc.nasa.gov/ , https://
   - FAO Irrigation and Drainage Papers 56 and 33, for crop water use and yield response
   - ISRIC SoilGrids 2.0, for a soil-texture hint: https://soilgrids.org/
   - PSA OpenSTAT, for farmgate prices (Region II, January to May 2026) and mungbean and peanut production costs (2021): https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices
-  - DOST-PCAARRD, PhilRice Isabela and The Manila Times, for San Mateo mungbean yield and local context
+  - DOST-PCAARRD and PhilRice Isabela, for San Mateo mungbean yield and local context
   - OpenStreetMap, for the base map
 
 ## References
@@ -69,9 +69,8 @@ Links: https://gpm.nasa.gov/data/imerg , https://power.larc.nasa.gov/ , https://
 8. DOST-PCAARRD (2018). Isabela town celebrates Mungbean FIESTA. https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/isabela-town-celebrates-mungbean-fiesta
 9. Philippine Statistics Authority, OpenSTAT. Farmgate prices, Region II, January to May 2026; Legumes costs and returns, 2021. https://openstat.psa.gov.ph/Database/Prices/Farmgate-Prices
 10. PhilRice (2023). 2021 PhilRice R&D Highlights, Isabela Branch Station. https://www.philrice.gov.ph/wp-content/uploads/2023/08/RD-highlights_Isabela-Aug_2023.pdf
-11. Domingo, L. C. (8 April 2021). Isabela town benefits from mungbean. The Manila Times. https://www.manilatimes.net/2021/04/08/business/agribusiness/isabela-town-benefits-from-mungbean/861138
-12. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
-13. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
+11. Basilio, K. C. (5 November 2026). 'Very strong' El Niño now active in tropical Pacific, says Philippine state weather bureau. Philippine Daily Inquirer, via Asia News Network. https://asianews.network/very-strong-el-nino-now-active-in-tropical-pacific-says-philippine-state-weather-bureau/
+12. Rosales, C. M., Rivera, F. G., Hautea, R. A., Del Rosario, E. (1998). Field evaluation of N2 fixation by mung bean in the Philippines, and residual effects on maize. https://www.osti.gov/etdeweb/biblio/634524
 
 ## Use of SI tools
 

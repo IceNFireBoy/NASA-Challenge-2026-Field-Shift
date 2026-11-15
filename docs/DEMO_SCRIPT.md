@@ -32,7 +32,7 @@
 Use this if the video cannot be finished. The limit is 7 slides, including the title and intro.
 
 1. **Title.** Has Bean Planned: San Mateo, Isabela. One-line pitch: compare dry-season options after rice with NASA data and the farmer's own priorities.
-2. **Intro and problem.** After rice, San Mateo fields stay bare or take on a second crop with uncertain water, prices and costs. The 2026-27 El Niño outlook makes the choice harder. [Cite The Manila Times and NOAA ONI.]
+2. **Intro and problem.** After rice, San Mateo fields stay bare or take on a second crop with uncertain water, prices and costs. The 2026-27 El Niño outlook makes the choice harder. [Cite the PAGASA report (Philippine Daily Inquirer, 5 Nov 2026) and NOAA ONI.]
 3. **What the tool does.** Compare fallow, mungbean, corn and peanut, including the current rotation. Ranked cards with why, evidence, benefits, gaps, risks and pest notes.
 4. **Screenshot of the Compare view.** Show the field form, priority sliders and one ranked card with its uncertainty line. Caption: the tool supports, not replaces, farmer and expert judgement.
 5. **Data and method.** NASA POWER daily climate data. Daily water balance (FAO-56). Yield loss from water stress (FAO-33). Editable prices with status badges. Rainfall is GPM IMERG (monthly, via NASA Giovanni), with NASA POWER shown beside it for comparison.
